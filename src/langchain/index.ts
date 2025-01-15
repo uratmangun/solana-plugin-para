@@ -32,7 +32,7 @@ export * from "./mayan";
 export * from "./allora";
 export * from "./solutiofi";
 export * from "./switchboard";
-export * from "./fluxbeam"
+export * from "./fluxbeam";
 import type { SolanaAgentKit } from "../agent";
 import {
   SolanaBalanceTool,
@@ -147,6 +147,23 @@ import {
   SolanaMergeTokensTool,
   SolanaSpreadTokenTool,
   SolanaSwitchboardSimulateFeed,
+  SolanaFluxbeamBridgeTokensTool,
+  SolanaFluxbeamBurnTokenTool,
+  SolanaFluxbeamCreatePoolTool,
+  SolanaFluxbeamSubmitFeeClaimTool,
+  SolanaFluxbeamSubmitFeePaymentTool,
+  SolanaFluxbeamUpdateV1MetadataTool,
+  SolanaFluxbeamUpdateV2MetadataTool,
+  SolanaFluxbeamMintToAccountTool,
+  SolanaFluxbeamSetAuthorityTool,
+  SolanaFluxbeamRevokeAuthorityTool,
+  SolanaFluxbeamCreateTokenV1Tool,
+  SolanaFluxbeamCreateTokenV2Tool,
+  SolanaFluxbeamGetClaimWithheldTokensFromMintTool,
+  SolanaFluxbeamGetClaimWithheldTokensToMintTool,
+  SolanaFluxbeamGetClaimWithheldTokensTool,
+  SolanaFluxbeamWrapSOLTool,
+  SolanaFluxbeamUnwrapSOLTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -269,13 +286,13 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaFluxbeamCreatePoolTool(solanaKit),
     new SolanaFluxbeamSubmitFeeClaimTool(solanaKit),
     new SolanaFluxbeamSubmitFeePaymentTool(solanaKit),
-    new SolanaFluxbeamUpdateMetadataTool(solanaKit),
+    new SolanaFluxbeamUpdateV1MetadataTool(solanaKit),
     new SolanaFluxbeamUpdateV2MetadataTool(solanaKit),
     new SolanaFluxbeamMintToAccountTool(solanaKit),
     new SolanaFluxbeamSetAuthorityTool(solanaKit),
     new SolanaFluxbeamRevokeAuthorityTool(solanaKit),
-    new SolanaFluxbeamCreateMintV1Tool(solanaKit),
-    new SolanaFluxbeamCreateMintV2Tool(solanaKit),
+    new SolanaFluxbeamCreateTokenV1Tool(solanaKit),
+    new SolanaFluxbeamCreateTokenV2Tool(solanaKit),
     new SolanaFluxbeamGetClaimWithheldTokensFromMintTool(solanaKit),
     new SolanaFluxbeamGetClaimWithheldTokensToMintTool(solanaKit),
     new SolanaFluxbeamGetClaimWithheldTokensTool(solanaKit),
