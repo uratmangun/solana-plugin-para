@@ -2,6 +2,12 @@ import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 
+export interface Plugin {
+  name: string;
+  methods: Record<string, Function>;
+  initialize(agent: SolanaAgentKit): void;
+}
+
 export interface Config {
   OPENAI_API_KEY?: string;
   JUPITER_REFERRAL_ACCOUNT?: string;

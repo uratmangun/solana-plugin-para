@@ -1,7 +1,7 @@
-import { Action } from "../../types/action";
-import { SolanaAgentKit } from "../../agent";
+import { Action } from "@src/types";
+import { SolanaAgentKit } from "@src/agent";
 import { z } from "zod";
-import { getTokenDataByTicker } from "../../tools/dexscreener";
+import { getTokenDataByTicker } from "../tools";
 
 const tokenDataByTickerAction: Action = {
   name: "GET_TOKEN_DATA_BY_TICKER",
@@ -21,7 +21,6 @@ const tokenDataByTickerAction: Action = {
         output: {
           status: "success",
           tokenData: {
-            // Some placeholder example data
             symbol: "USDC",
             name: "USD Coin",
             decimals: 6,

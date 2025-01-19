@@ -1,8 +1,8 @@
 import { PublicKey } from "@solana/web3.js";
-import { Action } from "../../types/action";
-import { SolanaAgentKit } from "../../agent";
+import { Action } from "@src/types"
+import { SolanaAgentKit } from "@src/agent";
 import { z } from "zod";
-import { trade } from "../../tools";
+import { trade } from "../tools";
 
 const tradeAction: Action = {
   name: "TRADE",

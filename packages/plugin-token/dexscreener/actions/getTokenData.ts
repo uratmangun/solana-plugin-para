@@ -1,9 +1,9 @@
-import { Action } from "../../types/action";
-import { SolanaAgentKit } from "../../agent";
+import { Action } from "@src/types";
+import { SolanaAgentKit } from "@src/agent";
 import { z } from "zod";
 import { PublicKey } from "@solana/web3.js";
-import { JupiterTokenData } from "../../types";
-import { getTokenAddressFromTicker, getTokenDataByAddress } from "../../tools";
+import { JupiterTokenData } from "@src/types";
+import { getTokenAddressFromTicker, getTokenDataByAddress } from "../tools";
 
 const getTokenDataAction: Action = {
   name: "GET_TOKEN_DATA",

@@ -1,7 +1,7 @@
-import { Action } from "../../types/action";
-import { SolanaAgentKit } from "../../agent";
+import { Action } from "@src/types";
+import { SolanaAgentKit } from "@src/agent";
 import { z } from "zod";
-import { stakeWithJup } from "../../tools";
+import { stakeWithJup } from "../tools";
 
 const stakeWithJupAction: Action = {
   name: "STAKE_WITH_JUPITER",
