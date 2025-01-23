@@ -263,3 +263,13 @@ export interface PriorityFeeResponse {
     options: { priorityLevel: string };
   }>;
 }
+
+export interface BridgeInput {
+  srcChainId: number;
+  srcChainTokenIn: string;
+  srcChainTokenInAmount: string;
+  dstChainId: number;
+  dstChainTokenOut: string;
+  dstChainOrderAuthorityAddress: string;
+  dstChainTokenOutRecipient: string;
+}

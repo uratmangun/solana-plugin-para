@@ -117,6 +117,7 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
+  bridge,
 } from "../tools";
 import {
   Config,
@@ -133,6 +134,7 @@ import {
   FlashCloseTradeParams,
   HeliusWebhookIdResponse,
   HeliusWebhookResponse,
+  BridgeInput,
 } from "../types";
 import {
   DasApiAsset,
@@ -1021,5 +1023,9 @@ export class SolanaAgentKit {
     params: GetAssetsByCreatorRpcInput,
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
+  }
+
+  async bridge(params: BridgeInput): Promise<string> {
+    return bridge(this, params);
   }
 }
