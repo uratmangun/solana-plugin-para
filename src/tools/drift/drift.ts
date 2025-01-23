@@ -1,6 +1,7 @@
 import {
   BASE_PRECISION,
   BigNum,
+  BulkAccountLoader,
   calculateDepositRate,
   calculateEstimatedEntryPriceWithL2,
   calculateInterestRate,
@@ -14,6 +15,7 @@ import {
   getInsuranceFundStakeAccountPublicKey,
   getLimitOrderParams,
   getMarketOrderParams,
+  getTokenAmount,
   getUserAccountPublicKeySync,
   JupiterClient,
   MainnetPerpMarkets,
@@ -70,6 +72,10 @@ export async function initClients(
     subAccountIds: params?.subAccountIds,
     txParams: {
       computeUnitsPrice: MINIMUM_COMPUTE_PRICE_FOR_COMPLEX_ACTIONS,
+    },
+    accountSubscription: {
+      type: "polling",
+      accountLoader: new BulkAccountLoader(agent.connection, "processed", 10),
     },
     txSender: new FastSingleTxSender({
       connection: agent.connection,
@@ -439,12 +445,14 @@ export async function doesUserHaveDriftAccount(agent: SolanaAgentKit) {
 export async function driftUserAccountInfo(agent: SolanaAgentKit) {
   try {
     const { driftClient, cleanUp } = await initClients(agent);
+    const userPublicKey = getUserAccountPublicKeySync(
+      new PublicKey(DRIFT_PROGRAM_ID),
+      agent.wallet.publicKey,
+    );
+
     const user = new User({
       driftClient,
-      userAccountPublicKey: getUserAccountPublicKeySync(
-        new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
-      ),
+      userAccountPublicKey: userPublicKey,
     });
     const userAccountExists = await user.exists();
 
@@ -457,28 +465,64 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
 
     await cleanUp();
     const perpPositions = account.perpPositions.map((pos) => ({
-      ...pos,
+      market: MainnetPerpMarkets[pos.marketIndex].symbol,
       baseAssetAmount: convertToNumber(pos.baseAssetAmount, BASE_PRECISION),
-      settledPnl: convertToNumber(pos.settledPnl, QUOTE_PRECISION),
-    }));
-    const spotPositions = account.spotPositions.map((pos) => ({
-      ...pos,
-      availableBalance: convertToNumber(
-        pos.scaledBalance,
-        MainnetSpotMarkets[pos.marketIndex].precision,
+      quoteAssetAmount: convertToNumber(
+        pos.quoteAssetAmount.abs(),
+        QUOTE_PRECISION,
       ),
-      symbol: MainnetSpotMarkets.find((v) => v.marketIndex === pos.marketIndex)
-        ?.symbol,
+      quoteEntryAmount: convertToNumber(
+        pos.quoteEntryAmount.abs(),
+        QUOTE_PRECISION,
+      ),
+      quoteBreakEvenAmount: convertToNumber(
+        pos.quoteBreakEvenAmount.abs(),
+        QUOTE_PRECISION,
+      ),
+      settledPnl: convertToNumber(pos.settledPnl, QUOTE_PRECISION),
+      openAsks: pos.openAsks.toNumber(),
+      openBids: pos.openBids.toNumber(),
+      openOrders: pos.openOrders,
+      positionType:
+        convertToNumber(pos.baseAssetAmount, QUOTE_PRECISION) > 0
+          ? "long"
+          : "short",
     }));
+    const spotPositions = account.spotPositions.map((pos) => {
+      const spotMarketAccount = driftClient.getSpotMarketAccount(
+        pos.marketIndex,
+      );
+
+      if (!spotMarketAccount) {
+        return;
+      }
+
+      const tokenBalance = getTokenAmount(
+        pos.scaledBalance,
+        spotMarketAccount,
+        pos.balanceType,
+      );
+
+      return {
+        availableBalance: convertToNumber(
+          tokenBalance,
+          MainnetSpotMarkets[pos.marketIndex].precision,
+        ),
+        symbol: MainnetSpotMarkets[pos.marketIndex].symbol,
+        openAsks: pos.openAsks.toNumber(),
+        openBids: pos.openBids.toNumber(),
+        openOrders: pos.openOrders,
+      };
+    });
 
     return {
-      ...account,
       name: account.name,
+      accountAddress: userPublicKey.toBase58(),
       authority: account.authority,
       settledPerpPnl: `$${convertToNumber(account.settledPerpPnl, QUOTE_PRECISION)}`,
       lastActiveSlot: account.lastActiveSlot.toNumber(),
-      perpPositions,
-      spotPositions,
+      perpPositions: perpPositions.filter((pos) => pos.baseAssetAmount !== 0),
+      spotPositions: spotPositions.filter((pos) => pos?.availableBalance !== 0),
     };
   } catch (e) {
     // @ts-expect-error - error message is a string
