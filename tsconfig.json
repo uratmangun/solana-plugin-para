@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
@@ -28,6 +28,6 @@
       "@packages/*": ["packages/*"]
     }
   },
-  "include": ["src/**/*", "packages/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "packages"]
 }
