@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
-import type { Action } from "../types/action";
-import type { SolanaAgentKit } from "../agent";
+import type { Action } from "../../../../src/types/action";
+import type { SolanaAgentKit } from "../../../../src/agent";
 import { z } from "zod";
 import { get_token_balance } from "../tools";
 
