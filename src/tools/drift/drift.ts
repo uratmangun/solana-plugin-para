@@ -26,6 +26,7 @@ import {
   PostOnlyParams,
   PRICE_PRECISION,
   QUOTE_PRECISION,
+  SpotBalanceType,
   User,
   type IWallet,
 } from "@drift-labs/sdk";
@@ -512,6 +513,7 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
         openAsks: pos.openAsks.toNumber(),
         openBids: pos.openBids.toNumber(),
         openOrders: pos.openOrders,
+        type: pos.balanceType === SpotBalanceType.BORROW ? "borrow" : "deposit",
       };
     });
 
