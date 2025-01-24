@@ -17,6 +17,7 @@ import {
   getMarketOrderParams,
   getTokenAmount,
   getUserAccountPublicKeySync,
+  isVariant,
   JupiterClient,
   MainnetPerpMarkets,
   MainnetSpotMarkets,
@@ -503,17 +504,21 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
       );
 
       return {
-        availableBalance: convertToNumber(
-          tokenBalance,
-          MainnetSpotMarkets[pos.marketIndex].precision,
-        ),
+        availableBalance: isVariant(pos.balanceType, "borrow")
+          ? -1
+          : 1 *
+            convertToNumber(
+              tokenBalance,
+              MainnetSpotMarkets[pos.marketIndex].precision,
+            ),
         symbol: MainnetSpotMarkets[pos.marketIndex].symbol,
         openAsks: pos.openAsks.toNumber(),
         openBids: pos.openBids.toNumber(),
         openOrders: pos.openOrders,
-        type: pos.balanceType === SpotBalanceType.BORROW ? "borrow" : "deposit",
+        type: isVariant(pos.balanceType, "borrow") ? "borrow" : "deposit",
       };
     });
+    console.log(spotPositions);
 
     const overallUserBalance = user.getNetSpotMarketValue();
     const unrealizedPnl = user.getUnrealizedPNL(true);
