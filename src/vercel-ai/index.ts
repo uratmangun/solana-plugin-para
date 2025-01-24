@@ -1,18 +1,17 @@
 import { tool, type CoreTool } from "ai";
 import { SolanaAgentKit } from "../agent";
 import { executeAction } from "../utils/actionExecutor";
-import { ACTIONS } from "../actions";
+import { Action } from "../types/action";
 
 export function createSolanaTools(
   solanaAgentKit: SolanaAgentKit,
+  actions: Action[],
 ): Record<string, CoreTool> {
   const tools: Record<string, CoreTool> = {};
-  const actionKeys = Object.keys(ACTIONS);
 
-  for (const key of actionKeys) {
-    const action = ACTIONS[key as keyof typeof ACTIONS];
-    tools[key] = tool({
-      id: action.name,
+  for (const [index, action] of actions.entries()) {
+    tools[index.toString()] = tool({
+      id: action.name as `${string}.${string}`,
       description: `
       ${action.description}
 
@@ -23,7 +22,7 @@ export function createSolanaTools(
       )}
       `.slice(0, 1023),
       parameters: action.schema,
-      execute: async (params) =>
+      execute: async (params: Record<string, unknown>) =>
         await executeAction(action, solanaAgentKit, params),
     });
   }
