@@ -462,9 +462,7 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
     }
     await user.subscribe();
     const account = user.getUserAccount();
-    await user.unsubscribe();
 
-    await cleanUp();
     const perpPositions = account.perpPositions.map((pos) => ({
       market: MainnetPerpMarkets[pos.marketIndex].symbol,
       baseAssetAmount: convertToNumber(pos.baseAssetAmount, BASE_PRECISION),
@@ -517,10 +515,21 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
       };
     });
 
+    const overallUserBalance = user.getNetSpotMarketValue();
+    const unrealizedPnl = user.getUnrealizedPNL(true);
+    const netUSDValue = convertToNumber(
+      overallUserBalance.add(unrealizedPnl),
+      QUOTE_PRECISION,
+    );
+
+    await cleanUp();
+    await user.unsubscribe();
+
     return {
       name: account.name,
       accountAddress: userPublicKey.toBase58(),
       authority: account.authority,
+      overallBalance: netUSDValue,
       settledPerpPnl: `$${convertToNumber(account.settledPerpPnl, QUOTE_PRECISION)}`,
       lastActiveSlot: account.lastActiveSlot.toNumber(),
       perpPositions: perpPositions.filter((pos) => pos.baseAssetAmount !== 0),
