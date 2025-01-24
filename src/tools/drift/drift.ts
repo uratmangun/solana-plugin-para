@@ -484,7 +484,7 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
       openBids: pos.openBids.toNumber(),
       openOrders: pos.openOrders,
       positionType:
-        convertToNumber(pos.baseAssetAmount, QUOTE_PRECISION) > 0
+        convertToNumber(pos.baseAssetAmount, BASE_PRECISION) > 0
           ? "long"
           : "short",
     }));
