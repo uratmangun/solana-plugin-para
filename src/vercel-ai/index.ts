@@ -12,7 +12,6 @@ export function createSolanaTools(
   for (const key of actionKeys) {
     const action = ACTIONS[key as keyof typeof ACTIONS];
     tools[key] = tool({
-      // @ts-expect-error Value matches type however TS still shows error
       id: action.name,
       description: `
       ${action.description}
