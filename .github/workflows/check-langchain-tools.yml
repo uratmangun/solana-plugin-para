@@ -15,4 +15,4 @@ jobs:
       with:
         node-version: 20.x
     - run: pnpm install
-    - run: pnpm run check-langchain-tool-names 
+    - run: pnpm run check-tool-names:langchain
