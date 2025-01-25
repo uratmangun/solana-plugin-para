@@ -17,29 +17,6 @@ export interface Config {
   HELIUS_API_KEY?: string;
 }
 
-export interface Creator {
-  address: string;
-  percentage: number;
-}
-
-export interface CollectionOptions {
-  name: string;
-  uri: string;
-  royaltyBasisPoints?: number;
-  creators?: Creator[];
-}
-
-// Add return type interface
-export interface CollectionDeployment {
-  collectionAddress: PublicKey;
-  signature: Uint8Array;
-}
-
-export interface MintCollectionNFTResponse {
-  mint: PublicKey;
-  metadata: PublicKey;
-}
-
 export interface PumpFunTokenOptions {
   twitter?: string;
   telegram?: string;

@@ -1,23 +1,20 @@
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { get_assets_by_authority } from "../../tools/metaplex";
+import { search_assets } from "../tools";
+import { publicKey } from "@metaplex-foundation/umi";
 
-const getAssetsByAuthorityAction: Action = {
-  name: "GET_ASSETS_BY_AUTHORITY",
-  similes: [
-    "fetch assets by authority",
-    "retrieve assets by authority",
-    "get assets by authority address",
-    "fetch authority assets",
-  ],
-  description: `Fetch a list of assets owned by a specific address using the Metaplex DAS API.`,
+const searchAssetsAction: Action = {
+  name: "SEARCH_ASSETS",
+  similes: ["search assets", "find assets", "lookup assets", "query assets"],
+  description: `Search for assets using various criteria with the Metaplex DAS API.`,
   examples: [
     [
       {
         input: {
-          authority: "mRdta4rc2RtsxEUDYuvKLamMZAdW6qHcwuq866Skxxv",
-          limit: 10,
+          owner: publicKey("N4f6zftYsuu4yT7icsjLwh4i6pB1zvvKbseHj2NmSQw"),
+          jsonUri:
+            "https://arweave.net/c9aGs5fOk7gD4wWnSvmzeqgtfxAGRgtI1jYzvl8-IVs/chiaki-violet-azure-common.json",
         },
         output: {
           status: "success",
@@ -69,18 +66,31 @@ const getAssetsByAuthorityAction: Action = {
             ],
           },
         },
-        explanation: "Fetch a list of assets owned by a specific address",
+        explanation: "Search for assets using various criteria",
       },
     ],
   ],
   schema: z.object({
-    authority: z.string().min(1, "Authority address is required"),
-    sortBy: z
-      .object({
-        sortBy: z.enum(["created", "updated", "recentAction", "none"]),
-        sortDirection: z.enum(["asc", "desc"]),
-      })
-      .optional(),
+    negate: z.boolean().optional(),
+    conditionType: z.enum(["all", "any"]).optional(),
+    interface: z.string().optional(),
+    jsonUri: z.string().optional(),
+    owner: z.string().optional(),
+    ownerType: z.enum(["single", "token"]).optional(),
+    creator: z.string().optional(),
+    creatorVerified: z.boolean().optional(),
+    authority: z.string().optional(),
+    grouping: z.tuple([z.string(), z.string()]).optional(),
+    delegate: z.string().optional(),
+    frozen: z.boolean().optional(),
+    supply: z.number().optional(),
+    supplyMint: z.string().optional(),
+    compressed: z.boolean().optional(),
+    compressible: z.boolean().optional(),
+    royaltyModel: z.enum(["creators", "fanout", "single"]).optional(),
+    royaltyTarget: z.string().optional(),
+    royaltyAmount: z.number().optional(),
+    burnt: z.boolean().optional(),
     limit: z.number().optional(),
     page: z.number().optional(),
     before: z.string().optional(),
@@ -88,9 +98,9 @@ const getAssetsByAuthorityAction: Action = {
   }),
   handler: async (
     agent: SolanaAgentKit,
-    input: z.infer<typeof getAssetsByAuthorityAction.schema>,
+    input: z.infer<typeof searchAssetsAction.schema>,
   ) => {
-    const result = await get_assets_by_authority(agent, input);
+    const result = await search_assets(agent, input);
 
     return {
       status: "success",
@@ -100,4 +110,4 @@ const getAssetsByAuthorityAction: Action = {
   },
 };
 
-export default getAssetsByAuthorityAction;
+export default searchAssetsAction;

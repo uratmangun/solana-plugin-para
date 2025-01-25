@@ -1,8 +1,8 @@
 import { PublicKey } from "@solana/web3.js";
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { mintCollectionNFT } from "../../tools/metaplex";
+import { mintCollectionNFT } from "../tools";
 
 const mintNFTAction: Action = {
   name: "MINT_NFT",

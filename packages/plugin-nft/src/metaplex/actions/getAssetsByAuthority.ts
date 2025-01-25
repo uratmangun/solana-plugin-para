@@ -1,23 +1,22 @@
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { get_assets_by_creator } from "../../tools/metaplex";
+import { get_assets_by_authority } from "../tools";
 
-const getAssetsByCreatorAction: Action = {
-  name: "GET_ASSETS_BY_CREATOR",
+const getAssetsByAuthorityAction: Action = {
+  name: "GET_ASSETS_BY_AUTHORITY",
   similes: [
-    "fetch assets by creator",
-    "retrieve assets by creator",
-    "get assets by creator address",
-    "fetch creator assets",
+    "fetch assets by authority",
+    "retrieve assets by authority",
+    "get assets by authority address",
+    "fetch authority assets",
   ],
-  description: `Fetch a list of assets created by a specific address using the Metaplex DAS API.`,
+  description: `Fetch a list of assets owned by a specific address using the Metaplex DAS API.`,
   examples: [
     [
       {
         input: {
-          creator: "D3XrkNZz6wx6cofot7Zohsf2KSsu2ArngNk8VqU9cTY3",
-          onlyVerified: true,
+          authority: "mRdta4rc2RtsxEUDYuvKLamMZAdW6qHcwuq866Skxxv",
           limit: 10,
         },
         output: {
@@ -70,13 +69,12 @@ const getAssetsByCreatorAction: Action = {
             ],
           },
         },
-        explanation: "Fetch a list of assets created by a specific address",
+        explanation: "Fetch a list of assets owned by a specific address",
       },
     ],
   ],
   schema: z.object({
-    creator: z.string().min(1, "Creator address is required"),
-    onlyVerified: z.boolean(),
+    authority: z.string().min(1, "Authority address is required"),
     sortBy: z
       .object({
         sortBy: z.enum(["created", "updated", "recentAction", "none"]),
@@ -90,9 +88,9 @@ const getAssetsByCreatorAction: Action = {
   }),
   handler: async (
     agent: SolanaAgentKit,
-    input: z.infer<typeof getAssetsByCreatorAction.schema>,
+    input: z.infer<typeof getAssetsByAuthorityAction.schema>,
   ) => {
-    const result = await get_assets_by_creator(agent, input);
+    const result = await get_assets_by_authority(agent, input);
 
     return {
       status: "success",
@@ -102,4 +100,4 @@ const getAssetsByCreatorAction: Action = {
   },
 };
 
-export default getAssetsByCreatorAction;
+export default getAssetsByAuthorityAction;

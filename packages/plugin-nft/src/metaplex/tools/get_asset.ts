@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "../../index";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { publicKey } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {

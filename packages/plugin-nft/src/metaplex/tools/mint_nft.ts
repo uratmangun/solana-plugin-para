@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "../../index";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { generateSigner, keypairIdentity } from "@metaplex-foundation/umi";
 import { create, mplCore } from "@metaplex-foundation/mpl-core";
 import { fetchCollection } from "@metaplex-foundation/mpl-core";
@@ -9,7 +9,7 @@ import {
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
-import { MintCollectionNFTResponse } from "../../types";
+import { MintCollectionNFTResponse } from "../types";
 
 /**
  * Mint a new NFT as part of an existing collection

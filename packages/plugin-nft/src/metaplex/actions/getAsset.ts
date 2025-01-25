@@ -1,7 +1,7 @@
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { get_asset } from "../../tools/metaplex";
+import { get_asset } from "../tools";
 
 const getAssetAction: Action = {
   name: "GET_ASSET",

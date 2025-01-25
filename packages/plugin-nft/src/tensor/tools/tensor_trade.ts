@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "../../index";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { TensorSwapSDK } from "@tensor-oss/tensorswap-sdk";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { AnchorProvider, Wallet } from "@coral-xyz/anchor";

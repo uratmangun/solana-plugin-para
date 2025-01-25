@@ -1,20 +1,24 @@
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { search_assets } from "../../tools/metaplex";
-import { publicKey } from "@metaplex-foundation/umi";
+import { get_assets_by_creator } from "../tools";
 
-const searchAssetsAction: Action = {
-  name: "SEARCH_ASSETS",
-  similes: ["search assets", "find assets", "lookup assets", "query assets"],
-  description: `Search for assets using various criteria with the Metaplex DAS API.`,
+const getAssetsByCreatorAction: Action = {
+  name: "GET_ASSETS_BY_CREATOR",
+  similes: [
+    "fetch assets by creator",
+    "retrieve assets by creator",
+    "get assets by creator address",
+    "fetch creator assets",
+  ],
+  description: `Fetch a list of assets created by a specific address using the Metaplex DAS API.`,
   examples: [
     [
       {
         input: {
-          owner: publicKey("N4f6zftYsuu4yT7icsjLwh4i6pB1zvvKbseHj2NmSQw"),
-          jsonUri:
-            "https://arweave.net/c9aGs5fOk7gD4wWnSvmzeqgtfxAGRgtI1jYzvl8-IVs/chiaki-violet-azure-common.json",
+          creator: "D3XrkNZz6wx6cofot7Zohsf2KSsu2ArngNk8VqU9cTY3",
+          onlyVerified: true,
+          limit: 10,
         },
         output: {
           status: "success",
@@ -66,31 +70,19 @@ const searchAssetsAction: Action = {
             ],
           },
         },
-        explanation: "Search for assets using various criteria",
+        explanation: "Fetch a list of assets created by a specific address",
       },
     ],
   ],
   schema: z.object({
-    negate: z.boolean().optional(),
-    conditionType: z.enum(["all", "any"]).optional(),
-    interface: z.string().optional(),
-    jsonUri: z.string().optional(),
-    owner: z.string().optional(),
-    ownerType: z.enum(["single", "token"]).optional(),
-    creator: z.string().optional(),
-    creatorVerified: z.boolean().optional(),
-    authority: z.string().optional(),
-    grouping: z.tuple([z.string(), z.string()]).optional(),
-    delegate: z.string().optional(),
-    frozen: z.boolean().optional(),
-    supply: z.number().optional(),
-    supplyMint: z.string().optional(),
-    compressed: z.boolean().optional(),
-    compressible: z.boolean().optional(),
-    royaltyModel: z.enum(["creators", "fanout", "single"]).optional(),
-    royaltyTarget: z.string().optional(),
-    royaltyAmount: z.number().optional(),
-    burnt: z.boolean().optional(),
+    creator: z.string().min(1, "Creator address is required"),
+    onlyVerified: z.boolean(),
+    sortBy: z
+      .object({
+        sortBy: z.enum(["created", "updated", "recentAction", "none"]),
+        sortDirection: z.enum(["asc", "desc"]),
+      })
+      .optional(),
     limit: z.number().optional(),
     page: z.number().optional(),
     before: z.string().optional(),
@@ -98,9 +90,9 @@ const searchAssetsAction: Action = {
   }),
   handler: async (
     agent: SolanaAgentKit,
-    input: z.infer<typeof searchAssetsAction.schema>,
+    input: z.infer<typeof getAssetsByCreatorAction.schema>,
   ) => {
-    const result = await search_assets(agent, input);
+    const result = await get_assets_by_creator(agent, input);
 
     return {
       status: "success",
@@ -110,4 +102,4 @@ const searchAssetsAction: Action = {
   },
 };
 
-export default searchAssetsAction;
+export default getAssetsByCreatorAction;

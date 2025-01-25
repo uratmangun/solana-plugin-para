@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "../../agent";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {
   dasApi,

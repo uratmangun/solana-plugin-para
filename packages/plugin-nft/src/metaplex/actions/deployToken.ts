@@ -1,7 +1,7 @@
-import { Action } from "../../../../src/types/action";
-import { SolanaAgentKit } from "../../../../src/agent";
+import { Action } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { deploy_token } from "../../../../src/tools";
+import { deploy_token } from "../tools";
 
 const deployTokenAction: Action = {
   name: "DEPLOY_TOKEN",

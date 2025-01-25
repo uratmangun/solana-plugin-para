@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "../../index";
+import { SolanaAgentKit } from "solana-agent-kit";
 import {
   generateSigner,
   keypairIdentity,
@@ -9,7 +9,7 @@ import {
   mplCore,
   ruleSet,
 } from "@metaplex-foundation/mpl-core";
-import { CollectionOptions, CollectionDeployment } from "../../types";
+import { CollectionOptions, CollectionDeployment } from "../types";
 import {
   fromWeb3JsKeypair,
   toWeb3JsPublicKey,
