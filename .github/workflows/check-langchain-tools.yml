@@ -1,0 +1,18 @@
+name: Check LangChain Tool Names
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-tool-names:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+    - run: pnpm install
+    - run: pnpm run check-langchain-tool-names 
