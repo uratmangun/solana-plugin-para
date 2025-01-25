@@ -6,3 +6,4 @@ export { SolanaAgentKit, createVercelAITools };
 // Optional: Export types that users might need
 export * from "./types";
 export * from "./utils/actionExecutor";
+export * from "./utils/send_tx";
