@@ -504,13 +504,12 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
       );
 
       return {
-        availableBalance: isVariant(pos.balanceType, "borrow")
-          ? -1
-          : 1 *
-            convertToNumber(
-              tokenBalance,
-              MainnetSpotMarkets[pos.marketIndex].precision,
-            ),
+        availableBalance:
+          (isVariant(pos.balanceType, "borrow") ? -1 : 1) *
+          convertToNumber(
+            tokenBalance,
+            MainnetSpotMarkets[pos.marketIndex].precision,
+          ),
         symbol: MainnetSpotMarkets[pos.marketIndex].symbol,
         openAsks: pos.openAsks.toNumber(),
         openBids: pos.openBids.toNumber(),
@@ -518,7 +517,6 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
         type: isVariant(pos.balanceType, "borrow") ? "borrow" : "deposit",
       };
     });
-    console.log(spotPositions);
 
     const overallUserBalance = user.getNetSpotMarketValue();
     const unrealizedPnl = user.getUnrealizedPNL(true);
