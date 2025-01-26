@@ -29,6 +29,7 @@ export * from "./helius";
 export * from "./drift";
 export * from "./voltr";
 export * from "./mayan";
+export * from "./allora";
 
 import type { SolanaAgentKit } from "../agent";
 import {
@@ -136,6 +137,9 @@ import {
   SolanaGetAssetsByCreatorTool,
   SolanaGetInfoTool,
   SolanaCrossChainSwapTool,
+  SolanaAlloraGetPriceInference,
+  SolanaAlloraGetAllTopics,
+  SolanaAlloraGetInferenceByTopicId,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -249,5 +253,8 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
     new SolanaCrossChainSwapTool(solanaKit),
+    new SolanaAlloraGetPriceInference(solanaKit),
+    new SolanaAlloraGetAllTopics(solanaKit),
+    new SolanaAlloraGetInferenceByTopicId(solanaKit),
   ];
 }
