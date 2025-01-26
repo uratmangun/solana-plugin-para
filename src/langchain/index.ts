@@ -28,6 +28,7 @@ export * from "./meteora";
 export * from "./helius";
 export * from "./drift";
 export * from "./voltr";
+export * from "./mayan";
 
 import type { SolanaAgentKit } from "../agent";
 import {
@@ -134,6 +135,7 @@ import {
   SolanaGetAssetsByAuthorityTool,
   SolanaGetAssetsByCreatorTool,
   SolanaGetInfoTool,
+  SolanaCrossChainSwapTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -246,5 +248,6 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetTool(solanaKit),
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
+    new SolanaCrossChainSwapTool(solanaKit),
   ];
 }

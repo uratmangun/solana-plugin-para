@@ -117,6 +117,7 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
+  swap,
 } from "../tools";
 import {
   Config,
@@ -1021,5 +1022,26 @@ export class SolanaAgentKit {
     params: GetAssetsByCreatorRpcInput,
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
+  }
+
+  async swap(
+    amount: string,
+    fromChain: string,
+    fromToken: string,
+    toChain: string,
+    toToken: string,
+    dstAddr: string,
+    slippageBps?: number,
+  ): Promise<string> {
+    return swap(
+      this,
+      amount,
+      fromChain,
+      fromToken,
+      toChain,
+      toToken,
+      dstAddr,
+      slippageBps,
+    );
   }
 }

@@ -11,6 +11,7 @@ export interface Config {
   FLEXLEND_API_KEY?: string;
   HELIUS_API_KEY?: string;
   PRIORITY_LEVEL?: string; // medium, high, or veryHigh
+  ETHEREUM_PRIVATE_KEY?: string;
 }
 
 export interface Creator {

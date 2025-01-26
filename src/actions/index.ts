@@ -76,6 +76,7 @@ import getAssetAction from "./metaplex/getAsset";
 import getAssetsByAuthorityAction from "./metaplex/getAssetsByAuthority";
 import getAssetsByCreatorAction from "./metaplex/getAssetsByCreator";
 import getInfoAction from "./agent/get_info";
+import swapAction from "./mayan/swap";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -158,6 +159,7 @@ export const ACTIONS = {
   GET_ASSET_ACTION: getAssetAction,
   GET_ASSETS_BY_AUTHORITY_ACTION: getAssetsByAuthorityAction,
   GET_ASSETS_BY_CREATOR_ACTION: getAssetsByCreatorAction,
+  SWAP_ACTION: swapAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";
