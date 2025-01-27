@@ -117,6 +117,7 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
+  simulate_switchboard_feed,
 } from "../tools";
 import {
   Config,
@@ -1021,5 +1022,12 @@ export class SolanaAgentKit {
     params: GetAssetsByCreatorRpcInput,
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
+  }
+
+  async simulateSwitchboardFeed(
+    feed: PublicKey,
+    crossbarUrl: string,
+  ): Promise<string> {
+    return simulate_switchboard_feed(this, feed, crossbarUrl);
   }
 }

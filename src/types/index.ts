@@ -263,3 +263,11 @@ export interface PriorityFeeResponse {
     options: { priorityLevel: string };
   }>;
 }
+
+export interface SwitchboardSimulateFeedResponse {
+  status: "success" | "error";
+  feed?: PublicKey;
+  value?: number;
+  message?: string;
+  code?: string;
+}

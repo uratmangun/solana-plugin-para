@@ -76,6 +76,7 @@ import getAssetAction from "./metaplex/getAsset";
 import getAssetsByAuthorityAction from "./metaplex/getAssetsByAuthority";
 import getAssetsByCreatorAction from "./metaplex/getAssetsByCreator";
 import getInfoAction from "./agent/get_info";
+import switchboardSimulateFeedAction from "./switchboard/simulate_feed";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -157,6 +158,7 @@ export const ACTIONS = {
   WITHDRAW_VOLTR_STRATEGY_ACTION: withdrawVoltrStrategyAction,
   GET_ASSET_ACTION: getAssetAction,
   GET_ASSETS_BY_AUTHORITY_ACTION: getAssetsByAuthorityAction,
+  SWITCHBOARD_FEED_ACTION: switchboardSimulateFeedAction,
   GET_ASSETS_BY_CREATOR_ACTION: getAssetsByCreatorAction,
 };
 
