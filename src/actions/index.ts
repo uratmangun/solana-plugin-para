@@ -79,6 +79,11 @@ import getInfoAction from "./agent/get_info";
 import getPriceInferenceAction from "./allora/getPriceInference";
 import getAllTopicsAction from "./allora/getAllTopics";
 import getInferenceByTopicIdAction from "./allora/getInferenceByTopicId";
+import closeOrcaPositionAction from "./orca/closeOrcaPosition";
+import createOrcaCLMMAction from "./orca/createOrcaCLMM";
+import fetchOrcaPositionsAction from "./orca/fetchOrcaPositions";
+import openOrcaCenteredPositionWithLiquidityAction from "./orca/openOrcaCenteredPositionWithLiquidity";
+import openOrcaSingleSidedPositionAction from "./orca/openOrcaSingleSidedPosition";
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
   WALLET_ADDRESS_ACTION: getWalletAddressAction,
@@ -114,6 +119,12 @@ export const ACTIONS = {
   RAYDIUM_CREATE_AMM_V4_ACTION: raydiumCreateAmmV4Action,
   CREATE_ORCA_SINGLE_SIDED_WHIRLPOOL_ACTION:
     createOrcaSingleSidedWhirlpoolAction,
+  CLOSE_ORCA_POSITION_ACTION: closeOrcaPositionAction,
+  CREATE_ORCA_CLMM_ACTION: createOrcaCLMMAction,
+  FETCH_ORCA_POSITIONS_ACTION: fetchOrcaPositionsAction,
+  OPEN_ORCA_CENTERED_POSITION_WITH_LIQUIDITY_ACTION:
+    openOrcaCenteredPositionWithLiquidityAction,
+  OPEN_ORCA_SINGLE_SIDED_POSITION_ACTION: openOrcaSingleSidedPositionAction,
   LAUNCH_PUMPFUN_TOKEN_ACTION: launchPumpfunTokenAction,
   FLASH_OPEN_TRADE_ACTION: flashOpenTradeAction,
   FLASH_CLOSE_TRADE_ACTION: flashCloseTradeAction,
