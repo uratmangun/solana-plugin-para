@@ -27,7 +27,6 @@ import {
   PostOnlyParams,
   PRICE_PRECISION,
   QUOTE_PRECISION,
-  SpotBalanceType,
   User,
   type IWallet,
 } from "@drift-labs/sdk";
