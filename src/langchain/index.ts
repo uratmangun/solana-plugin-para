@@ -29,6 +29,7 @@ export * from "./helius";
 export * from "./drift";
 export * from "./voltr";
 export * from "./allora";
+export * from "./solutiofi";
 
 import type { SolanaAgentKit } from "../agent";
 import {
@@ -138,6 +139,12 @@ import {
   SolanaAlloraGetPriceInference,
   SolanaAlloraGetAllTopics,
   SolanaAlloraGetInferenceByTopicId,
+  SolanaCloseAccountsTool,
+  SolanaBurnTokensTool,
+  SolanaMergeTokensTool,
+  SolanaSpreadTokenTool,
+  SolanaGetTokenPricesTool,
+  SolanaGetUserTokensTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -253,5 +260,11 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaAlloraGetPriceInference(solanaKit),
     new SolanaAlloraGetAllTopics(solanaKit),
     new SolanaAlloraGetInferenceByTopicId(solanaKit),
+    new SolanaCloseAccountsTool(solanaKit),
+    new SolanaBurnTokensTool(solanaKit),
+    new SolanaMergeTokensTool(solanaKit),
+    new SolanaSpreadTokenTool(solanaKit),
+    new SolanaGetTokenPricesTool(solanaKit),
+    new SolanaGetUserTokensTool(solanaKit),
   ];
 }

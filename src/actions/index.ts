@@ -79,6 +79,12 @@ import getInfoAction from "./agent/get_info";
 import getPriceInferenceAction from "./allora/getPriceInference";
 import getAllTopicsAction from "./allora/getAllTopics";
 import getInferenceByTopicIdAction from "./allora/getInferenceByTopicId";
+import closeAccountsAction from "./solutiofi/closeAccounts";
+import burnTokensAction from "./solutiofi/burnTokens";
+import mergeTokensAction from "./solutiofi/mergeTokens";
+import spreadTokenAction from "./solutiofi/spreadToken";
+import getTokenPricesAction from "./solutiofi/getTokenPrices";
+import getUserTokensAction from "./solutiofi/getUserTokens";
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
   WALLET_ADDRESS_ACTION: getWalletAddressAction,
@@ -163,6 +169,12 @@ export const ACTIONS = {
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,
+  CLOSE_SOLUTIOFI_ACCOUNTS_ACTION: closeAccountsAction,
+  BURN_SOLUTIOFI_TOKENS_ACTION: burnTokensAction,
+  MERGE_SOLUTIOFI_TOKENS_ACTION: mergeTokensAction,
+  SPREAD_SOLUTIOFI_TOKEN_ACTION: spreadTokenAction,
+  GET_SOLUTIOFI_TOKEN_PRICES_ACTION: getTokenPricesAction,
+  GET_SOLUTIOFI_USER_TOKENS_ACTION: getUserTokensAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";

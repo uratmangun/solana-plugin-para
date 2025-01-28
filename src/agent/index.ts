@@ -120,6 +120,16 @@ import {
   getPriceInference,
   getAllTopics,
   getInferenceByTopicId,
+  closeAccounts,
+  burnTokens,
+  mergeTokens,
+  spreadToken,
+  getTokenPrices,
+  getUserTokens,
+  AssetType,
+  PriorityFee,
+  TargetTokenStruct,
+  InputAssetStruct,
 } from "../tools";
 import {
   Config,
@@ -1044,5 +1054,36 @@ export class SolanaAgentKit {
   }
   async getInferenceByTopicId(topicId: number): Promise<AlloraInference> {
     return getInferenceByTopicId(this, topicId);
+  }
+  async closeAccounts(mints: string[]) {
+    return await closeAccounts(this, mints);
+  }
+
+  async burnTokens(mints: string[]) {
+    return await burnTokens(this, mints);
+  }
+
+  async mergeTokens(
+    inputAssets: InputAssetStruct[],
+    outputMint: string,
+    priorityFee: PriorityFee,
+  ) {
+    return await mergeTokens(this, inputAssets, outputMint, priorityFee);
+  }
+
+  async spreadToken(
+    inputAsset: InputAssetStruct,
+    targetTokens: TargetTokenStruct[],
+    priorityFee: PriorityFee,
+  ) {
+    return await spreadToken(this, inputAsset, targetTokens, priorityFee);
+  }
+
+  async getTokenPrices(mints: string[]) {
+    return await getTokenPrices(this, mints);
+  }
+
+  async getUserTokens(type: AssetType) {
+    return await getUserTokens(this, type);
   }
 }
