@@ -531,6 +531,17 @@ const inference = await agent.getInferenceByTopicId(42);
 console.log("Allora inference for topic 42:", inference);
 ```
 
+### Simulate a Switchboard feed
+
+Simulate a given switchboard feed.
+
+```typescript
+const value = await agent.simulateSwitchboardFeed(
+      "BwBLNEuTnqQVhzgx3557szSgz1PEHEvj2RRoPiFWR8YB", // Nonexistent feed
+      "http://crossbar.switchboard.xyz");;
+console.log("Simulation resulted in the following value:", value);
+```
+
 ## Examples
 
 ### LangGraph Multi-Agent System

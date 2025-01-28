@@ -12,7 +12,7 @@ const agent = new SolanaAgentKit(
 
 (async () => {
   const result = await agent.simulateSwitchboardFeed(
-    new PublicKey("6qmsMwtMmeqMgZEhyLv1Pe4wcqT5iKwJAWnmzmnKjf83"), // BTC/USDC 
+    "6qmsMwtMmeqMgZEhyLv1Pe4wcqT5iKwJAWnmzmnKjf83", // BTC/USDC 
     "http://crossbar.switchboard.xyz");
 
   console.log("✅ BTC/USDC feed simulation result: ", result);
@@ -20,16 +20,18 @@ const agent = new SolanaAgentKit(
     
 (async () => {
   const result = await agent.simulateSwitchboardFeed(
-    new PublicKey("9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2"), // TRUMP/USD
+    "9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2", // TRUMP/USD
     "http://crossbar.switchboard.xyz");
 
   console.log("✅ TRUMP/USD feed simulation result: ", result);
 })();
-    
+
+/**************************** SIMULATE AN INVALID FEED ******************************* */
+
 (async () => {
   try {
     const result = await agent.simulateSwitchboardFeed(
-      new PublicKey("BwBLNEuTnqQVhzgx3557szSgz1PEHEvj2RRoPiFWR8YB"), // Nonexistent feed
+      "BwBLNEuTnqQVhzgx3557szSgz1PEHEvj2RRoPiFWR8YB", // Nonexistent feed
       "http://crossbar.switchboard.xyz");
     console.error("❌ This call should have failed.")
     process.exit(1);
@@ -44,6 +46,3 @@ const agent = new SolanaAgentKit(
   }
 
 })();
-
-    // result = await agent.simulateSwitchboardFeed(new PublicKey("BwBLNEuTnqQVhzgx3557szSgz1PEHEvj2RRoPiFWR8YB"), "http://crossbar.switchboard.xyz");
-    // console.log(result);
