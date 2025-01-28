@@ -2,7 +2,7 @@ import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
 export class SolanaMergeTokensTool extends Tool {
-  name = "merge_solutiofi_tokens";
+  name = "merge_tokens";
   description = `Merge tokens using SolutioFi protocol.
   Input: JSON string with inputAssets, outputMint, and priorityFee`;
 

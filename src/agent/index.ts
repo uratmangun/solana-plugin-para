@@ -124,8 +124,6 @@ import {
   burnTokens,
   mergeTokens,
   spreadToken,
-  getTokenPrices,
-  getUserTokens,
   AssetType,
   PriorityFee,
   TargetTokenStruct,
@@ -1077,13 +1075,5 @@ export class SolanaAgentKit {
     priorityFee: PriorityFee,
   ) {
     return await spreadToken(this, inputAsset, targetTokens, priorityFee);
-  }
-
-  async getTokenPrices(mints: string[]) {
-    return await getTokenPrices(this, mints);
-  }
-
-  async getUserTokens(type: AssetType) {
-    return await getUserTokens(this, type);
   }
 }

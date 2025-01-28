@@ -8,7 +8,7 @@ import {
 } from "../../tools/solutiofi/types";
 
 const spreadTokenAction: Action = {
-  name: "SPREAD_SOLUTIOFI_TOKEN",
+  name: "SPREAD_TOKEN",
   description: "Split a token into multiple tokens using SolutioFi",
   similes: ["spread token", "split token", "distribute token on solutiofi"],
   examples: [

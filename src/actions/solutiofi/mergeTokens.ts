@@ -4,7 +4,7 @@ import { SolanaAgentKit } from "../../agent";
 import { InputAssetStruct, PriorityFee } from "../../tools/solutiofi/types";
 
 const mergeTokensAction: Action = {
-  name: "MERGE_SOLUTIOFI_TOKENS",
+  name: "MERGE_TOKENS",
   description: "Merge multiple tokens into one using SolutioFi",
   similes: ["merge tokens", "combine tokens", "merge assets on solutiofi"],
   examples: [

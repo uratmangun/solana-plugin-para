@@ -5,7 +5,7 @@ import { PublicKey } from "@solana/web3.js";
 
 const closeAccountsAction: Action = {
   name: "CLOSE_SOLUTIOFI_ACCOUNTS",
-  description: "Close token accounts using SolutioFi",
+  description: "Close specific token accounts using SolutioFi",
   similes: [
     "close token accounts",
     "close solutiofi accounts",

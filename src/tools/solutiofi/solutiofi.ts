@@ -5,7 +5,6 @@ import type {
   InputAssetStruct,
   TargetTokenStruct,
   PriorityFee,
-  AssetType,
 } from "./types";
 
 let solutiofiClient: SolutioFi | null = null;
@@ -113,33 +112,5 @@ export async function spreadToken(
     );
   } catch (e) {
     throw new Error(`Failed to spread token: ${e}`);
-  }
-}
-
-/**
- * Get token prices
- * @param agent SolanaAgentKit instance
- * @param mints Array of token mint addresses
- */
-export async function getTokenPrices(agent: SolanaAgentKit, mints: string[]) {
-  try {
-    const client = await initClient(agent);
-    return await client.getTokenPrices(mints);
-  } catch (e) {
-    throw new Error(`Failed to get token prices: ${e}`);
-  }
-}
-
-/**
- * Get user tokens
- * @param agent SolanaAgentKit instance
- * @param type Type of tokens to retrieve
- */
-export async function getUserTokens(agent: SolanaAgentKit, type: AssetType) {
-  try {
-    const client = await initClient(agent);
-    return await client.getUserTokens(agent.wallet.publicKey.toString(), type);
-  } catch (e) {
-    throw new Error(`Failed to get user tokens: ${e}`);
   }
 }

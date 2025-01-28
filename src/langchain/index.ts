@@ -143,8 +143,6 @@ import {
   SolanaBurnTokensTool,
   SolanaMergeTokensTool,
   SolanaSpreadTokenTool,
-  SolanaGetTokenPricesTool,
-  SolanaGetUserTokensTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -264,7 +262,5 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaBurnTokensTool(solanaKit),
     new SolanaMergeTokensTool(solanaKit),
     new SolanaSpreadTokenTool(solanaKit),
-    new SolanaGetTokenPricesTool(solanaKit),
-    new SolanaGetUserTokensTool(solanaKit),
   ];
 }

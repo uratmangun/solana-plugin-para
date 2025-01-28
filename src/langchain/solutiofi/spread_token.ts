@@ -2,7 +2,7 @@ import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
 export class SolanaSpreadTokenTool extends Tool {
-  name = "spread_solutiofi_token";
+  name = "spread_token";
   description = `Spread token using SolutioFi protocol.
   Input: JSON string with inputAsset, targetTokens, and priorityFee`;
 
