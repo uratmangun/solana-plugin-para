@@ -1,4 +1,3 @@
-import { PublicKey } from "@solana/web3.js";
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
@@ -27,8 +26,6 @@ const swapAction: Action = {
         explanation:
           "swap 0.02 0x0000000000000000000000000000000000000000 from solana to 0x0000000000000000000000000000000000000000 polygon destination 0x0cae42c0ce52e6e64c1e384ff98e686c6ee225f0",
       },
-    ],
-    [
       {
         input: {
           amount: "0.02",
@@ -45,6 +42,25 @@ const swapAction: Action = {
         },
         explanation:
           "swap 0.02 0x0000000000000000000000000000000000000000 from solana to HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3 solana destination 4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
+      },
+    ],
+    [
+      {
+        input: {
+          amount: "0.02",
+          fromChain: "solana",
+          fromToken: "sol",
+          toChain: "solana",
+          toToken: "HNT",
+          dstAddr: "4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
+        },
+        output: {
+          status: "success",
+          message: "Swap executed successfully",
+          url: "https://explorer.mayan.finance/swap/2GLNqs5gXCBSwRt6VjtfQRnLWYbcU1gzkgjWMWautv1RUj13Di4qJPjV29YRpoAdMYxgXj8ArMLzF3bCCZmVUXHz",
+        },
+        explanation:
+          "swap 0.02 sol from solana to hnt solana destination 4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
       },
     ],
   ],
@@ -65,7 +81,7 @@ const swapAction: Action = {
       "optimism",
       "base",
     ]),
-    fromToken: z.string().min(32, "Invalid from mint address"),
+    fromToken: z.string(),
     toChain: z.enum([
       "solana",
       "ethereum",
@@ -76,7 +92,7 @@ const swapAction: Action = {
       "optimism",
       "base",
     ]),
-    toToken: z.string().min(32, "Invalid to mint address"),
+    toToken: z.string(),
     dstAddr: z.string().min(32, "Invalid destination address"),
     inputAmount: z.number().positive("Input amount must be positive"),
     slippageBps: z.number().min(0).max(10000).optional(),
@@ -87,7 +103,7 @@ const swapAction: Action = {
       throw new Error("one of the from or to chain should be solana.");
     }
 
-    const tx = await swap(
+    const url = await swap(
       agent,
       input.amount,
       input.fromChain,
@@ -101,10 +117,7 @@ const swapAction: Action = {
     return {
       status: "success",
       message: "Swap executed successfully",
-      transaction: tx,
-      inputAmount: input.inputAmount,
-      inputToken: input.inputMint || "SOL",
-      outputToken: input.outputMint,
+      url,
     };
   },
 };

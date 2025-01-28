@@ -86,6 +86,9 @@ importers:
       '@onsol/tldparser':
         specifier: ^0.6.7
         version: 0.6.7(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bn.js@5.2.1)(borsh@2.0.0)(buffer@6.0.3)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@openzeppelin/contracts':
+        specifier: ^5.2.0
+        version: 5.2.0
       '@orca-so/common-sdk':
         specifier: 0.6.4
         version: 0.6.4(@solana/spl-token@0.4.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.2)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(decimal.js@10.4.3)
@@ -1091,6 +1094,9 @@ packages:
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
+
+  '@openzeppelin/contracts@5.2.0':
+    resolution: {integrity: sha512-bxjNie5z89W1Ea0NZLZluFh8PrFNn9DH8DQlujEok2yjsOlraUPKID5p1Wk3qdNbf6XkQ1Os2RvfiHrrXLHWKA==}
 
   '@orca-so/common-sdk@0.6.4':
     resolution: {integrity: sha512-iOiC6exTA9t2CEOaUPoWlNP3soN/1yZFjoz1mSf7NvOqo/PJZeIdWpB7BRXwU0mGGatjxU4SFgMGQ8NrSx+ONw==}
@@ -6747,6 +6753,8 @@ snapshots:
       - utf-8-validate
 
   '@opentelemetry/api@1.9.0': {}
+
+  '@openzeppelin/contracts@5.2.0': {}
 
   '@orca-so/common-sdk@0.6.4(@solana/spl-token@0.4.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.2)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(decimal.js@10.4.3)':
     dependencies:
