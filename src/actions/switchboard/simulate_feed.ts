@@ -26,7 +26,7 @@ const switchboardSimulateFeedAction: Action = {
         output: {
           status: "success",
           value: "104097.59",
-          message: "Current price in USDT: $104,097.59",
+          message: "Simulation result: 104097.59",
         },
         explanation:
           "Get the current BTC/USDT price by simulating a Switchbaord feed",
@@ -34,7 +34,7 @@ const switchboardSimulateFeedAction: Action = {
     ],
   ],
   schema: z.object({
-    feedAddress: z
+    feed: z
       .string()
       .describe("The address of the Switchboard feed to simulate"),
     crossbarUrl: z

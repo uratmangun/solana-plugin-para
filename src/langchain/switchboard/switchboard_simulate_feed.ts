@@ -20,7 +20,7 @@ export class SolanaSwitchboardSimulateFeed extends Tool {
   async _call(input: string): Promise<string> {
     try {
       const InputFormat = JSON.parse(input);
-      const feed = new PublicKey(InputFormat.feed);
+      const feed = InputFormat.feed;
       const crossbarUrl = InputFormat.crossbarUrl;
 
       const value = await this.solanaKit.simulateSwitchboardFeed(

@@ -1048,7 +1048,7 @@ export class SolanaAgentKit {
   }
 
   async simulateSwitchboardFeed(
-    feed: PublicKey,
+    feed: string,
     crossbarUrl: string,
   ): Promise<string> {
     return simulate_switchboard_feed(this, feed, crossbarUrl);

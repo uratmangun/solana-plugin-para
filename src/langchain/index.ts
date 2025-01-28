@@ -252,9 +252,9 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetTool(solanaKit),
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
-    new SolanaAlloraGetPriceInference(solanaKit),
+    new SolanaSwitchboardSimulateFeed(solanaKit),
     new SolanaAlloraGetAllTopics(solanaKit),
     new SolanaAlloraGetInferenceByTopicId(solanaKit),
-    new SolanaSwitchboardSimulateFeed(solanaKit),
+    new SolanaAlloraGetPriceInference(solanaKit),
   ];
 }

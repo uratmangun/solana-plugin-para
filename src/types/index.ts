@@ -294,7 +294,7 @@ export interface AlloraGetInferenceByTopicIdResponse {
 
 export interface SwitchboardSimulateFeedResponse {
   status: "success" | "error";
-  feed?: PublicKey;
+  feed?: string;
   value?: number;
   message?: string;
   code?: string;

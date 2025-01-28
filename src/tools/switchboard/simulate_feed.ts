@@ -13,14 +13,12 @@ import { CrossbarClient } from "@switchboard-xyz/common";
 
 export async function simulate_switchboard_feed(
   agent: SolanaAgentKit,
-  feed: PublicKey,
+  feed: string,
   crossbarUrl: string = SWITCHBOARD_DEFAULT_CROSSBAR,
 ): Promise<string> {
   try {
     const crossbar = new CrossbarClient(crossbarUrl, true);
-    const results = await crossbar.simulateSolanaFeeds("mainnet", [
-      feed.toString(),
-    ]);
+    const results = await crossbar.simulateSolanaFeeds("mainnet", [feed]);
 
     if (results.length === 0) {
       throw new Error(
