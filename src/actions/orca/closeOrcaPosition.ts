@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { Action } from "../../types";
 import { orcaClosePosition } from "../../tools";
+import { PublicKey } from "@solana/web3.js";
 
 const closeOrcaPositionAction: Action = {
   name: "CLOSE_ORCA_POSITION_ACTION",
@@ -36,7 +37,7 @@ const closeOrcaPositionAction: Action = {
     try {
       const signature = await orcaClosePosition(
         agent,
-        input.positionMintAddress,
+        new PublicKey(input.positionMintAddress),
       );
 
       return {
