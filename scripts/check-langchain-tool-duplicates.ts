@@ -1,6 +1,8 @@
+import { Keypair } from "@solana/web3.js";
 import { SolanaAgentKit } from "../src";
 import { createSolanaTools } from "../src/langchain/index";
 import { Tool } from "langchain/tools";
+import bs58 from "bs58";
 
 function findDuplicateNames(tools: Tool[]): Map<string, string[]> {
   const nameMap = new Map<string, string[]>();
@@ -42,7 +44,8 @@ function findDuplicateClasses(tools: Tool[]): Map<string, string[]> {
 
 async function main() {
   const kit = new SolanaAgentKit(
-    process.env.SOLANA_PRIVATE_KEY || "",
+    process.env.SOLANA_PRIVATE_KEY ||
+      bs58.encode(Buffer.from(Keypair.generate().secretKey)),
     process.env.RPC_URL || "",
     { OPENAI_API_KEY: process.env.OPENAI_API_KEY || "" },
   );
