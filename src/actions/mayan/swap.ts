@@ -13,9 +13,9 @@ const swapAction: Action = {
         input: {
           amount: "0.02",
           fromChain: "solana",
-          fromToken: "0x0000000000000000000000000000000000000000",
+          fromToken: "SOL",
           toChain: "polygan",
-          toToken: "0x0000000000000000000000000000000000000000",
+          toToken: "pol",
           dstAddr: "0x0cae42c0ce52e6e64c1e384ff98e686c6ee225f0",
         },
         output: {
@@ -24,15 +24,15 @@ const swapAction: Action = {
           url: "https://explorer.mayan.finance/swap/3JywZA6om5t1c5gT1bkFX91bEewHGmntJAqRZniEzETDEBMERvzxBeXVUUMFaernRCmvniZTKsAM7TVG3CTumc12",
         },
         explanation:
-          "swap 0.02 0x0000000000000000000000000000000000000000 from solana to 0x0000000000000000000000000000000000000000 polygon destination 0x0cae42c0ce52e6e64c1e384ff98e686c6ee225f0",
+          "swap 0.02 SOL from solana to pol polygon destination 0x0cae42c0ce52e6e64c1e384ff98e686c6ee225f0",
       },
       {
         input: {
           amount: "0.02",
           fromChain: "solana",
-          fromToken: "0x0000000000000000000000000000000000000000",
+          fromToken: "sol",
           toChain: "solana",
-          toToken: "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
+          toToken: "hnt",
           dstAddr: "4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
         },
         output: {
@@ -41,7 +41,7 @@ const swapAction: Action = {
           url: "https://explorer.mayan.finance/swap/2GLNqs5gXCBSwRt6VjtfQRnLWYbcU1gzkgjWMWautv1RUj13Di4qJPjV29YRpoAdMYxgXj8ArMLzF3bCCZmVUXHz",
         },
         explanation:
-          "swap 0.02 0x0000000000000000000000000000000000000000 from solana to HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3 solana destination 4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
+          "swap 0.02 sol from solana to hnt solana destination 4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk",
       },
     ],
     [

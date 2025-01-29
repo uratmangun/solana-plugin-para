@@ -215,8 +215,7 @@ async function swapEVM(
     dstAddr,
     null,
     signer,
-    // TODO: permit.
-    null,
+    permit,
     null,
     null,
   );

@@ -8,9 +8,9 @@ export class SolanaCrossChainSwapTool extends Tool {
   Inputs ( input is a JSON string):
   amount: string, eg "0.02" or "7"
   fromChain: string, eg "solana" or "ethereum"
-  fromToken: string, eg "0x0000000000000000000000000000000000000000" or "hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux" or "sol" or "Pol"
+  fromToken: string, eg "sol" or "Pol" or "0x0000000000000000000000000000000000000000" or "hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux"
   toChain: string, eg "solana" or "ethereum"
-  toToken: string, eg "0x0000000000000000000000000000000000000000" or "0x6b175474e89094c44da98b954eedeac495271d0f" or "SOL" or "eth"
+  toToken: string, eg "SOL" or "eth" or "0x0000000000000000000000000000000000000000" or "0x6b175474e89094c44da98b954eedeac495271d0f"
   dstAddr: string, eg "4ZgCP2idpqrxuQNfsjakJEm9nFyZ2xnT4CrDPKPULJPk" or "0x0cae42c0cE52E6E64C1e384fF98e686C6eE225f0"
   slippageBps: number, eg 10 (optional)`;
 
