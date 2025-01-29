@@ -540,6 +540,21 @@ const value = await agent.simulateSwitchboardFeed(
       "9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2", // TRUMP/USD
       "http://crossbar.switchboard.xyz");;
 console.log("Simulation resulted in the following value:", value);
+
+### Cross-Chain Swap
+
+```typescript
+import { PublicKey } from "@solana/web3.js";
+
+const signature = await agent.swap(
+  amount: "10",
+  fromChain: "bsc",
+  fromToken: "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+  toChain: "solana",
+  toToken: "0x0000000000000000000000000000000000000000",
+  dstAddr: "0xc2d3024d64f27d85e05c40056674Fd18772dd922",
+);
+
 ```
 
 ## Examples

@@ -28,6 +28,7 @@ export * from "./meteora";
 export * from "./helius";
 export * from "./drift";
 export * from "./voltr";
+export * from "./mayan";
 export * from "./allora";
 export * from "./switchboard";
 
@@ -136,6 +137,7 @@ import {
   SolanaGetAssetsByAuthorityTool,
   SolanaGetAssetsByCreatorTool,
   SolanaGetInfoTool,
+  SolanaCrossChainSwapTool,
   SolanaAlloraGetPriceInference,
   SolanaAlloraGetAllTopics,
   SolanaAlloraGetInferenceByTopicId,
@@ -248,6 +250,7 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
     new SolanaSwitchboardSimulateFeed(solanaKit),
+    new SolanaCrossChainSwapTool(solanaKit),
     new SolanaAlloraGetAllTopics(solanaKit),
     new SolanaAlloraGetInferenceByTopicId(solanaKit),
     new SolanaAlloraGetPriceInference(solanaKit),
