@@ -76,6 +76,7 @@ import getAssetAction from "./metaplex/getAsset";
 import getAssetsByAuthorityAction from "./metaplex/getAssetsByAuthority";
 import getAssetsByCreatorAction from "./metaplex/getAssetsByCreator";
 import getInfoAction from "./agent/get_info";
+import swapAction from "./mayan/swap";
 import getPriceInferenceAction from "./allora/getPriceInference";
 import getAllTopicsAction from "./allora/getAllTopics";
 import getInferenceByTopicIdAction from "./allora/getInferenceByTopicId";
@@ -84,6 +85,7 @@ import createOrcaCLMMAction from "./orca/createOrcaCLMM";
 import fetchOrcaPositionsAction from "./orca/fetchOrcaPositions";
 import openOrcaCenteredPositionWithLiquidityAction from "./orca/openOrcaCenteredPositionWithLiquidity";
 import openOrcaSingleSidedPositionAction from "./orca/openOrcaSingleSidedPosition";
+
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
   WALLET_ADDRESS_ACTION: getWalletAddressAction,
@@ -171,6 +173,7 @@ export const ACTIONS = {
   GET_ASSET_ACTION: getAssetAction,
   GET_ASSETS_BY_AUTHORITY_ACTION: getAssetsByAuthorityAction,
   GET_ASSETS_BY_CREATOR_ACTION: getAssetsByCreatorAction,
+  SWAP_ACTION: swapAction,
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,
