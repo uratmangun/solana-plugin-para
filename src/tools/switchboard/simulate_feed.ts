@@ -1,5 +1,4 @@
 import { SolanaAgentKit } from "../../index";
-import { PublicKey } from "@solana/web3.js";
 import { SWITCHBOARD_DEFAULT_CROSSBAR } from "../../constants";
 import { CrossbarClient } from "@switchboard-xyz/common";
 

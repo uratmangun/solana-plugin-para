@@ -1,7 +1,6 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 import { SwitchboardSimulateFeedResponse } from "../../index";
-import { PublicKey } from "@solana/web3.js";
 
 export class SolanaSwitchboardSimulateFeed extends Tool {
   name = "switchboard_simulate_feed";
