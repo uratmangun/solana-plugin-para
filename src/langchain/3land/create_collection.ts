@@ -3,7 +3,7 @@ import { SolanaAgentKit } from "../../agent";
 import { CreateCollectionOptions } from "@3land/listings-sdk/dist/types/implementation/implementationTypes";
 
 export class Solana3LandCreateCollection extends Tool {
-  name = "3land_minting_tool";
+  name = "3land_minting_tool_collection";
   description = `Creates an NFT Collection that you can visit on 3.land's website (3.land/collection/{collectionAccount})
   
   Inputs:
