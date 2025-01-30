@@ -10,7 +10,7 @@
 
 </div>
 
-An open-source toolkit for connecting AI agents to Solana protocols. Now, any agent, using any model can autonomously perform 15+ Solana actions:
+An open-source toolkit for connecting AI agents to Solana protocols. Now, any agent, using any model can autonomously perform 60+ Solana actions:
 
 - Trade tokens
 - Launch new tokens
@@ -134,7 +134,8 @@ console.log("Token Mint Address:", result.mint.toString());
 ```
 ### Create NFT Collection on 3Land
 ```typescript
-const isDevnet = true; // (Optional) if not present TX takes place in Mainnet
+const isDevnet = false; // (Optional) if not present TX takes place in Mainnet
+const priorityFeeParam = 1000000; // (Optional) if not present the default priority fee will be 50000
 
  const collectionOpts: CreateCollectionOptions = {
     collectionName: "",
@@ -146,6 +147,7 @@ const isDevnet = true; // (Optional) if not present TX takes place in Mainnet
 const result = await agent.create3LandCollection(
       collectionOpts,
       isDevnet, // (Optional) if not present TX takes place in Mainnet
+      priorityFeeParam, //(Optional)
     );
 ```
 
@@ -154,6 +156,7 @@ When creating an NFT using 3Land's tool, it automatically goes for sale on 3.lan
 ```typescript
 const isDevnet = true; // (Optional) if not present TX takes place in Mainnet
 const withPool = true; // (Optional) only present if NFT will be created with a Liquidity Pool for a specific SPL token
+const priorityFeeParam = 1000000; // (Optional) if not present the default priority fee will be 50000
 const collectionAccount = ""; //hash for the collection
 const createItemOptions: CreateSingleOptions = {
   itemName: "",
@@ -174,6 +177,7 @@ const result = await agent.create3LandNft(
   createItemOptions,
   isDevnet, // (Optional) if not present TX takes place in Mainnet
   withPool
+  priorityFeeParam, //(Optional)
 );
 
 ```
@@ -381,7 +385,7 @@ const signature = await agent.requestWithdrawalFromDriftVault(100, "41Y8C4oxk4zg
 
 ### Carry out a perpetual trade using a Drift vault
 
-Open a perpertual trade using a drift vault that is delegated to you.
+Open a perpetual trade using a drift vault that is delegated to you.
 
 ```typescript
 const signature = await agent.tradeUsingDelegatedDriftVault({
@@ -396,7 +400,7 @@ const signature = await agent.tradeUsingDelegatedDriftVault({
 
 ### Carry out a perpetual trade using your Drift account
 
-Open a perpertual trade using your drift account.
+Open a perpetual trade using your drift account.
 
 ```typescript
 const signature = await agent.tradeUsingDriftPerpAccount({
@@ -502,6 +506,55 @@ const signature = await agent.voltrWithdrawStrategy(
 
 ```typescript
 const asset = await agent.getAsset("41Y8C4oxk4zgJT1KXyQr35UhZcfsp5mP86Z2G7UUzojU")
+```
+
+### Get a price inference from Allora
+
+Get the price for a given token and timeframe from Allora's API
+
+```typescript
+const sol5mPrice = await agent.getPriceInference("SOL", "5m");
+console.log("5m price inference of SOL/USD:", sol5mPrice);
+```
+
+### List all topics from Allora
+
+```typescript
+const topics = await agent.getAllTopics();
+console.log("Allora topics:", topics);
+```
+
+### Get an inference for an specific topic from Allora
+
+```typescript
+const inference = await agent.getInferenceByTopicId(42);
+console.log("Allora inference for topic 42:", inference);
+```
+
+### Simulate a Switchboard feed
+
+Simulate a given Switchboard feed. Find or create feeds [here](https://ondemand.switchboard.xyz/solana/mainnet).
+
+```typescript
+const value = await agent.simulateSwitchboardFeed(
+      "9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2", // TRUMP/USD
+      "http://crossbar.switchboard.xyz");;
+console.log("Simulation resulted in the following value:", value);
+
+### Cross-Chain Swap
+
+```typescript
+import { PublicKey } from "@solana/web3.js";
+
+const signature = await agent.swap(
+  amount: "10",
+  fromChain: "bsc",
+  fromToken: "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+  toChain: "solana",
+  toToken: "0x0000000000000000000000000000000000000000",
+  dstAddr: "0xc2d3024d64f27d85e05c40056674Fd18772dd922",
+);
+
 ```
 
 ## Examples

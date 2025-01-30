@@ -118,6 +118,11 @@ import {
   get_assets_by_authority,
   get_assets_by_creator,
   bridge,
+  simulate_switchboard_feed,
+  swap,
+  getPriceInference,
+  getAllTopics,
+  getInferenceByTopicId,
 } from "../tools";
 import {
   Config,
@@ -143,6 +148,7 @@ import {
   GetAssetsByCreatorRpcInput,
   SearchAssetsRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
+import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -720,6 +726,7 @@ export class SolanaAgentKit {
   async create3LandCollection(
     collectionOpts: CreateCollectionOptions,
     isDevnet: boolean = false,
+    priorityFeeParam?: number,
   ): Promise<string> {
     const optionsWithBase58: StoreInitOptions = {
       privateKey: this.wallet.secretKey,
@@ -730,7 +737,11 @@ export class SolanaAgentKit {
       optionsWithBase58.isMainnet = true;
     }
 
-    const tx = await createCollection(optionsWithBase58, collectionOpts);
+    const tx = await createCollection(
+      optionsWithBase58,
+      collectionOpts,
+      priorityFeeParam,
+    );
     return `Transaction: ${tx}`;
   }
 
@@ -739,6 +750,7 @@ export class SolanaAgentKit {
     createItemOptions: CreateSingleOptions,
     isDevnet: boolean = false,
     withPool: boolean = false,
+    priorityFeeParam?: number,
   ): Promise<string> {
     const optionsWithBase58: StoreInitOptions = {
       privateKey: this.wallet.secretKey,
@@ -755,6 +767,7 @@ export class SolanaAgentKit {
       createItemOptions,
       !isDevnet,
       withPool,
+      priorityFeeParam,
     );
     return `Transaction: ${tx}`;
   }
@@ -1027,5 +1040,46 @@ export class SolanaAgentKit {
 
   async bridge(params: BridgeInput): Promise<string> {
     return bridge(this, params);
+  }
+
+  async swap(
+    amount: string,
+    fromChain: string,
+    fromToken: string,
+    toChain: string,
+    toToken: string,
+    dstAddr: string,
+    slippageBps?: number,
+  ): Promise<string> {
+    return swap(
+      this,
+      amount,
+      fromChain,
+      fromToken,
+      toChain,
+      toToken,
+      dstAddr,
+      slippageBps,
+    );
+  }
+
+  async getPriceInference(
+    tokenSymbol: string,
+    timeframe: string,
+  ): Promise<string> {
+    return getPriceInference(this, tokenSymbol, timeframe);
+  }
+  async getAllTopics(): Promise<AlloraTopic[]> {
+    return getAllTopics(this);
+  }
+  async getInferenceByTopicId(topicId: number): Promise<AlloraInference> {
+    return getInferenceByTopicId(this, topicId);
+  }
+
+  async simulateSwitchboardFeed(
+    feed: string,
+    crossbarUrl: string,
+  ): Promise<string> {
+    return simulate_switchboard_feed(this, feed, crossbarUrl);
   }
 }

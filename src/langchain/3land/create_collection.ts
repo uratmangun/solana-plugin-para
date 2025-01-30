@@ -3,7 +3,7 @@ import { SolanaAgentKit } from "../../agent";
 import { CreateCollectionOptions } from "@3land/listings-sdk/dist/types/implementation/implementationTypes";
 
 export class Solana3LandCreateCollection extends Tool {
-  name = "3land_minting_tool";
+  name = "3land_minting_tool_collection";
   description = `Creates an NFT Collection that you can visit on 3.land's website (3.land/collection/{collectionAccount})
   
   Inputs:
@@ -13,6 +13,7 @@ export class Solana3LandCreateCollection extends Tool {
   collectionDescription (required): the description of the collection
   mainImageUrl (required): the image of the collection
   coverImageUrl (optional): the cover image of the collection
+  priorityFeeParam (optional): default value is 50000, if tx doesnt land this param can help it land
   `;
 
   constructor(private solanaKit: SolanaAgentKit) {
@@ -29,6 +30,7 @@ export class Solana3LandCreateCollection extends Tool {
       const collectionDescription = inputFormat?.collectionDescription;
       const mainImageUrl = inputFormat?.mainImageUrl;
       const coverImageUrl = inputFormat?.coverImageUrl;
+      const priorityFeeParam = inputFormat?.priorityFeeParam;
 
       const collectionOpts: CreateCollectionOptions = {
         ...(collectionSymbol && { collectionSymbol }),
@@ -41,6 +43,7 @@ export class Solana3LandCreateCollection extends Tool {
       const tx = await this.solanaKit.create3LandCollection(
         collectionOpts,
         !isMainnet,
+        priorityFeeParam,
       );
       return JSON.stringify({
         status: "success",
