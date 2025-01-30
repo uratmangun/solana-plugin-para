@@ -531,6 +531,16 @@ const inference = await agent.getInferenceByTopicId(42);
 console.log("Allora inference for topic 42:", inference);
 ```
 
+### Simulate a Switchboard feed
+
+Simulate a given Switchboard feed. Find or create feeds [here](https://ondemand.switchboard.xyz/solana/mainnet).
+
+```typescript
+const value = await agent.simulateSwitchboardFeed(
+      "9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2", // TRUMP/USD
+      "http://crossbar.switchboard.xyz");;
+console.log("Simulation resulted in the following value:", value);
+
 ### Cross-Chain Swap
 
 ```typescript
@@ -544,6 +554,7 @@ const signature = await agent.swap(
   toToken: "0x0000000000000000000000000000000000000000",
   dstAddr: "0xc2d3024d64f27d85e05c40056674Fd18772dd922",
 );
+
 ```
 
 ## Examples
