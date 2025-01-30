@@ -385,7 +385,7 @@ const signature = await agent.requestWithdrawalFromDriftVault(100, "41Y8C4oxk4zg
 
 ### Carry out a perpetual trade using a Drift vault
 
-Open a perpertual trade using a drift vault that is delegated to you.
+Open a perpetual trade using a drift vault that is delegated to you.
 
 ```typescript
 const signature = await agent.tradeUsingDelegatedDriftVault({
@@ -400,7 +400,7 @@ const signature = await agent.tradeUsingDelegatedDriftVault({
 
 ### Carry out a perpetual trade using your Drift account
 
-Open a perpertual trade using your drift account.
+Open a perpetual trade using your drift account.
 
 ```typescript
 const signature = await agent.tradeUsingDriftPerpAccount({
