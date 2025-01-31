@@ -34,6 +34,15 @@ export async function createBridgeOrder(
   params: BridgeOrderInput
 ): Promise<BridgeOrderResponse> {
   try {
+    process.stdout.write("\n🔍 Creating bridge order with parameters:");
+    process.stdout.write(`\n  Source Chain ID: ${params.srcChainId}`);
+    process.stdout.write(`\n  Source Token: ${params.srcChainTokenIn}`);
+    process.stdout.write(`\n  Amount: ${params.srcChainTokenInAmount}`);
+    process.stdout.write(`\n  Destination Chain ID: ${params.dstChainId}`);
+    process.stdout.write(`\n  Destination Token: ${params.dstChainTokenOut}`);
+    process.stdout.write(`\n  Destination Recipient: ${params.dstChainTokenOutRecipient}`);
+    process.stdout.write(`\n  Sender's Wallet Address: ${params.account}\n`);
+
     if (params.srcChainId === params.dstChainId) {
       throw new Error("Source and destination chains must be different");
     }
@@ -53,17 +62,23 @@ export async function createBridgeOrder(
       prependOperatingExpenses: "true", // Always true
       // deBridgeApp: "SOLANA_AGENT_KIT",
     });
+    
+    process.stdout.write(`\n🌐 Requesting order from: ${DEBRIDGE_API}/dln/order/create-tx?${queryParams}\n`);
 
-    const response = await fetch(`${DEBRIDGE_API}/dln/order/create-tx?${queryParams}`);
-
+    const response = await fetch(
+      `${DEBRIDGE_API}/dln/order/create-tx?${queryParams}`
+    );
+    
     if (!response.ok) {
       const errorText = await response.text();
+      process.stderr.write(`\n❌ API Error (${response.status}): ${errorText}\n`);
       throw new Error(`Failed to create bridge order: ${response.statusText}. ${errorText}`);
     }
 
     const data = await response.json();
-
+    
     if (data.error) {
+      process.stderr.write(`\n❌ DeBridge Error: ${data.error}\n`);
       throw new Error(`DeBridge API Error: ${data.error}`);
     }
 
@@ -72,8 +87,14 @@ export async function createBridgeOrder(
       data.tx.data = data.tx.data.toString();
     }
 
+    process.stdout.write("\n✅ Bridge order created successfully");
+    process.stdout.write(`\n📝 Transaction Data: ${data.tx.data}`);
+    process.stdout.write(`\n💰 Estimated Fee: ${data.estimation?.protocolFee} native tokens\n`);
+    process.stdout.write(`\nTo execute this transaction, run:\nEXECUTE_BRIDGE_ORDER { "transactionData": "${data.tx.data}" }\n`);
+
     return data;
   } catch (error: any) {
+    process.stderr.write(`\n❌ Failed to create bridge order: ${error.message}\n`);
     throw error;
   }
 }

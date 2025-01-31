@@ -20,11 +20,6 @@ const checkTransactionStatusAction: Action = {
         },
         output: {
           status: "success",
-          message: "Bridge transaction status retrieved successfully",
-          transaction: {
-            hash: "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
-            explorerUrl: "https://explorer.solana.com/tx/5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX"
-          },
           orders: [
             {
               status: "completed",
@@ -32,7 +27,8 @@ const checkTransactionStatusAction: Action = {
               dstChainTxHash: "0x1234567890abcdef",
               orderLink: "https://app.debridge.finance/order?orderId=0x9876543210",
             }
-          ]
+          ],
+          message: "Bridge transaction status retrieved successfully",
         },
         explanation: "Check the status of a bridge transaction from Solana to another chain",
       },
@@ -47,17 +43,13 @@ const checkTransactionStatusAction: Action = {
 
       return {
         status: "success",
+        orders,
         message: "Bridge transaction status retrieved successfully",
-        transaction: {
-          hash: input.txHash,
-          explorerUrl: `https://explorer.solana.com/tx/${input.txHash}`
-        },
-        orders
       };
     } catch (error: any) {
       return {
         status: "error",
-        message: error.message
+        message: error.message,
       };
     }
   },
