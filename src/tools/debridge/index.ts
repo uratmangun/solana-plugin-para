@@ -1,1 +1,4 @@
-export * from "./bridge";
+export * from './executeBridgeOrder';
+export * from './getBridgeQuote';
+export * from './getSupportedChains';
+export * from './getTokensInfo';
