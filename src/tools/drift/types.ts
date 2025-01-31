@@ -1,4 +1,8 @@
-import type { L2OrderBook, MarketType, OraclePriceData } from "@drift-labs/sdk";
+import type {
+  L2OrderBook,
+  MarketType,
+  OraclePriceData,
+} from "@drift-labs/sdk-browser";
 
 export type L2WithOracle = L2OrderBook & { oracleData: OraclePriceData };
 

@@ -1,4 +1,4 @@
-import { MainnetSpotMarkets } from "@drift-labs/sdk";
+import { MainnetSpotMarkets } from "@drift-labs/sdk-browser";
 import type { Action } from "../../types";
 import { z } from "zod";
 import {

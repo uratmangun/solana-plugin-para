@@ -29,7 +29,7 @@ import {
   QUOTE_PRECISION,
   User,
   type IWallet,
-} from "@drift-labs/sdk";
+} from "@drift-labs/sdk-browser";
 import type { SolanaAgentKit } from "../../agent";
 import * as anchor from "@coral-xyz/anchor";
 import { IDL, VAULT_PROGRAM_ID, VaultClient } from "@drift-labs/vaults-sdk";
@@ -96,6 +96,7 @@ export async function initClients(
     driftClient.provider,
   );
   const vaultClient = new VaultClient({
+    // @ts-expect-error - type mismatch due to different dep versions and types
     driftClient,
     // @ts-expect-error - type mismatch due to different dep versions
     program: vaultProgram,
