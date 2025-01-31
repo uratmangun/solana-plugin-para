@@ -37,7 +37,7 @@ export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<To
         const url = `${DEBRIDGE_API}/token-list?chainId=${parameters.chainId}`;
 
         // Use process.stdout.write for direct output
-        process.stdout.write(`\nFetching token information from: ${url}\n`);
+        process.stdout.write(`\nFetching tokens for chain ${parameters.chainId}...`);
 
         const response = await fetch(url);
 
@@ -63,14 +63,8 @@ export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<To
                 throw new Error(`Token ${parameters.tokenAddress} not found on chain ${parameters.chainId}`);
             }
             
-            // Log the found token using process.stdout
-            process.stdout.write(`\nFound token on chain ${parameters.chainId}:\n`);
-            process.stdout.write(JSON.stringify({
-                name: tokenInfo.name,
-                symbol: tokenInfo.symbol,
-                address: parameters.tokenAddress,
-                decimals: tokenInfo.decimals,
-            }, null, 2) + '\n');
+            // Log just the token symbol and address
+            process.stdout.write(`\nFound token: ${tokenInfo.symbol} (${parameters.tokenAddress})\n`);
             
             return {
                 tokens: {
@@ -112,12 +106,21 @@ export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<To
                 >,
             );
 
-        // Log matched tokens with full addresses using process.stdout
+        // Log only the count and first few matches if searching
         const matchedTokens = Object.values(tokens);
         if (searchTerm) {
-            process.stdout.write(`\nFound ${matchedTokens.length} token(s) matching "${searchTerm}" on chain ${parameters.chainId}:\n`);
+            process.stdout.write(`\nFound ${matchedTokens.length} token(s) matching "${searchTerm}" on chain ${parameters.chainId}`);
             if (matchedTokens.length > 0) {
-                process.stdout.write(JSON.stringify(matchedTokens, null, 2) + '\n');
+                // Show only first 3 matches as examples
+                const examples = matchedTokens.slice(0, 3);
+                process.stdout.write(`\nFirst ${Math.min(3, matchedTokens.length)} matches:`);
+                examples.forEach(token => {
+                    process.stdout.write(`\n- ${token.symbol} (${token.address})`);
+                });
+                if (matchedTokens.length > 3) {
+                    process.stdout.write(`\n... and ${matchedTokens.length - 3} more`);
+                }
+                process.stdout.write('\n');
             }
         } else {
             process.stdout.write(`\nFound ${matchedTokens.length} total tokens on chain ${parameters.chainId}\n`);
