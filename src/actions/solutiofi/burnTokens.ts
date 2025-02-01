@@ -6,7 +6,17 @@ import { PublicKey } from "@solana/web3.js";
 const burnTokensAction: Action = {
   name: "BURN_SOLUTIOFI_TOKENS",
   description: "Burn tokens using SolutioFi",
-  similes: ["burn tokens", "destroy tokens", "burn assets on solutiofi"],
+  similes: [
+    "burn tokens",
+    "destroy tokens",
+    "burn assets",
+    "remove tokens from circulation",
+    "delete my tokens",
+    "send tokens to burn address",
+    "permanently remove my tokens",
+    "burn my SolutioFi tokens",
+    "burn assets on solutiofi",
+  ],
   examples: [
     [
       {

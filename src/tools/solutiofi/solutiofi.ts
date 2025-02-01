@@ -1,11 +1,7 @@
 import SolutioFi from "@solutiofi/sdk";
 import type { SolanaAgentKit } from "../../agent";
 import { VersionedTransaction, PublicKey } from "@solana/web3.js";
-import type {
-  InputAssetStruct,
-  TargetTokenStruct,
-  PriorityFee,
-} from "./types";
+import type { InputAssetStruct, TargetTokenStruct, PriorityFee } from "./types";
 
 let solutiofiClient: SolutioFi | null = null;
 
@@ -36,10 +32,32 @@ async function initClient(agent: SolanaAgentKit) {
 export async function closeAccounts(
   agent: SolanaAgentKit,
   mints: string[],
-): Promise<VersionedTransaction[]> {
+): Promise<string[]> {
   try {
     const client = await initClient(agent);
-    return await client.close(agent.wallet.publicKey.toString(), mints);
+    const signatures: string[] = [];
+    const versionedTxns = await client.close(
+      agent.wallet.publicKey.toString(),
+      mints,
+    );
+    for (const transaction of versionedTxns) {
+      try {
+        transaction.sign([agent.wallet]);
+
+        const signature = await agent.connection.sendRawTransaction(
+          transaction.serialize(),
+          {
+            skipPreflight: false,
+            preflightCommitment: "processed",
+          },
+        );
+
+        signatures.push(signature);
+      } catch (error) {
+        continue;
+      }
+    }
+    return signatures;
   } catch (e) {
     throw new Error(`Failed to close accounts: ${e}`);
   }
@@ -54,10 +72,33 @@ export async function closeAccounts(
 export async function burnTokens(
   agent: SolanaAgentKit,
   mints: string[],
-): Promise<VersionedTransaction[]> {
+): Promise<string[]> {
   try {
     const client = await initClient(agent);
-    return await client.burn(agent.wallet.publicKey.toString(), mints);
+    const signatures: string[] = [];
+
+    const versionedTxns = await client.burn(
+      agent.wallet.publicKey.toString(),
+      mints,
+    );
+    for (const transaction of versionedTxns) {
+      try {
+        transaction.sign([agent.wallet]);
+
+        const signature = await agent.connection.sendRawTransaction(
+          transaction.serialize(),
+          {
+            skipPreflight: false,
+            preflightCommitment: "processed",
+          },
+        );
+
+        signatures.push(signature);
+      } catch (error) {
+        continue;
+      }
+    }
+    return signatures;
   } catch (e) {
     throw new Error(`Failed to burn tokens: ${e}`);
   }
@@ -75,15 +116,36 @@ export async function mergeTokens(
   inputAssets: InputAssetStruct[],
   outputMint: string,
   priorityFee: PriorityFee,
-) {
+): Promise<string[]> {
   try {
     const client = await initClient(agent);
-    return await client.merge(
+    const signatures: string[] = [];
+    const swapData = await client.merge(
       agent.wallet.publicKey.toString(),
       inputAssets,
       outputMint,
       priorityFee,
     );
+
+    for (const txn of swapData.transactions) {
+      try {
+        const transaction = txn.transaction;
+        transaction.sign([agent.wallet]);
+
+        const signature = await agent.connection.sendRawTransaction(
+          transaction.serialize(),
+          {
+            skipPreflight: false,
+            preflightCommitment: "processed",
+          },
+        );
+
+        signatures.push(signature);
+      } catch (error) {
+        continue;
+      }
+    }
+    return signatures;
   } catch (e) {
     throw new Error(`Failed to merge tokens: ${e}`);
   }
@@ -101,15 +163,36 @@ export async function spreadToken(
   inputAsset: InputAssetStruct,
   targetTokens: TargetTokenStruct[],
   priorityFee: PriorityFee,
-) {
+): Promise<string[]> {
   try {
     const client = await initClient(agent);
-    return await client.spread(
+    const signatures: string[] = [];
+    const swapData = await client.spread(
       agent.wallet.publicKey.toString(),
       inputAsset,
       targetTokens,
       priorityFee,
     );
+
+    for (const txn of swapData.transactions) {
+      try {
+        const transaction = txn.transaction;
+        transaction.sign([agent.wallet]);
+
+        const signature = await agent.connection.sendRawTransaction(
+          transaction.serialize(),
+          {
+            skipPreflight: false,
+            preflightCommitment: "processed",
+          },
+        );
+
+        signatures.push(signature);
+      } catch (error) {
+        continue;
+      }
+    }
+    return signatures;
   } catch (e) {
     throw new Error(`Failed to spread token: ${e}`);
   }

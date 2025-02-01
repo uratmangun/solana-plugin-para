@@ -10,7 +10,27 @@ import {
 const spreadTokenAction: Action = {
   name: "SPREAD_TOKEN",
   description: "Split a token into multiple tokens using SolutioFi",
-  similes: ["spread token", "split token", "distribute token on solutiofi"],
+  similes: [
+    "spread token",
+    "split token",
+    "swap token",
+    "distribute token on solutiofi",
+    "swap one token for multiple",
+    "break token into parts",
+    "split token into multiple assets",
+    "convert one token into many",
+    "swap token into different tokens",
+    "allocate token to multiple assets",
+    "split token supply",
+    "spread token balance across multiple tokens",
+    "swap and distribute token",
+    "convert token into smaller portions",
+    "fractionalize token holdings",
+    "exchange one token for multiple",
+    "redistribute token into other tokens",
+    "convert and spread token balance",
+    "swap one asset for multiple tokens",
+  ],
   examples: [
     [
       {

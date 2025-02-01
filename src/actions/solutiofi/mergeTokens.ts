@@ -6,7 +6,28 @@ import { InputAssetStruct, PriorityFee } from "../../tools/solutiofi/types";
 const mergeTokensAction: Action = {
   name: "MERGE_TOKENS",
   description: "Merge multiple tokens into one using SolutioFi",
-  similes: ["merge tokens", "combine tokens", "merge assets on solutiofi"],
+  similes: [
+    "merge tokens",
+    "combine tokens",
+    "swap tokens",
+    "merge assets on solutiofi",
+    "swap multiple tokens for one",
+    "convert tokens into a single asset",
+    "merge SPL tokens",
+    "swap tokens into one",
+    "combine assets into one token",
+    "consolidate token balances",
+    "merge token supplies",
+    "convert multiple tokens into one",
+    "swap multiple assets into a single token",
+    "combine token holdings",
+    "exchange tokens for a unified asset",
+    "aggregate tokens into one",
+    "convert tokens into a single mint",
+    "unify token holdings",
+    "merge and swap tokens",
+    "swap and consolidate token assets",
+  ],
   examples: [
     [
       {
