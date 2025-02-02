@@ -1,21 +1,24 @@
 import type { Action } from "../../types";
 import { z } from "zod";
 import { SolanaAgentKit } from "../../agent";
-import { PublicKey } from "@solana/web3.js";
 
 const burnTokensAction: Action = {
-  name: "BURN_SOLUTIOFI_TOKENS",
+  name: "BURN_TOKENS",
   description: "Burn tokens using SolutioFi",
   similes: [
     "burn tokens",
+    "burn spl tokens",
+    "burn spl-token",
     "destroy tokens",
     "burn assets",
+    "burn nfts",
+    "burn an nft",
+    "permanently delete an nft or a token",
     "remove tokens from circulation",
     "delete my tokens",
-    "send tokens to burn address",
     "permanently remove my tokens",
-    "burn my SolutioFi tokens",
-    "burn assets on solutiofi",
+    "burn tokens with solutiofi",
+    "burn nfts with solutiofi",
   ],
   examples: [
     [
@@ -25,7 +28,7 @@ const burnTokensAction: Action = {
         },
         output: {
           status: "success",
-          message: "Successfully burned tokens",
+          message: "Successfully burnt tokens",
           transactions: ["tx_signature"],
         },
         explanation: "Burn specified tokens",

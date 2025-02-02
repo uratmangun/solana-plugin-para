@@ -167,8 +167,8 @@ export const ACTIONS = {
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,
-  CLOSE_SOLUTIOFI_ACCOUNTS_ACTION: closeAccountsAction,
-  BURN_SOLUTIOFI_TOKENS_ACTION: burnTokensAction,
+  SOLUTIOFI_CLOSE_ACCOUNTS_ACTION: closeAccountsAction,
+  BURN_TOKENS_ACTION: burnTokensAction,
   MERGE_TOKENS_ACTION: mergeTokensAction,
   SPREAD_TOKEN_ACTION: spreadTokenAction,
 };

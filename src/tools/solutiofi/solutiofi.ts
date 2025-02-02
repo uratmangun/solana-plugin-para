@@ -1,6 +1,5 @@
 import SolutioFi from "@solutiofi/sdk";
 import type { SolanaAgentKit } from "../../agent";
-import { VersionedTransaction, PublicKey } from "@solana/web3.js";
 import type { InputAssetStruct, TargetTokenStruct, PriorityFee } from "./types";
 
 let solutiofiClient: SolutioFi | null = null;
