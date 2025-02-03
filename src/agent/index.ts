@@ -117,6 +117,8 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
+  simulate_switchboard_feed,
+  swap,
   getPriceInference,
   getAllTopics,
   getInferenceByTopicId,
@@ -1041,6 +1043,28 @@ export class SolanaAgentKit {
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
   }
+
+  async swap(
+    amount: string,
+    fromChain: string,
+    fromToken: string,
+    toChain: string,
+    toToken: string,
+    dstAddr: string,
+    slippageBps?: number,
+  ): Promise<string> {
+    return swap(
+      this,
+      amount,
+      fromChain,
+      fromToken,
+      toChain,
+      toToken,
+      dstAddr,
+      slippageBps,
+    );
+  }
+
   async getPriceInference(
     tokenSymbol: string,
     timeframe: string,
@@ -1075,5 +1099,12 @@ export class SolanaAgentKit {
     priorityFee: PriorityFee,
   ) {
     return await spreadToken(this, inputAsset, targetTokens, priorityFee);
+
+
+  async simulateSwitchboardFeed(
+    feed: string,
+    crossbarUrl: string,
+  ): Promise<string> {
+    return simulate_switchboard_feed(this, feed, crossbarUrl);
   }
 }

@@ -3,7 +3,7 @@ import { SolanaAgentKit } from "../../agent";
 import { CreateSingleOptions } from "@3land/listings-sdk/dist/types/implementation/implementationTypes";
 
 export class Solana3LandCreateSingle extends Tool {
-  name = "3land_minting_tool";
+  name = "3land_minting_tool_single";
   description = `Creates an NFT and lists it on 3.land's website
 
   Inputs:

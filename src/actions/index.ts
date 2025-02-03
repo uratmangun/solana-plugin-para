@@ -76,6 +76,8 @@ import getAssetAction from "./metaplex/getAsset";
 import getAssetsByAuthorityAction from "./metaplex/getAssetsByAuthority";
 import getAssetsByCreatorAction from "./metaplex/getAssetsByCreator";
 import getInfoAction from "./agent/get_info";
+import switchboardSimulateFeedAction from "./switchboard/simulate_feed";
+import swapAction from "./mayan/swap";
 import getPriceInferenceAction from "./allora/getPriceInference";
 import getAllTopicsAction from "./allora/getAllTopics";
 import getInferenceByTopicIdAction from "./allora/getInferenceByTopicId";
@@ -83,6 +85,12 @@ import closeAccountsAction from "./solutiofi/closeAccounts";
 import burnTokensAction from "./solutiofi/burnTokens";
 import mergeTokensAction from "./solutiofi/mergeTokens";
 import spreadTokenAction from "./solutiofi/spreadToken";
+import closeOrcaPositionAction from "./orca/closeOrcaPosition";
+import createOrcaCLMMAction from "./orca/createOrcaCLMM";
+import fetchOrcaPositionsAction from "./orca/fetchOrcaPositions";
+import openOrcaCenteredPositionWithLiquidityAction from "./orca/openOrcaCenteredPositionWithLiquidity";
+import openOrcaSingleSidedPositionAction from "./orca/openOrcaSingleSidedPosition";
+
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
   WALLET_ADDRESS_ACTION: getWalletAddressAction,
@@ -118,6 +126,12 @@ export const ACTIONS = {
   RAYDIUM_CREATE_AMM_V4_ACTION: raydiumCreateAmmV4Action,
   CREATE_ORCA_SINGLE_SIDED_WHIRLPOOL_ACTION:
     createOrcaSingleSidedWhirlpoolAction,
+  CLOSE_ORCA_POSITION_ACTION: closeOrcaPositionAction,
+  CREATE_ORCA_CLMM_ACTION: createOrcaCLMMAction,
+  FETCH_ORCA_POSITIONS_ACTION: fetchOrcaPositionsAction,
+  OPEN_ORCA_CENTERED_POSITION_WITH_LIQUIDITY_ACTION:
+    openOrcaCenteredPositionWithLiquidityAction,
+  OPEN_ORCA_SINGLE_SIDED_POSITION_ACTION: openOrcaSingleSidedPositionAction,
   LAUNCH_PUMPFUN_TOKEN_ACTION: launchPumpfunTokenAction,
   FLASH_OPEN_TRADE_ACTION: flashOpenTradeAction,
   FLASH_CLOSE_TRADE_ACTION: flashCloseTradeAction,
@@ -163,7 +177,9 @@ export const ACTIONS = {
   WITHDRAW_VOLTR_STRATEGY_ACTION: withdrawVoltrStrategyAction,
   GET_ASSET_ACTION: getAssetAction,
   GET_ASSETS_BY_AUTHORITY_ACTION: getAssetsByAuthorityAction,
+  SWITCHBOARD_FEED_ACTION: switchboardSimulateFeedAction,
   GET_ASSETS_BY_CREATOR_ACTION: getAssetsByCreatorAction,
+  SWAP_ACTION: swapAction,
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,

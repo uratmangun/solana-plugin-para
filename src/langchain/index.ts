@@ -28,8 +28,10 @@ export * from "./meteora";
 export * from "./helius";
 export * from "./drift";
 export * from "./voltr";
+export * from "./mayan";
 export * from "./allora";
 export * from "./solutiofi";
+export * from "./switchboard";
 
 import type { SolanaAgentKit } from "../agent";
 import {
@@ -136,6 +138,7 @@ import {
   SolanaGetAssetsByAuthorityTool,
   SolanaGetAssetsByCreatorTool,
   SolanaGetInfoTool,
+  SolanaCrossChainSwapTool,
   SolanaAlloraGetPriceInference,
   SolanaAlloraGetAllTopics,
   SolanaAlloraGetInferenceByTopicId,
@@ -143,6 +146,7 @@ import {
   SolanaBurnTokensTool,
   SolanaMergeTokensTool,
   SolanaSpreadTokenTool,
+  SolanaSwitchboardSimulateFeed,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -222,11 +226,6 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaDeleteHeliusWebhookTool(solanaKit),
     new SolanaParseTransactionHeliusTool(solanaKit),
     new SolanaGetAllAssetsByOwner(solanaKit),
-    new Solana3LandCreateSingle(solanaKit),
-    new SolanaSendTransactionWithPriorityFee(solanaKit),
-    new SolanaHeliusWebhookTool(solanaKit),
-    new SolanaGetHeliusWebhookTool(solanaKit),
-    new SolanaDeleteHeliusWebhookTool(solanaKit),
     new SolanaCreateDriftUserAccountTool(solanaKit),
     new SolanaCreateDriftVaultTool(solanaKit),
     new SolanaDepositIntoDriftVaultTool(solanaKit),
@@ -255,12 +254,14 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetTool(solanaKit),
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
-    new SolanaAlloraGetPriceInference(solanaKit),
+    new SolanaSwitchboardSimulateFeed(solanaKit),
+    new SolanaCrossChainSwapTool(solanaKit),
     new SolanaAlloraGetAllTopics(solanaKit),
     new SolanaAlloraGetInferenceByTopicId(solanaKit),
     new SolanaCloseAccountsTool(solanaKit),
     new SolanaBurnTokensTool(solanaKit),
     new SolanaMergeTokensTool(solanaKit),
     new SolanaSpreadTokenTool(solanaKit),
+    new SolanaAlloraGetPriceInference(solanaKit),
   ];
 }

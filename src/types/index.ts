@@ -13,6 +13,7 @@ export interface Config {
   HELIUS_API_KEY?: string;
   PRIORITY_LEVEL?: string; // medium, high, or veryHigh
   SOLUTIOFI_API_KEY?: string;
+  ETHEREUM_PRIVATE_KEY?: string;
   ALLORA_API_KEY?: string;
   ALLORA_API_URL?: string;
   ALLORA_NETWORK?: string;
@@ -289,6 +290,14 @@ export interface AlloraGetInferenceByTopicIdResponse {
   status: "success" | "error";
   topicId?: number;
   inference?: AlloraInference;
+  message?: string;
+  code?: string;
+}
+
+export interface SwitchboardSimulateFeedResponse {
+  status: "success" | "error";
+  feed?: string;
+  value?: number;
   message?: string;
   code?: string;
 }
