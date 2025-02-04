@@ -180,8 +180,14 @@ export const elfaGetSmartMentionsAction: Action = {
     ],
   ],
   schema: z.object({
-    limit: z.number().optional(),
-    offset: z.number().optional(),
+    limit: z
+      .number()
+      .describe("Number of tweets to retrieve (default: 100)")
+      .optional(),
+    offset: z
+      .number()
+      .describe("Offset for pagination (default: 0)")
+      .optional(),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const limit = input.limit ?? 100;
@@ -264,11 +270,17 @@ export const elfaGetTopMentionsByTickerAction: Action = {
     ],
   ],
   schema: z.object({
-    ticker: z.string(),
-    timeWindow: z.string().optional(),
-    page: z.number().optional(),
-    pageSize: z.number().optional(),
-    includeAccountDetails: z.boolean().optional(),
+    ticker: z.string().describe("Ticker symbol to retrieve mentions for"),
+    timeWindow: z
+      .string()
+      .optional()
+      .describe("Time window for mentions (default: 1h)"),
+    page: z.number().optional().describe("Page number for pagination"),
+    pageSize: z.number().optional().describe("Number of mentions per page"),
+    includeAccountDetails: z
+      .boolean()
+      .optional()
+      .describe("Include account details in the response"),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const ticker = input.ticker;
@@ -361,10 +373,15 @@ export const elfaSearchMentionsByKeywordsAction: Action = {
     ],
   ],
   schema: z.object({
-    keywords: z.string(),
-    from: z.number(),
-    to: z.number(),
-    limit: z.number().optional(),
+    keywords: z
+      .string()
+      .describe("Keywords to search for string separated by commas"),
+    from: z.number().describe("Start date as unix timestamp"),
+    to: z.number().describe("End date as unix timestamp"),
+    limit: z
+      .number()
+      .optional()
+      .describe("Number of tweets to retrieve (default: 20)"),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const keywords = input.keywords;
@@ -488,7 +505,7 @@ export const elfaSmartTwitterAccountStats: Action = {
     ],
   ],
   schema: z.object({
-    username: z.string(),
+    username: z.string().describe("Twitter username to retrieve stats for"),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const username = input.username;
