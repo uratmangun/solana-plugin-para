@@ -189,7 +189,7 @@ export const elfaGetSmartMentionsAction: Action = {
       .describe("Offset for pagination (default: 0)")
       .optional(),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent: SolanaAgentKit, input) => {
     const limit = input.limit ?? 100;
     const offset = input.offset ?? 0;
     const data = await agent.getSmartMentions(limit, offset);
@@ -282,7 +282,7 @@ export const elfaGetTopMentionsByTickerAction: Action = {
       .optional()
       .describe("Include account details in the response"),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent: SolanaAgentKit, input) => {
     const ticker = input.ticker;
     if (!ticker) {
       throw new Error("Ticker is required.");
@@ -383,7 +383,7 @@ export const elfaSearchMentionsByKeywordsAction: Action = {
       .optional()
       .describe("Number of tweets to retrieve (default: 20)"),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent: SolanaAgentKit, input) => {
     const keywords = input.keywords;
     const from = input.from;
     const to = input.to;
@@ -463,7 +463,7 @@ export const elfaTrendingTokensAction: Action = {
     ],
   ],
   schema: z.object({}),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent: SolanaAgentKit, input) => {
     const data = await agent.getTrendingTokens();
     return {
       status: "success",
@@ -507,7 +507,7 @@ export const elfaSmartTwitterAccountStats: Action = {
   schema: z.object({
     username: z.string().describe("Twitter username to retrieve stats for"),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent: SolanaAgentKit, input) => {
     const username = input.username;
     if (!username) {
       throw new Error("Username is required.");
