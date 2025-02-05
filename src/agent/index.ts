@@ -1100,7 +1100,7 @@ export class SolanaAgentKit {
     limit: number = 100,
     offset: number = 0,
   ): Promise<any> {
-    const response = getSmartMentions(this, limit, offset);
+    const response = await getSmartMentions(this, limit, offset);
     return response;
   }
 
@@ -1111,7 +1111,7 @@ export class SolanaAgentKit {
     pageSize: number = 10,
     includeAccountDetails: boolean = false,
   ): Promise<any> {
-    const response = getTopMentionsByTicker(
+    const response = await getTopMentionsByTicker(
       this,
       ticker,
       timeWindow,
@@ -1128,17 +1128,23 @@ export class SolanaAgentKit {
     to: number,
     limit: number = 20,
   ): Promise<any> {
-    const response = searchMentionsByKeywords(this, keywords, from, to, limit);
+    const response = await searchMentionsByKeywords(
+      this,
+      keywords,
+      from,
+      to,
+      limit,
+    );
     return response;
   }
 
   async getTrendingTokens(): Promise<any> {
-    const response = getTrendingTokens(this);
+    const response = await getTrendingTokens(this);
     return response;
   }
 
   async getSmartTwitterAccountStats(username: string): Promise<any> {
-    const response = getSmartTwitterAccountStats(this, username);
+    const response = await getSmartTwitterAccountStats(this, username);
     return response;
   }
 }

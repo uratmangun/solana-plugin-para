@@ -270,9 +270,10 @@ export const elfaGetTopMentionsByTickerAction: Action = {
     ],
   ],
   schema: z.object({
-    ticker: z.string().describe("Ticker symbol to retrieve mentions for"),
+    ticker: z.string().min(1).describe("Ticker symbol to retrieve mentions for"),
     timeWindow: z
       .string()
+      .min(1)
       .optional()
       .describe("Time window for mentions (default: 1h)"),
     page: z.number().optional().describe("Page number for pagination"),
@@ -375,6 +376,7 @@ export const elfaSearchMentionsByKeywordsAction: Action = {
   schema: z.object({
     keywords: z
       .string()
+      .min(1)
       .describe("Keywords to search for string separated by commas"),
     from: z.number().describe("Start date as unix timestamp"),
     to: z.number().describe("End date as unix timestamp"),
@@ -505,7 +507,10 @@ export const elfaSmartTwitterAccountStats: Action = {
     ],
   ],
   schema: z.object({
-    username: z.string().describe("Twitter username to retrieve stats for"),
+    username: z
+      .string()
+      .min(1)
+      .describe("Twitter username to retrieve stats for"),
   }),
   handler: async (agent: SolanaAgentKit, input) => {
     const username = input.username;
