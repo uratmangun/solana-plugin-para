@@ -132,7 +132,6 @@ import {
   InputAssetStruct,
   fluxbeamBurnToken,
   fluxBeamCreatePool,
-  fluxBeamSwap,
 } from "../tools";
 import {
   Config,
@@ -1124,13 +1123,5 @@ export class SolanaAgentKit {
       token_b,
       token_b_amount,
     );
-  }
-  async fluxBeamSwap(
-    inputMint: PublicKey = TOKENS.USDC,
-    outputMint: PublicKey,
-    inputAmount: number,
-    slippageBps: number = DEFAULT_OPTIONS.SLIPPAGE_BPS,
-  ): Promise<string> {
-    return fluxBeamSwap(this, inputMint, outputMint, inputAmount, slippageBps);
   }
 }

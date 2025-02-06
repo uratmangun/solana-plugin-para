@@ -148,7 +148,6 @@ import {
   SolanaSpreadTokenTool,
   SolanaSwitchboardSimulateFeed,
   SolanaFluxbeamCreatePoolTool,
-  SolanaFluxbeamSwapTokenTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -266,6 +265,5 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaSpreadTokenTool(solanaKit),
     new SolanaAlloraGetPriceInference(solanaKit),
     new SolanaFluxbeamCreatePoolTool(solanaKit),
-    new SolanaFluxbeamSwapTokenTool(solanaKit),
   ];
 }
