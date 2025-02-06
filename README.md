@@ -573,7 +573,7 @@ console.log("Available chains:", chains);
 ```typescript
 const orderInput = {
   srcChainId: "7565164", // Solana
-  srcChainTokenIn: "So11111111111111111111111111111111111111112", // Wrapped SOL
+  srcChainTokenIn: "11111111111111111111111111111111", // Native SOL
   srcChainTokenInAmount: "1000000000", // 1 SOL (9 decimals)
   dstChainId: "1", // Ethereum
   dstChainTokenOut: "0x0000000000000000000000000000000000000000", // ETH
