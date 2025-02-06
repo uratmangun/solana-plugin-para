@@ -117,12 +117,15 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
-  getSupportedChains,
   simulate_switchboard_feed,
   swap,
   getPriceInference,
   getAllTopics,
   getInferenceByTopicId,
+  getSupportedChains,
+  createBridgeOrder,
+  checkTransactionStatus,
+  executeBridgeOrder,
 } from "../tools";
 import {
   Config,
@@ -141,6 +144,8 @@ import {
   HeliusWebhookResponse,
   BridgeOrderInput,
   SupportedChainsResponse,
+  BridgeOrderResponse,
+  BridgeOrderStatusResponse
 } from "../types";
 import {
   DasApiAsset,
@@ -1039,10 +1044,6 @@ export class SolanaAgentKit {
     return get_assets_by_creator(this, params);
   }
 
-  async getSupportedChains(): Promise<SupportedChainsResponse> {
-    return await getSupportedChains();
-  }
-
   async swap(
     amount: string,
     fromChain: string,
@@ -1082,5 +1083,21 @@ export class SolanaAgentKit {
     crossbarUrl: string,
   ): Promise<string> {
     return simulate_switchboard_feed(this, feed, crossbarUrl);
+  }
+
+  async getBridgeSupportedChains(): Promise<SupportedChainsResponse> {
+    return getSupportedChains();
+  }
+
+  async createBridgeOrder(orderInput: BridgeOrderInput): Promise<BridgeOrderResponse> {
+    return createBridgeOrder(orderInput);
+  }
+
+  async checkBridgeStatus(txHashOrOrderId: string): Promise<BridgeOrderStatusResponse[]> {
+    return checkTransactionStatus(this, txHashOrOrderId);
+  }
+
+  async bridge(orderData: string): Promise<string> {
+    return executeBridgeOrder(this, orderData);
   }
 }
