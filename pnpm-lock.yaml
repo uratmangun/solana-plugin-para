@@ -6056,7 +6056,6 @@ snapshots:
   '@jup-ag/api@6.0.38': {}
 
   '@langchain/core@0.3.27(openai@4.77.3(zod@3.24.1))':
-  '@langchain/core@0.3.29(openai@4.78.1(encoding@0.1.13)(zod@3.24.1))':
     dependencies:
       '@cfworker/json-schema': 4.0.3
       ansi-styles: 5.2.0

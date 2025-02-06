@@ -130,7 +130,6 @@ import {
   PriorityFee,
   TargetTokenStruct,
   InputAssetStruct,
-  fluxbeamBurnToken,
   fluxBeamCreatePool,
 } from "../tools";
 import {
