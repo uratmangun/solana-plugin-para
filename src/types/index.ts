@@ -407,6 +407,21 @@ export interface BridgeOrderResponse {
   };
 }
 
+export interface BridgeOrderIdsResponse {
+  orderIds: string[];
+  errorCode?: number;
+  errorMessage?: string;
+}
+
+export interface BridgeOrderStatusResponse {
+  orderId: string;
+  status: "None" | "Created" | "Fulfilled" | "SentUnlock" | "OrderCancelled" | "SentOrderCancel" | "ClaimedUnlock" | "ClaimedOrderCancel";
+  srcChainTxHash?: string;
+  dstChainTxHash?: string;
+  orderLink?: string;
+  error?: string;
+}
+
 // Regular expressions for validating addresses
 export const SOLANA_ADDRESS_REGEX = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 export const EVM_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;

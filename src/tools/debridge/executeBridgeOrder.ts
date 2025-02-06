@@ -15,8 +15,6 @@ export async function executeBridgeOrder(
   transactionData: string
 ): Promise<string> {
   try {
-    process.stdout.write("\n Preparing bridge transaction...");
-    
     const txBuffer = Buffer.from(transactionData.substring(2), "hex");
     const transaction = VersionedTransaction.deserialize(txBuffer);
 
@@ -29,8 +27,6 @@ export async function executeBridgeOrder(
     // Sign the transaction
     transaction.sign([agent.wallet]);
     
-    process.stdout.write("\n Sending transaction...");
-    
     // Send transaction with optimal parameters
     const signature = await agent.connection.sendTransaction(transaction, {
       skipPreflight: false,
@@ -38,15 +34,8 @@ export async function executeBridgeOrder(
       maxRetries: 3
     });
     
-    process.stdout.write(`\n Transaction sent! View on explorer: https://explorer.solana.com/tx/${signature}`);
-    
     return signature;
   } catch (error: any) {
-    process.stderr.write(`\n Failed to execute bridge transaction: ${error.message}\n`);
-    if (error.logs) {
-      process.stderr.write("\n Transaction logs:");
-      error.logs.forEach((log: string) => process.stderr.write(`\n${log}`));
-    }
     throw error;
   }
 }

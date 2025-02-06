@@ -34,9 +34,6 @@ const executeBridgeOrderAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>): Promise<Record<string, any>> => {
     try {
-      process.stdout.write("\n⚠️  WARNING: About to execute cross-chain bridge transaction. This will move tokens between chains.\n");
-      process.stdout.write(`\n📝 Using transaction data: ${input.transactionData}\n`);
-      
       const signature = await executeBridgeOrder(agent, input.transactionData);
 
       return {
