@@ -30,4 +30,5 @@ export * from "./voltr";
 export * from "./debridge";
 export * from "./mayan";
 export * from "./allora";
+export * from "./solutiofi";
 export * from "./switchboard";
