@@ -1,5 +1,14 @@
 import { DEBRIDGE_API } from "../../constants";
-import { ChainInfo, SupportedChainsResponse } from "../../types";
+
+export interface ChainInfo {
+  chainId: string;
+  originalChainId: string;
+  chainName: string;
+}
+
+export interface SupportedChainsResponse {
+  chains: ChainInfo[];
+}
 
 export async function getSupportedChains(): Promise<SupportedChainsResponse> {
   const response = await fetch(`${DEBRIDGE_API}/supported-chains-info`);

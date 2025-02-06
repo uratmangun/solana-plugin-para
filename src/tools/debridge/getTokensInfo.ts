@@ -35,10 +35,6 @@ import { SolanaAgentKit } from "../../agent";
 export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<TokensInfoResponse> {
     try {
         const url = `${DEBRIDGE_API}/token-list?chainId=${parameters.chainId}`;
-
-        // Use process.stdout.write for direct output
-        process.stdout.write(`\nFetching tokens for chain ${parameters.chainId}...`);
-
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -62,9 +58,6 @@ export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<To
             if (!tokenInfo) {
                 throw new Error(`Token ${parameters.tokenAddress} not found on chain ${parameters.chainId}`);
             }
-            
-            // Log just the token symbol and address
-            process.stdout.write(`\nFound token: ${tokenInfo.symbol} (${parameters.tokenAddress})\n`);
             
             return {
                 tokens: {
@@ -106,30 +99,8 @@ export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<To
                 >,
             );
 
-        // Log only the count and first few matches if searching
-        const matchedTokens = Object.values(tokens);
-        if (searchTerm) {
-            process.stdout.write(`\nFound ${matchedTokens.length} token(s) matching "${searchTerm}" on chain ${parameters.chainId}`);
-            if (matchedTokens.length > 0) {
-                // Show only first 3 matches as examples
-                const examples = matchedTokens.slice(0, 3);
-                process.stdout.write(`\nFirst ${Math.min(3, matchedTokens.length)} matches:`);
-                examples.forEach(token => {
-                    process.stdout.write(`\n- ${token.symbol} (${token.address})`);
-                });
-                if (matchedTokens.length > 3) {
-                    process.stdout.write(`\n... and ${matchedTokens.length - 3} more`);
-                }
-                process.stdout.write('\n');
-            }
-        } else {
-            process.stdout.write(`\nFound ${matchedTokens.length} total tokens on chain ${parameters.chainId}\n`);
-        }
-
         return { tokens };
     } catch (error) {
-        // Log error using process.stderr
-        process.stderr.write(`\nError fetching token information: ${error}\n`);
         throw error;
     }
 }
