@@ -14,7 +14,7 @@ import {
   PRICE_PRECISION,
   QUOTE_PRECISION,
   TEN,
-} from "@drift-labs/sdk-browser";
+} from "@drift-labs/sdk";
 import {
   WithdrawUnit,
   decodeName,
