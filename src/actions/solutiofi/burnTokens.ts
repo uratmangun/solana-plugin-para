@@ -3,7 +3,7 @@ import { z } from "zod";
 import { SolanaAgentKit } from "../../agent";
 
 const burnTokensAction: Action = {
-  name: "BURN_TOKENS",
+  name: "SOLUTIOFI_BURN_TOKENS",
   description: "Burn tokens using SolutioFi",
   similes: [
     "burn tokens",

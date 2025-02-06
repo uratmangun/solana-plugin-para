@@ -1099,7 +1099,7 @@ export class SolanaAgentKit {
     priorityFee: PriorityFee,
   ) {
     return await spreadToken(this, inputAsset, targetTokens, priorityFee);
-
+  }
 
   async simulateSwitchboardFeed(
     feed: string,

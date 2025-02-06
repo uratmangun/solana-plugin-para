@@ -4,7 +4,9 @@ import { SolanaAgentKit } from "../../agent";
 export class SolanaCloseAccountsTool extends Tool {
   name = "close_solutiofi_accounts";
   description = `Close token accounts using SolutioFi protocol.
-  Input: JSON string with mints array to close`;
+  
+  Inputs (JSON string):
+  - mints: string, Array of mint ids of token accounts to close (required).`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();

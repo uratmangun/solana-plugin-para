@@ -184,9 +184,9 @@ export const ACTIONS = {
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,
   SOLUTIOFI_CLOSE_ACCOUNTS_ACTION: closeAccountsAction,
-  BURN_TOKENS_ACTION: burnTokensAction,
-  MERGE_TOKENS_ACTION: mergeTokensAction,
-  SPREAD_TOKEN_ACTION: spreadTokenAction,
+  SOLUTIOFI_BURN_TOKENS_ACTION: burnTokensAction,
+  SOLUTIOFI_MERGE_TOKENS_ACTION: mergeTokensAction,
+  SOLUTIOFI_SPREAD_TOKEN_ACTION: spreadTokenAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";

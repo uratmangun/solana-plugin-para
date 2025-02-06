@@ -4,7 +4,10 @@ import { SolanaAgentKit } from "../../agent";
 export class SolanaBurnTokensTool extends Tool {
   name = "burn_solutiofi_tokens";
   description = `Burn tokens using SolutioFi protocol.
-  Input: JSON string with mints array to burn`;
+  
+  Inputs (JSON string):
+  - mints: string, mint ids of tokens to burn (required).
+  `;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();
@@ -12,7 +15,16 @@ export class SolanaBurnTokensTool extends Tool {
 
   protected async _call(input: string): Promise<string> {
     try {
-      const { mints } = JSON.parse(input);
+      const parsedInput = JSON.parse(input);
+
+      if (
+        !Array.isArray(parsedInput.mints) ||
+        parsedInput.mints.some((mint: string) => typeof mint !== "string")
+      ) {
+        throw new Error("mints must be an array of valid string addresses.");
+      }
+
+      const { mints } = parsedInput;
       const transactions = await this.solanaKit.burnTokens(mints);
       return JSON.stringify({
         status: "success",
