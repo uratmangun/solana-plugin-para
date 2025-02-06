@@ -81,6 +81,10 @@ import swapAction from "./mayan/swap";
 import getPriceInferenceAction from "./allora/getPriceInference";
 import getAllTopicsAction from "./allora/getAllTopics";
 import getInferenceByTopicIdAction from "./allora/getInferenceByTopicId";
+import closeAccountsAction from "./solutiofi/closeAccounts";
+import burnTokensAction from "./solutiofi/burnTokens";
+import mergeTokensAction from "./solutiofi/mergeTokens";
+import spreadTokenAction from "./solutiofi/spreadToken";
 import closeOrcaPositionAction from "./orca/closeOrcaPosition";
 import createOrcaCLMMAction from "./orca/createOrcaCLMM";
 import fetchOrcaPositionsAction from "./orca/fetchOrcaPositions";
@@ -193,6 +197,10 @@ export const ACTIONS = {
   ELFA_SEARCH_MENTIONS_BY_KEYWORDS_ACTION: elfaSearchMentionsByKeywordsAction,
   ELFA_TRENDING_TOKENS_ACTION: elfaTrendingTokensAction,
   ELFA_SMART_TWITTER_ACCOUNT_STATS_ACTION: elfaSmartTwitterAccountStats,
+  SOLUTIOFI_CLOSE_ACCOUNTS_ACTION: closeAccountsAction,
+  SOLUTIOFI_BURN_TOKENS_ACTION: burnTokensAction,
+  SOLUTIOFI_MERGE_TOKENS_ACTION: mergeTokensAction,
+  SOLUTIOFI_SPREAD_TOKEN_ACTION: spreadTokenAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";

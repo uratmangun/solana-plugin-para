@@ -30,6 +30,7 @@ export * from "./drift";
 export * from "./voltr";
 export * from "./mayan";
 export * from "./allora";
+export * from "./solutiofi";
 export * from "./switchboard";
 export * from "./elfa_ai";
 
@@ -142,6 +143,10 @@ import {
   SolanaAlloraGetPriceInference,
   SolanaAlloraGetAllTopics,
   SolanaAlloraGetInferenceByTopicId,
+  SolanaCloseAccountsTool,
+  SolanaBurnTokensTool,
+  SolanaMergeTokensTool,
+  SolanaSpreadTokenTool,
   SolanaSwitchboardSimulateFeed,
   ElfaPingTool,
   ElfaApiKeyStatusTool,
@@ -261,6 +266,10 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaCrossChainSwapTool(solanaKit),
     new SolanaAlloraGetAllTopics(solanaKit),
     new SolanaAlloraGetInferenceByTopicId(solanaKit),
+    new SolanaCloseAccountsTool(solanaKit),
+    new SolanaBurnTokensTool(solanaKit),
+    new SolanaMergeTokensTool(solanaKit),
+    new SolanaSpreadTokenTool(solanaKit),
     new SolanaAlloraGetPriceInference(solanaKit),
     new ElfaPingTool(solanaKit),
     new ElfaApiKeyStatusTool(solanaKit),
