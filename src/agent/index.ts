@@ -1138,6 +1138,7 @@ export class SolanaAgentKit {
 
   async checkDebridgeTransactionStatus(txHashOrOrderId: string): Promise<deBridgeOrderStatusResponse[]> {
     return checkDebridgeTransactionStatus(this, txHashOrOrderId);
+  }
 
   async fluxbeamCreatePool(
     token_a: PublicKey,
