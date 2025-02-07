@@ -33,74 +33,70 @@ import { SolanaAgentKit } from "../../agent";
  * ```
  */
 export async function getDebridgeTokensInfo(parameters: GetDebridgeTokensInfoParams): Promise<deBridgeTokensInfoResponse> {
-    try {
-        const url = `${DEBRIDGE_API}/token-list?chainId=${parameters.chainId}`;
-        const response = await fetch(url);
+  const url = `${DEBRIDGE_API}/token-list?chainId=${parameters.chainId}`;
+  const response = await fetch(url);
 
-        if (!response.ok) {
-            const text = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
-        }
+  if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+  }
 
-        const responseData = await response.json();
-        const data = responseData.tokens;
+  const responseData = await response.json();
+  const data = responseData.tokens;
 
-        // Define token data type
-        type TokenData = {
-            name: string;
-            symbol: string;
-            decimals: number;
-        };
+  // Define token data type
+  type TokenData = {
+      name: string;
+      symbol: string;
+      decimals: number;
+  };
 
-        // If a specific token address is provided, return just that token's info
-        if (parameters.tokenAddress) {
-            const tokenInfo = data[parameters.tokenAddress];
-            if (!tokenInfo) {
-                throw new Error(`Token ${parameters.tokenAddress} not found on chain ${parameters.chainId}`);
-            }
-            
-            return {
-                tokens: {
-                    [parameters.tokenAddress]: {
-                        name: tokenInfo.name,
-                        symbol: tokenInfo.symbol,
-                        address: parameters.tokenAddress,
-                        decimals: tokenInfo.decimals,
-                    }
-                }
-            };
-        }
+  // If a specific token address is provided, return just that token's info
+  if (parameters.tokenAddress) {
+      const tokenInfo = data[parameters.tokenAddress];
+      if (!tokenInfo) {
+          throw new Error(`Token ${parameters.tokenAddress} not found on chain ${parameters.chainId}`);
+      }
+      
+      return {
+          tokens: {
+              [parameters.tokenAddress]: {
+                  name: tokenInfo.name,
+                  symbol: tokenInfo.symbol,
+                  address: parameters.tokenAddress,
+                  decimals: tokenInfo.decimals,
+              }
+          }
+      };
+  }
 
-        // Filter tokens by search term
-        const searchTerm = parameters.search?.toLowerCase() || "";
-        const tokens = Object.entries(data as Record<string, TokenData>)
-            .filter(
-                ([, token]: [string, TokenData]) =>
-                    token.symbol && (!searchTerm || token.symbol.toLowerCase().includes(searchTerm)),
-            )
-            .reduce(
-                (acc, [address, token]: [string, TokenData]) => {
-                    acc[address] = {
-                        name: token.name,
-                        symbol: token.symbol,
-                        address: address,
-                        decimals: token.decimals,
-                    };
-                    return acc;
-                },
-                {} as Record<
-                    string,
-                    {
-                        name: string;
-                        symbol: string;
-                        address: string;
-                        decimals: number;
-                    }
-                >,
-            );
+  // Filter tokens by search term
+  const searchTerm = parameters.search?.toLowerCase() || "";
+  const tokens = Object.entries(data as Record<string, TokenData>)
+      .filter(
+          ([, token]: [string, TokenData]) =>
+              token.symbol && (!searchTerm || token.symbol.toLowerCase().includes(searchTerm)),
+      )
+      .reduce(
+          (acc, [address, token]: [string, TokenData]) => {
+              acc[address] = {
+                  name: token.name,
+                  symbol: token.symbol,
+                  address: address,
+                  decimals: token.decimals,
+              };
+              return acc;
+          },
+          {} as Record<
+              string,
+              {
+                  name: string;
+                  symbol: string;
+                  address: string;
+                  decimals: number;
+              }
+          >,
+      );
 
-        return { tokens };
-    } catch (error) {
-        throw error;
-    }
+  return { tokens };
 }
