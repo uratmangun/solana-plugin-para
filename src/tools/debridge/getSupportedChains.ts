@@ -1,12 +1,12 @@
 import { DEBRIDGE_API } from "../../constants";
-import { SupportedChainsResponse } from "../../types";
+import { deBridgeSupportedChainsResponse } from "../../types";
 
 /**
- * Get list of supported chains and their configurations
+ * Get list of chains supported by deBridge protocol
  * @returns List of supported chains with their configurations
  * @throws {Error} If the API request fails or returns an error
  */
-export async function getSupportedChains(): Promise<SupportedChainsResponse> {
+export async function getDebridgeSupportedChains(): Promise<deBridgeSupportedChainsResponse> {
   const response = await fetch(`${DEBRIDGE_API}/supported-chains-info`);
   
   if (!response.ok) {

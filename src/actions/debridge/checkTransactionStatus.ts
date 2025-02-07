@@ -1,9 +1,9 @@
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
-import { checkTransactionStatus } from "../../tools/debridge";
+import { checkDebridgeTransactionStatus } from "../../tools/debridge";
 
-const checkTransactionStatusAction: Action = {
+const checkDebridgeTransactionStatusAction: Action = {
   name: "DEBRIDGE_CHECK_TRANSACTION_STATUS",
   similes: [
     "check bridge status",
@@ -11,7 +11,7 @@ const checkTransactionStatusAction: Action = {
     "get bridge status",
     "bridge transaction status",
   ],
-  description: "Check the status of a cross-chain bridge transaction on DeBridge",
+  description: "Check the status of a cross-chain bridge transaction on deBridge",
   examples: [
     [
       {
@@ -34,16 +34,16 @@ const checkTransactionStatusAction: Action = {
             }
           ]
         },
-        explanation: "Check the status of a bridge transaction from Solana to another chain",
-      },
-    ],
+        explanation: "Check the status of a bridge transaction from Solana to Ethereum"
+      }
+    ]
   ],
   schema: z.object({
     txHash: z.string().describe("Transaction hash to check status for"),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const orders = await checkTransactionStatus(agent, input.txHash);
+      const orders = await checkDebridgeTransactionStatus(agent, input.txHash);
 
       return {
         status: "success",
@@ -63,4 +63,4 @@ const checkTransactionStatusAction: Action = {
   },
 };
 
-export default checkTransactionStatusAction;
+export default checkDebridgeTransactionStatusAction;

@@ -1,26 +1,37 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
-import { BridgeOrderInput } from "../../types";
+import { deBridgeOrderInput } from "../../types";
 
 export class CreateBridgeOrderTool extends Tool {
   name = "create_bridge_order";
-  description = `Creates a new bridge order for cross-chain token transfers.
-    Input should be a JSON string with the following properties:
-    - srcChainId: Source chain ID (e.g., "1" for Ethereum, "7565164" for Solana)
-    - srcChainTokenIn: Input token address
-    - srcChainTokenInAmount: Amount to swap
-    - dstChainId: Destination chain ID
-    - dstChainTokenOut: Target token address
-    Optional properties:
-    - dstChainTokenOutAmount: Expected output amount (defaults to "auto")
-    - slippage: Slippage tolerance
-    - dstChainTokenOutRecipient: Recipient address on destination chain
-    - senderAddress: Source chain sender address
+  description = `This tool creates a new bridge order for cross-chain token transfers.
 
-    Chain-specific considerations:
-    - EVM to EVM: Use EVM addresses for recipients and tokens
-    - To Solana: Use base58 addresses for recipients and token mints
-    - From Solana: Use EVM addresses for recipients, ERC-20 format for tokens`;
+  Inputs (input is a JSON string):
+  Required fields:
+  srcChainId: string, eg "1" for Ethereum or "7565164" for Solana
+  srcChainTokenIn: string, eg "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" for EVM or base58 for Solana
+  srcChainTokenInAmount: string, eg "1000000" for 1 USDC
+  dstChainId: string, eg "56" for BSC
+  dstChainTokenOut: string, eg "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+  dstChainTokenOutRecipient: string, eg "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+  senderAddress: string, eg "Abws588GagNKeMViBPE2e1WjQ2jViDyw81ZRq8oMSx75" for Solana sender
+
+  Optional fields:
+  dstChainTokenOutAmount: string, eg "auto"
+  slippage: number, eg 0.5 for 0.5%
+  additionalTakerRewardBps: number
+  srcIntermediaryTokenAddress: string
+  dstIntermediaryTokenAddress: string
+  dstIntermediaryTokenSpenderAddress: string
+  intermediaryTokenUSDPrice: number
+  srcAllowedCancelBeneficiary: string
+  referralCode: number
+  affiliateFeePercent: number
+  srcChainOrderAuthorityAddress: string
+  srcChainRefundAddress: string
+  dstChainOrderAuthorityAddress: string
+  prependOperatingExpenses: boolean
+  deBridgeApp: string`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();
@@ -28,8 +39,8 @@ export class CreateBridgeOrderTool extends Tool {
 
   protected async _call(input: string): Promise<string> {
     try {
-      const orderInput: BridgeOrderInput = JSON.parse(input);
-      const result = await this.solanaKit.createBridgeOrder(orderInput);
+      const orderInput = JSON.parse(input) as deBridgeOrderInput;
+      const result = await this.solanaKit.createDebridgeOrder(orderInput);
       return JSON.stringify({
         status: "success",
         message: "Successfully created bridge order",

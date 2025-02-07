@@ -1,32 +1,36 @@
-import { VersionedTransaction } from "@solana/web3.js";
 import { SolanaAgentKit } from "../../agent";
+import { VersionedTransaction } from "@solana/web3.js";
 
 /**
  * Execute a bridge transaction on Solana.
- * Takes the transaction data from createBridgeOrder and executes it.
- * Returns immediately after sending without waiting for confirmation.
- * 
- * @param agent SolanaAgentKit instance for signing and sending the transaction
- * @param transactionData Hex-encoded transaction data from createBridgeOrder
+ * @param agent SolanaAgentKit instance
+ * @param transactionData Hex-encoded transaction data
  * @returns Transaction signature
  */
-export async function executeBridgeOrder(
+export async function executeDebridgeBridgeOrder(
   agent: SolanaAgentKit,
   transactionData: string
 ): Promise<string> {
   try {
+    // Convert transaction data to buffer
     const txBuffer = Buffer.from(transactionData.substring(2), "hex");
+    
+    // Deserialize transaction
     const transaction = VersionedTransaction.deserialize(txBuffer);
 
-    // Get a fresh blockhash
+    if (!transaction.message.staticAccountKeys?.length) {
+      throw new Error(
+        "Invalid transaction: No account keys found in the transaction"
+      );
+    }
+
+    // Get a fresh blockhash and update transaction
     const { blockhash } = await agent.connection.getLatestBlockhash();
-    
-    // Update the blockhash in the transaction
     transaction.message.recentBlockhash = blockhash;
 
-    // Sign the transaction
+    // Sign transaction with agent's wallet
     transaction.sign([agent.wallet]);
-    
+
     // Send transaction with optimal parameters
     const signature = await agent.connection.sendTransaction(transaction, {
       skipPreflight: false,

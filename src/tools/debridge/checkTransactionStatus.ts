@@ -1,20 +1,18 @@
 import { SolanaAgentKit } from "../../agent";
 import { DEBRIDGE_API } from "../../constants";
-import { BridgeOrderIdsResponse, BridgeOrderStatusResponse } from "../../types";
+import { deBridgeOrderStatusResponse, deBridgeOrderIdsResponse } from "../../types";
 
 /**
- * Check the status of bridge transactions using their transaction hash
- * This method retrieves the current status of one or more bridge transactions
- *
+ * Check the status of a bridge transaction using its transaction hash
  * @param agent SolanaAgentKit instance
  * @param txHash Transaction hash to check status for
  * @returns Status information for the bridge transaction
  * @throws {Error} If the API request fails or returns an error
  */
-export async function checkTransactionStatus(
+export async function checkDebridgeTransactionStatus(
   agent: SolanaAgentKit,
   txHash: string
-): Promise<BridgeOrderStatusResponse[]> {
+): Promise<deBridgeOrderStatusResponse[]> {
   try {
     // First get the order IDs for the transaction
     const orderIdsUrl = `${DEBRIDGE_API}/dln/tx/${txHash}/order-ids`;
@@ -29,7 +27,7 @@ export async function checkTransactionStatus(
       }
     }
 
-    const orderIdsData = responseData as BridgeOrderIdsResponse;
+    const orderIdsData = responseData as deBridgeOrderIdsResponse;
     if (!orderIdsData.orderIds || orderIdsData.orderIds.length === 0) {
       throw new Error("No bridge orders found for this transaction");
     }

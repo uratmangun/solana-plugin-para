@@ -1,5 +1,5 @@
 import { DEBRIDGE_API } from "../../constants";
-import { BridgeOrderInput, BridgeQuoteResponse } from "../../types";
+import { deBridgeOrderInput, deBridgeOrderResponse } from "../../types";
 
 /**
  * Get a quote for bridging tokens between chains AND build the transaction.
@@ -16,8 +16,8 @@ import { BridgeOrderInput, BridgeQuoteResponse } from "../../types";
  * @returns Quote information and transaction data
  */
 export async function getBridgeQuote(
-  params: BridgeOrderInput
-): Promise<BridgeQuoteResponse> {
+  params: deBridgeOrderInput
+): Promise<deBridgeOrderResponse> {
   // Validate required parameters
   if (!params.dstChainTokenOutRecipient) {
     throw new Error("dstChainTokenOutRecipient is required for transaction building");

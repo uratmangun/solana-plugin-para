@@ -3,13 +3,9 @@ import { SolanaAgentKit } from "../../agent";
 
 export class GetSupportedChainsTool extends Tool {
   name = "get_supported_chains";
-  description = `Gets a list of chains supported by the deBridge DLN protocol.
-    No input required. Returns a list of supported chains with their IDs and configurations.
-    Example chains:
-    - "1": Ethereum
-    - "7565164": Solana
-    - "56": BNB Chain
-    - "137": Polygon`;
+  description = `This tool gets a list of chains supported by the deBridge DLN protocol.
+
+  Inputs: No input required`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();
@@ -17,7 +13,7 @@ export class GetSupportedChainsTool extends Tool {
 
   protected async _call(_input: string): Promise<string> {
     try {
-      const result = await this.solanaKit.getBridgeSupportedChains();
+      const result = await this.solanaKit.getDebridgeSupportedChains();
       return JSON.stringify({
         status: "success",
         message: "Successfully retrieved supported chains",

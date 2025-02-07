@@ -90,11 +90,11 @@ import createOrcaCLMMAction from "./orca/createOrcaCLMM";
 import fetchOrcaPositionsAction from "./orca/fetchOrcaPositions";
 import openOrcaCenteredPositionWithLiquidityAction from "./orca/openOrcaCenteredPositionWithLiquidity";
 import openOrcaSingleSidedPositionAction from "./orca/openOrcaSingleSidedPosition";
-import getSupportedChainsAction from "./debridge/getSupportedChains";
-import getTokensInfoAction from "./debridge/getTokensInfo";
-import createBridgeOrderAction from "./debridge/createBridgeOrder";
-import executeBridgeOrderAction from "./debridge/executeBridgeOrder";
-import checkTransactionStatusAction from "./debridge/checkTransactionStatus";
+import getDebridgeSupportedChainsAction from "./debridge/getSupportedChains";
+import getDebridgeTokensInfoAction from "./debridge/getTokensInfo";
+import createDebridgeBridgeOrderAction from "./debridge/createBridgeOrder";
+import executeDebridgeBridgeOrderAction from "./debridge/executeBridgeOrder";
+import checkDebridgeTransactionStatusAction from "./debridge/checkTransactionStatus";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -188,12 +188,11 @@ export const ACTIONS = {
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,
-  // deBridge actions
-  DEBRIDGE_GET_SUPPORTED_CHAINS_ACTION: getSupportedChainsAction,
-  DEBRIDGE_GET_TOKENS_INFO_ACTION: getTokensInfoAction,
-  DEBRIDGE_CREATE_BRIDGE_ORDER_ACTION: createBridgeOrderAction,
-  DEBRIDGE_CHECK_TRANSACTION_STATUS_ACTION: checkTransactionStatusAction,
-  DEBRIDGE_EXECUTE_BRIDGE_ORDER_ACTION: executeBridgeOrderAction,
+  DEBRIDGE_GET_SUPPORTED_CHAINS_ACTION: getDebridgeSupportedChainsAction,
+  DEBRIDGE_GET_TOKENS_INFO_ACTION: getDebridgeTokensInfoAction,
+  DEBRIDGE_CREATE_BRIDGE_ORDER_ACTION: createDebridgeBridgeOrderAction,
+  DEBRIDGE_CHECK_TRANSACTION_STATUS_ACTION: checkDebridgeTransactionStatusAction,
+  DEBRIDGE_EXECUTE_BRIDGE_ORDER_ACTION: executeDebridgeBridgeOrderAction,
   SOLUTIOFI_CLOSE_ACCOUNTS_ACTION: closeAccountsAction,
   SOLUTIOFI_BURN_TOKENS_ACTION: burnTokensAction,
   SOLUTIOFI_MERGE_TOKENS_ACTION: mergeTokensAction,

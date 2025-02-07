@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { Action } from "../../types/action";
-import { getSupportedChains } from "../../tools/debridge/getSupportedChains";
+import { getDebridgeSupportedChains } from "../../tools/debridge/getSupportedChains";
 import { SolanaAgentKit } from "../../agent";
 
-export const DEBRIDGE_GET_SUPPORTED_CHAINS: Action = {
+const getDebridgeSupportedChainsAction: Action = {
   name: "DEBRIDGE_GET_SUPPORTED_CHAINS",
-  description: "Fetch the list of supported chains for cross-chain bridging via deBridge",
+  description: "Fetch the list of chains supported by deBridge for cross-chain token transfers",
   similes: [
     "list supported chains for bridging",
     "show available chains for cross-chain transfer",
@@ -20,31 +20,34 @@ export const DEBRIDGE_GET_SUPPORTED_CHAINS: Action = {
         output: {
           status: "success",
           chains: [
-            { chainId: "1", chainName: "Ethereum" },
-            { chainId: "7565164", chainName: "Solana" },
-            { chainId: "56", chainName: "BNB Chain" }
+            {
+              chainId: "1",
+              originalChainId: "1",
+              chainName: "Ethereum"
+            },
+            {
+              chainId: "7565164",
+              originalChainId: "7565164",
+              chainName: "Solana"
+            }
           ],
-          message: "Retrieved supported chains successfully"
+          message: "Retrieved supported chains"
         },
-        explanation: "Get list of all chains supported for cross-chain bridging"
+        explanation: "Get the list of chains supported by deBridge"
       }
     ]
   ],
   schema: z.object({}),
   handler: async (_agent: SolanaAgentKit, _input: Record<string, any>) => {
     try {
-      const response = await getSupportedChains();
-      
+      const response = await getDebridgeSupportedChains();
       return {
         status: "success",
-        chains: response.chains.map(chain => ({
-          chainId: chain.originalChainId.toString(),
-          chainName: chain.chainName,
-          internalChainId: chain.chainId
-        })),
-        message: "Retrieved supported chains successfully"
+        ...response,
+        message: "Retrieved supported chains"
       };
     } catch (error: any) {
+      console.error("Error in getDebridgeSupportedChains action:", error);
       return {
         status: "error",
         message: `Failed to fetch supported chains: ${error.message}`
@@ -53,4 +56,4 @@ export const DEBRIDGE_GET_SUPPORTED_CHAINS: Action = {
   }
 };
 
-export default DEBRIDGE_GET_SUPPORTED_CHAINS;
+export default getDebridgeSupportedChainsAction;

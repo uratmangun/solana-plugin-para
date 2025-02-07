@@ -302,18 +302,18 @@ export interface SwitchboardSimulateFeedResponse {
   code?: string;
 }
 
-// DeBridge Types
-export interface ChainInfo {
+// DeBridge Types ref: https://dln.debridge.finance/v1.0/
+export interface deBridgeChainInfo {
   chainId: string;
   originalChainId: string;
   chainName: string;
 }
 
-export interface SupportedChainsResponse {
-  chains: ChainInfo[];
+export interface deBridgeSupportedChainsResponse {
+  chains: deBridgeChainInfo[];
 }
 
-export interface TokenInfo {
+export interface deBridgeTokenInfo {
   name: string;
   symbol: string;
   address: string;
@@ -321,11 +321,11 @@ export interface TokenInfo {
   chainId?: string;
 }
 
-export interface TokensInfoResponse {
-  tokens: Record<string, TokenInfo>;
+export interface deBridgeTokensInfoResponse {
+  tokens: Record<string, deBridgeTokenInfo>;
 }
 
-export interface BridgeQuoteInput {
+export interface deBridgeQuoteInput {
   srcChainId: string;
   srcChainTokenIn: string;
   srcChainTokenInAmount: string;
@@ -336,7 +336,7 @@ export interface BridgeQuoteInput {
   senderAddress?: string;
 }
 
-export interface BridgeQuoteResponse {
+export interface deBridgeQuoteResponse {
   estimation: {
     srcChainTokenIn: {
       amount: string;
@@ -357,7 +357,7 @@ export interface BridgeQuoteResponse {
   };
 }
 
-export interface BridgeOrderInput {
+export interface deBridgeOrderInput {
   srcChainId: string;
   srcChainTokenIn: string;
   srcChainTokenInAmount: string;
@@ -382,7 +382,7 @@ export interface BridgeOrderInput {
   deBridgeApp?: string;
 }
 
-export interface BridgeOrderResponse {
+export interface deBridgeOrderResponse {
   tx: {
     data: string;
     to: string;
@@ -408,13 +408,13 @@ export interface BridgeOrderResponse {
   };
 }
 
-export interface BridgeOrderIdsResponse {
+export interface deBridgeOrderIdsResponse {
   orderIds: string[];
   errorCode?: number;
   errorMessage?: string;
 }
 
-export interface BridgeOrderStatusResponse {
+export interface deBridgeOrderStatusResponse {
   orderId: string;
   status: "None" | "Created" | "Fulfilled" | "SentUnlock" | "OrderCancelled" | "SentOrderCancel" | "ClaimedUnlock" | "ClaimedOrderCancel";
   srcChainTxHash?: string;
@@ -445,15 +445,15 @@ export const chainIdSchema = z.string().refine(
 );
 
 // Token info parameters schema
-export const getTokensInfoSchema = z.object({
+export const getDebridgeTokensInfoSchema = z.object({
     /** Chain ID to query tokens for */
-    chainId: chainIdSchema.describe("Chain ID to get token information for"),
+    chainId: chainIdSchema.describe("Chain ID to get token information for. Examples: '1' (Ethereum), '56' (BNB Chain), '7565164' (Solana)"),
 
     /** Optional token address to filter results */
-    tokenAddress: z.string().optional().describe("Specific token address to query information for"),
+    tokenAddress: z.string().optional().describe("Token address to query information for. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address"),
 
     /** Optional search term to filter tokens by name or symbol */
-    search: z.string().optional().describe("Search term to filter tokens by name or symbol"),
+    search: z.string().optional().describe("Search term to filter tokens by name or symbol (e.g., 'USDC', 'Ethereum')"),
 });
 
-export type GetTokensInfoParams = z.infer<typeof getTokensInfoSchema>;
+export type GetDebridgeTokensInfoParams = z.infer<typeof getDebridgeTokensInfoSchema>;

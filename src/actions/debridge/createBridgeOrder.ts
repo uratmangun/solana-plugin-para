@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { Action } from "../../types/action";
-import { createBridgeOrder } from "../../tools/debridge/createBridgeOrder";
+import { createDebridgeBridgeOrder } from "../../tools/debridge/createBridgeOrder";
 import { SolanaAgentKit } from "../../agent";
 
-const createBridgeOrderAction: Action = {
+const createDebridgeBridgeOrderAction: Action = {
   name: "DEBRIDGE_CREATE_BRIDGE_ORDER",
-  description: "Create a bridge order to transfer tokens between chains. Returns both the transaction data and estimated amounts.",
+  description: "Create a cross-chain bridge order using deBridge to transfer tokens between chains. Returns both the transaction data and estimated amounts.",
   similes: [
     "create bridge order",
     "bridge tokens between chains",
@@ -19,41 +19,41 @@ const createBridgeOrderAction: Action = {
     [
       {
         input: {
-          srcChainId: "1",
-          srcChainTokenIn: "0x0000000000000000000000000000000000000000",
-          srcChainTokenInAmount: "1000000000000000000",
-          dstChainId: "7565164",
-          dstChainTokenOut: "DBRiDgJAMsM95moTzJs7M9LnkGErpbv9v6CUR1DXnUu5",
-          dstChainTokenOutRecipient: "DYw8jCTfwHNRJhhmFcbXvVDXqmHZiPXQXqTOsPcZN1Nm"
+          srcChainId: "7565164", // Solana
+          srcChainTokenIn: "11111111111111111111111111111111", // Native SOL
+          srcChainTokenInAmount: "1000000000", // 1 SOL (9 decimals)
+          dstChainId: "1", // Ethereum
+          dstChainTokenOut: "0x0000000000000000000000000000000000000000", // ETH
+          dstChainTokenOutRecipient: "0x23C279e58ddF1018C3B9D0C224534fA2a83fb1d2" // ETH recipient
         },
         output: {
           status: "success",
           tx: {
-            data: "0x23b872dd000000000000000000000000742d35cc6634c0532925a3b844bc454e4438f44e000000000000000000000000e7351fd770a37282b91d153ee690b63579b6e837000000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            to: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            data: "0x...",
+            to: "0x...",
             value: "0"
           },
           estimation: {
             srcChainTokenIn: {
-              amount: "1000000000000000000",
+              amount: "1000000000",
+              tokenAddress: "11111111111111111111111111111111",
+              decimals: 9,
+              symbol: "SOL"
+            },
+            dstChainTokenOut: {
+              amount: "0.99",
               tokenAddress: "0x0000000000000000000000000000000000000000",
               decimals: 18,
               symbol: "ETH"
             },
-            dstChainTokenOut: {
-              amount: "50000000",
-              tokenAddress: "DBRiDgJAMsM95moTzJs7M9LnkGErpbv9v6CUR1DXnUu5",
-              decimals: 6,
-              symbol: "DBR"
-            },
             fees: {
-              srcChainTokenIn: "10000000000000000",
-              dstChainTokenOut: "500000"
+              srcChainTokenIn: "0.01",
+              dstChainTokenOut: "0.01"
             }
           },
-          message: "Successfully created bridge order from ETH to DBR"
+          message: "Bridge order created successfully"
         },
-        explanation: "Create a bridge order to transfer 1 ETH from Ethereum to DBR on Solana"
+        explanation: "Create a bridge order to transfer 1 SOL from Solana to ETH on Ethereum"
       }
     ]
   ],
@@ -80,7 +80,7 @@ const createBridgeOrderAction: Action = {
       // Get the agent's wallet address
       const walletAddress = agent.wallet.publicKey.toBase58();
       
-      const response = await createBridgeOrder({
+      const response = await createDebridgeBridgeOrder({
         srcChainId: input.srcChainId,
         srcChainTokenIn: input.srcChainTokenIn,
         srcChainTokenInAmount: input.srcChainTokenInAmount,
@@ -100,15 +100,11 @@ const createBridgeOrderAction: Action = {
         affiliateFeePercent: input.affiliateFeePercent
       });
 
-      // Get token symbols for better message
-      const srcSymbol = response.estimation.srcChainTokenIn.symbol;
-      const dstSymbol = response.estimation.dstChainTokenOut.symbol;
 
       return {
         status: "success",
-        tx: response.tx,
-        estimation: response.estimation,
-        message: `Successfully created bridge order from ${srcSymbol} to ${dstSymbol}`
+        ...response,
+        message: "Bridge order created successfully"
       };
     } catch (error: any) {
       return {
@@ -119,4 +115,4 @@ const createBridgeOrderAction: Action = {
   }
 };
 
-export default createBridgeOrderAction;
+export default createDebridgeBridgeOrderAction;

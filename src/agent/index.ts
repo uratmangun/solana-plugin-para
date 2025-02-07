@@ -122,10 +122,11 @@ import {
   getPriceInference,
   getAllTopics,
   getInferenceByTopicId,
-  getSupportedChains,
-  createBridgeOrder,
-  checkTransactionStatus,
-  executeBridgeOrder,
+  getDebridgeSupportedChains,
+  getDebridgeTokensInfo,
+  createDebridgeBridgeOrder,
+  checkDebridgeTransactionStatus,
+  executeDebridgeBridgeOrder,
   closeAccounts,
   burnTokens,
   mergeTokens,
@@ -150,10 +151,11 @@ import {
   FlashCloseTradeParams,
   HeliusWebhookIdResponse,
   HeliusWebhookResponse,
-  BridgeOrderInput,
-  SupportedChainsResponse,
-  BridgeOrderResponse,
-  BridgeOrderStatusResponse
+  deBridgeOrderInput,
+  deBridgeSupportedChainsResponse,
+  deBridgeOrderResponse,
+  deBridgeOrderStatusResponse,
+  deBridgeTokensInfoResponse,
 } from "../types";
 import {
   DasApiAsset,
@@ -1116,19 +1118,26 @@ export class SolanaAgentKit {
     return simulate_switchboard_feed(this, feed, crossbarUrl);
   }
 
-  async getBridgeSupportedChains(): Promise<SupportedChainsResponse> {
-    return getSupportedChains();
+  async getDebridgeSupportedChains(): Promise<deBridgeSupportedChainsResponse> {
+    return getDebridgeSupportedChains();
   }
 
-  async createBridgeOrder(orderInput: BridgeOrderInput): Promise<BridgeOrderResponse> {
-    return createBridgeOrder(orderInput);
+  async getDebridgeTokensInfo(
+    chainId: string,
+    search?: string,
+  ): Promise<deBridgeTokensInfoResponse> {
+    return getDebridgeTokensInfo({ chainId, search });
   }
 
-  async checkBridgeStatus(txHashOrOrderId: string): Promise<BridgeOrderStatusResponse[]> {
-    return checkTransactionStatus(this, txHashOrOrderId);
+  async createDebridgeOrder(orderInput: deBridgeOrderInput): Promise<deBridgeOrderResponse> {
+    return createDebridgeBridgeOrder(orderInput);
   }
 
-  async bridge(orderData: string): Promise<string> {
-    return executeBridgeOrder(this, orderData);
+  async executeDebridgeOrder(transactionData: string): Promise<string> {
+    return executeDebridgeBridgeOrder(this, transactionData);
+  }
+
+  async checkDebridgeTransactionStatus(txHashOrOrderId: string): Promise<deBridgeOrderStatusResponse[]> {
+    return checkDebridgeTransactionStatus(this, txHashOrOrderId);
   }
 }

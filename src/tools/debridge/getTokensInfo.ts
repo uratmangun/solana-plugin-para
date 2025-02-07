@@ -1,8 +1,8 @@
 import { DEBRIDGE_API } from "../../constants";
 import { 
-    TokensInfoResponse, 
-    GetTokensInfoParams,
-    getTokensInfoSchema
+    deBridgeTokensInfoResponse, 
+    GetDebridgeTokensInfoParams,
+    getDebridgeTokensInfoSchema
 } from "../../types";
 import { SolanaAgentKit } from "../../agent";
 
@@ -20,19 +20,19 @@ import { SolanaAgentKit } from "../../agent";
  * @example
  * ```typescript
  * // Get USDC on Ethereum
- * const ethUSDC = await getTokensInfo({
+ * const ethUSDC = await getDebridgeTokensInfo({
  *   chainId: "1",
  *   search: "USDC"
  * });
  * 
  * // Get USDC on BSC
- * const bscUSDC = await getTokensInfo({
+ * const bscUSDC = await getDebridgeTokensInfo({
  *   chainId: "56",
  *   search: "USDC"
  * });
  * ```
  */
-export async function getTokensInfo(parameters: GetTokensInfoParams): Promise<TokensInfoResponse> {
+export async function getDebridgeTokensInfo(parameters: GetDebridgeTokensInfoParams): Promise<deBridgeTokensInfoResponse> {
     try {
         const url = `${DEBRIDGE_API}/token-list?chainId=${parameters.chainId}`;
         const response = await fetch(url);

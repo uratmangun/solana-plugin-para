@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { Action } from "../../types/action";
-import { getTokensInfo } from "../../tools/debridge/getTokensInfo";
+import { getDebridgeTokensInfo } from "../../tools/debridge/getTokensInfo";
 import { SolanaAgentKit } from "../../agent";
-import { getTokensInfoSchema } from "../../types";
+import { getDebridgeTokensInfoSchema } from "../../types";
 
-const getTokensInfoAction: Action = {
+const getDebridgeTokensInfoAction: Action = {
   name: "DEBRIDGE_GET_TOKENS_INFO",
-  description: "Get information about tokens available for bridging on a specific chain. First use DEBRIDGE_GET_SUPPORTED_CHAINS to get the list of valid chain IDs, then provide the chain ID from that list. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address.",
+  description: "Get information about tokens available for cross-chain bridging via deBridge protocol. First use DEBRIDGE_GET_SUPPORTED_CHAINS to get the list of valid chain IDs, then provide the chain ID from that list. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address.",
   similes: [
     "list available tokens for bridging",
     "show tokens I can bridge",
@@ -21,12 +21,12 @@ const getTokensInfoAction: Action = {
       {
         input: {
           chainId: "1",
-          search: "USDC"
+          search: "USDC",
         },
         output: {
           status: "success",
           tokens: {
-            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+            "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
               name: "USD Coin",
               symbol: "USDC",
               address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -37,15 +37,17 @@ const getTokensInfoAction: Action = {
         },
         explanation: "After getting chain IDs from DEBRIDGE_GET_SUPPORTED_CHAINS, search for USDC tokens on Ethereum using its chain ID"
       },
+    ],
+    [
       {
         input: {
           chainId: "56",
-          search: "USDC"
+          search: "USDC",
         },
         output: {
           status: "success",
           tokens: {
-            "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d": {
+            "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d": {
               name: "USD Coin",
               symbol: "USDC",
               address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
@@ -58,10 +60,10 @@ const getTokensInfoAction: Action = {
       }
     ]
   ],
-  schema: getTokensInfoSchema,
+  schema: getDebridgeTokensInfoSchema,
   handler: async (_agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const response = await getTokensInfo({
+      const response = await getDebridgeTokensInfo({
         chainId: input.chainId,
         tokenAddress: input.tokenAddress,
         search: input.search
@@ -69,20 +71,19 @@ const getTokensInfoAction: Action = {
 
       const searchMsg = input.search ? ` matching '${input.search}'` : '';
       const chainMsg = ` on chain ${input.chainId}`;
-      
+
       return {
         status: "success",
         tokens: response.tokens,
         message: `Found tokens${searchMsg}${chainMsg}`
       };
     } catch (error: any) {
-      console.error("Error in getTokensInfo action:", error);
       return {
         status: "error",
         message: `Failed to fetch token information: ${error.message}`
       };
     }
-  }
+  },
 };
 
-export default getTokensInfoAction;
+export default getDebridgeTokensInfoAction;
