@@ -1,7 +1,7 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
-export class GetSupportedChainsTool extends Tool {
+export class GetDebridgeSupportedChainsTool extends Tool {
   name = "get_supported_chains";
   description = `This tool gets a list of chains supported by the deBridge DLN protocol.
 
