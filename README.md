@@ -564,12 +564,19 @@ The Solana Agent Kit supports cross-chain token transfers using deBridge's DLN p
 
 1. Check supported chains:
 ```typescript
-const chains = await agent.getBridgeSupportedChains();
+const chains = await agent.getDebridgeSupportedChains();
 console.log("Available chains:", chains);
 // Example output: { chains: [{ chainId: "1", chainName: "Ethereum" }, { chainId: "7565164", chainName: "Solana" }] }
 ```
 
-2. Create a bridge order (SOL -> ETH):
+2. Get available tokens (optional):
+```typescript
+const tokens = await agent.getDebridgeTokensInfo("1", "USDC"); // Search for USDC on Ethereum
+console.log("Available tokens:", tokens);
+// Shows tokens matching 'USDC' on the specified chain
+```
+
+3. Create bridge order (SOL -> ETH):
 ```typescript
 const orderInput = {
   srcChainId: "7565164", // Solana
@@ -580,20 +587,20 @@ const orderInput = {
   dstChainTokenOutRecipient: "0x23C279e58ddF1018C3B9D0C224534fA2a83fb1d2" // ETH recipient
 };
 
-const order = await agent.createBridgeOrder(orderInput);
+const order = await agent.createDebridgeOrder(orderInput);
 console.log("Order created:", order);
 // Contains transaction data and estimated amounts
 ```
 
-3. Execute the bridge order:
+4. Execute the bridge order:
 ```typescript
-const signature = await agent.bridge(order.tx.data);
+const signature = await agent.executeDebridgeOrder(order.tx.data);
 console.log("Bridge transaction sent:", signature);
 ```
 
-4. Check bridge status:
+5. Check bridge status:
 ```typescript
-const status = await agent.checkBridgeStatus(signature);
+const status = await agent.checkDebridgeTransactionStatus(signature);
 console.log("Bridge status:", status);
 // Shows current status: Created, Fulfilled, etc.
 ```
