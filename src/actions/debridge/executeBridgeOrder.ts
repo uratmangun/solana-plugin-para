@@ -4,8 +4,8 @@ import { executeBridgeOrder } from "../../tools/debridge/executeBridgeOrder";
 import { SolanaAgentKit } from "../../agent";
 
 const executeBridgeOrderAction: Action = {
-  name: "EXECUTE_BRIDGE_ORDER",
-  description: "Execute a cross-chain bridge transaction on Solana using the transaction data from CREATE_BRIDGE_ORDER.",
+  name: "DEBRIDGE_EXECUTE_BRIDGE_ORDER",
+  description: "Execute a cross-chain bridge transaction on Solana using the transaction data from DEBRIDGE_CREATE_BRIDGE_ORDER.",
   similes: [
     "execute bridge transaction",
     "send bridge transaction",
@@ -25,12 +25,12 @@ const executeBridgeOrderAction: Action = {
           signature: "4jJ6UvwqzHHqKif7hKvz3JwA8qQFEAuQqFBpPgX6qHzk9UF9eBiNJSqrEEtbqzVBGZYqoAKK6hUqHP4YmwmvQsZm",
           message: "Successfully executed bridge transaction. Signature: 4jJ6..."
         },
-        explanation: "Execute a cross-chain bridge transaction using transaction data from CREATE_BRIDGE_ORDER."
+        explanation: "Execute a cross-chain bridge transaction using transaction data from DEBRIDGE_CREATE_BRIDGE_ORDER."
       }
     ]
   ],
   schema: z.object({
-    transactionData: z.string().describe("Transaction data obtained from CREATE_BRIDGE_ORDER command")
+    transactionData: z.string().describe("Transaction data obtained from DEBRIDGE_CREATE_BRIDGE_ORDER command")
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>): Promise<Record<string, any>> => {
     try {

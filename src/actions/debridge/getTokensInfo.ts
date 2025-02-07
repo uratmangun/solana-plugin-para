@@ -5,8 +5,8 @@ import { SolanaAgentKit } from "../../agent";
 import { getTokensInfoSchema } from "../../types";
 
 const getTokensInfoAction: Action = {
-  name: "GET_TOKENS_INFO",
-  description: "Get information about tokens available for bridging on a specific chain. First use GET_SUPPORTED_CHAINS to get the list of valid chain IDs, then provide the chain ID from that list. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address.",
+  name: "DEBRIDGE_GET_TOKENS_INFO",
+  description: "Get information about tokens available for bridging on a specific chain. First use DEBRIDGE_GET_SUPPORTED_CHAINS to get the list of valid chain IDs, then provide the chain ID from that list. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address.",
   similes: [
     "list available tokens for bridging",
     "show tokens I can bridge",
@@ -35,7 +35,7 @@ const getTokensInfoAction: Action = {
           },
           message: "Found tokens matching 'USDC' on Ethereum"
         },
-        explanation: "After getting chain IDs from GET_SUPPORTED_CHAINS, search for USDC tokens on Ethereum using its chain ID"
+        explanation: "After getting chain IDs from DEBRIDGE_GET_SUPPORTED_CHAINS, search for USDC tokens on Ethereum using its chain ID"
       },
       {
         input: {
@@ -54,7 +54,7 @@ const getTokensInfoAction: Action = {
           },
           message: "Found tokens matching 'USDC' on BSC"
         },
-        explanation: "After getting chain IDs from GET_SUPPORTED_CHAINS, search for USDC tokens on BSC using its chain ID"
+        explanation: "After getting chain IDs from DEBRIDGE_GET_SUPPORTED_CHAINS, search for USDC tokens on BSC using its chain ID"
       }
     ]
   ],

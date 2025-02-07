@@ -4,7 +4,7 @@ import { createBridgeOrder } from "../../tools/debridge/createBridgeOrder";
 import { SolanaAgentKit } from "../../agent";
 
 const createBridgeOrderAction: Action = {
-  name: "CREATE_BRIDGE_ORDER",
+  name: "DEBRIDGE_CREATE_BRIDGE_ORDER",
   description: "Create a bridge order to transfer tokens between chains. Returns both the transaction data and estimated amounts.",
   similes: [
     "create bridge order",

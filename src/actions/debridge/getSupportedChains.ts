@@ -3,8 +3,8 @@ import { Action } from "../../types/action";
 import { getSupportedChains } from "../../tools/debridge/getSupportedChains";
 import { SolanaAgentKit } from "../../agent";
 
-const getSupportedChainsAction: Action = {
-  name: "GET_SUPPORTED_CHAINS",
+export const DEBRIDGE_GET_SUPPORTED_CHAINS: Action = {
+  name: "DEBRIDGE_GET_SUPPORTED_CHAINS",
   description: "Fetch the list of supported chains for cross-chain bridging via deBridge",
   similes: [
     "list supported chains for bridging",
@@ -53,4 +53,4 @@ const getSupportedChainsAction: Action = {
   }
 };
 
-export default getSupportedChainsAction;
+export default DEBRIDGE_GET_SUPPORTED_CHAINS;

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { checkTransactionStatus } from "../../tools/debridge";
 
 const checkTransactionStatusAction: Action = {
-  name: "CHECK_BRIDGE_TRANSACTION_STATUS",
+  name: "DEBRIDGE_CHECK_TRANSACTION_STATUS",
   similes: [
     "check bridge status",
     "check debridge transaction",
