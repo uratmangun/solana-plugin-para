@@ -131,10 +131,10 @@ import {
   burnTokens,
   mergeTokens,
   spreadToken,
-  AssetType,
   PriorityFee,
   TargetTokenStruct,
   InputAssetStruct,
+  fluxBeamCreatePool,
 } from "../tools";
 import {
   Config,
@@ -162,7 +162,6 @@ import {
   DasApiAssetList,
   GetAssetsByAuthorityRpcInput,
   GetAssetsByCreatorRpcInput,
-  SearchAssetsRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
 
@@ -1139,5 +1138,19 @@ export class SolanaAgentKit {
 
   async checkDebridgeTransactionStatus(txHashOrOrderId: string): Promise<deBridgeOrderStatusResponse[]> {
     return checkDebridgeTransactionStatus(this, txHashOrOrderId);
+
+  async fluxbeamCreatePool(
+    token_a: PublicKey,
+    token_a_amount: number,
+    token_b: PublicKey,
+    token_b_amount: number,
+  ): Promise<string> {
+    return fluxBeamCreatePool(
+      this,
+      token_a,
+      token_a_amount,
+      token_b,
+      token_b_amount,
+    );
   }
 }

@@ -457,3 +457,21 @@ export const getDebridgeTokensInfoSchema = z.object({
 });
 
 export type GetDebridgeTokensInfoParams = z.infer<typeof getDebridgeTokensInfoSchema>;
+
+export interface FluxbeamServerResponse {
+  signature: string;
+}
+
+export interface Quote {
+  amountIn: number;
+  inputMint: string;
+  minimumOut: number;
+  outAmount: number;
+  outputMint: string;
+  pool: string;
+  program: string;
+}
+
+export interface TransformedResponse {
+  quote: Quote;
+}
