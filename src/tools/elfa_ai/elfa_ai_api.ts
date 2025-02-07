@@ -19,12 +19,8 @@ function createAxiosInstance(apiKey: string | undefined): AxiosInstance {
 export async function pingElfaAiApi(agent: SolanaAgentKit): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/ping");
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/ping");
+  return response.data;
 }
 
 export async function getElfaAiApiKeyStatus(
@@ -32,12 +28,8 @@ export async function getElfaAiApiKeyStatus(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/key-status");
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/key-status");
+  return response.data;
 }
 
 export async function getSmartMentions(
@@ -47,14 +39,10 @@ export async function getSmartMentions(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/mentions", {
-      params: { limit, offset },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/mentions", {
+    params: { limit, offset },
+  });
+  return response.data;
 }
 
 export async function getTopMentionsByTicker(
@@ -67,14 +55,10 @@ export async function getTopMentionsByTicker(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/top-mentions", {
-      params: { ticker, timeWindow, page, pageSize, includeAccountDetails },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/top-mentions", {
+    params: { ticker, timeWindow, page, pageSize, includeAccountDetails },
+  });
+  return response.data;
 }
 
 export async function searchMentionsByKeywords(
@@ -87,14 +71,10 @@ export async function searchMentionsByKeywords(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/mentions/search", {
-      params: { keywords, from, to, limit, cursor },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/mentions/search", {
+    params: { keywords, from, to, limit, cursor },
+  });
+  return response.data;
 }
 
 export async function getTrendingTokens(
@@ -106,14 +86,10 @@ export async function getTrendingTokens(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/trending-tokens", {
-      params: { timeWindow, page, pageSize, minMentions },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/trending-tokens", {
+    params: { timeWindow, page, pageSize, minMentions },
+  });
+  return response.data;
 }
 
 export async function getSmartTwitterAccountStats(
@@ -122,12 +98,8 @@ export async function getSmartTwitterAccountStats(
 ): Promise<any> {
   const apiKey = agent.config.ELFA_AI_API_KEY;
   const axiosInstance = createAxiosInstance(apiKey);
-  try {
-    const response = await axiosInstance.get("/v1/account/smart-stats", {
-      params: { username },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get("/v1/account/smart-stats", {
+    params: { username },
+  });
+  return response.data;
 }
