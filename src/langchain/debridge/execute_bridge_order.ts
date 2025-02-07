@@ -1,53 +1,34 @@
-import { z } from "zod";
-import { Action } from "../../types/action";
-import { executeDebridgeBridgeOrder } from "../../tools/debridge/executeBridgeOrder";
+import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
+import { executeDebridgeBridgeOrder } from "../../tools/debridge/executeBridgeOrder";
 
-const executeBridgeOrderAction: Action = {
-  name: "EXECUTE_BRIDGE_ORDER",
-  description: "Execute a cross-chain bridge transaction on Solana using the transaction data from CREATE_BRIDGE_ORDER.",
-  similes: [
-    "execute bridge transaction",
-    "send bridge transaction",
-    "submit bridge transaction",
-    "process bridge transaction",
-    "complete bridge transfer",
-    "finalize cross-chain transfer"
-  ],
-  examples: [
-    [
-      {
-        input: {
-          transactionData: "0x23b872dd000000000000000000000000742d35cc6634c0532925a3b844bc454e4438f44e000000000000000000000000e7351fd770a37282b91d153ee690b63579b6e837000000000000000000000000000000000000000000000000000de0b6b3a7640000"
-        },
-        output: {
-          status: "success",
-          signature: "4jJ6UvwqzHHqKif7hKvz3JwA8qQFEAuQqFBpPgX6qHzk9UF9eBiNJSqrEEtbqzVBGZYqoAKK6hUqHP4YmwmvQsZm",
-          message: "Successfully executed bridge transaction. Signature: 4jJ6..."
-        },
-        explanation: "Execute a cross-chain bridge transaction using transaction data from CREATE_BRIDGE_ORDER."
-      }
-    ]
-  ],
-  schema: z.object({
-    transactionData: z.string().describe("Transaction data obtained from CREATE_BRIDGE_ORDER command")
-  }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>): Promise<Record<string, any>> => {
+export class ExecuteDebridgeOrderTool extends Tool {
+  name = "execute_bridge_order";
+  description = `Execute a cross-chain bridge transaction on Solana.
+
+  Inputs (input is a JSON string):
+  - transactionData: string, hex-encoded transaction data from create_bridge_order (e.g., "0x23b872dd...")`;
+
+  constructor(private solanaKit: SolanaAgentKit) {
+    super();
+  }
+
+  protected async _call(input: string): Promise<string> {
     try {
-      const signature = await executeDebridgeBridgeOrder(agent, input.transactionData);
+      const parsedInput = JSON.parse(input);
+      const signature = await executeDebridgeBridgeOrder(this.solanaKit, parsedInput.transactionData);
 
-      return {
+      return JSON.stringify({
         status: "success",
+        message: "Bridge transaction executed successfully",
         signature,
-        message: `Successfully executed bridge transaction. Signature: ${signature.slice(0, 4)}...`
-      };
+      });
     } catch (error: any) {
-      return {
+      return JSON.stringify({
         status: "error",
-        message: `Failed to execute bridge transaction: ${error.message}`
-      };
+        message: error.message,
+        code: error.code || "UNKNOWN_ERROR",
+      });
     }
   }
-};
-
-export default executeBridgeOrderAction;
+}

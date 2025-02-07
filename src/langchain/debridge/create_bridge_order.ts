@@ -2,7 +2,7 @@ import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 import { deBridgeOrderInput } from "../../types";
 
-export class CreateBridgeOrderTool extends Tool {
+export class CreateDebridgeOrderTool extends Tool {
   name = "create_bridge_order";
   description = `This tool creates a new bridge order for cross-chain token transfers.
 
