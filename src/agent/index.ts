@@ -1128,7 +1128,9 @@ export class SolanaAgentKit {
     return getDebridgeTokensInfo({ chainId, search });
   }
 
-  async createDebridgeOrder(orderInput: deBridgeOrderInput): Promise<deBridgeOrderResponse> {
+  async createDebridgeOrder(
+    orderInput: deBridgeOrderInput,
+  ): Promise<deBridgeOrderResponse> {
     return createDebridgeBridgeOrder(orderInput);
   }
 
@@ -1136,7 +1138,9 @@ export class SolanaAgentKit {
     return executeDebridgeBridgeOrder(this, transactionData);
   }
 
-  async checkDebridgeTransactionStatus(txHashOrOrderId: string): Promise<deBridgeOrderStatusResponse[]> {
+  async checkDebridgeTransactionStatus(
+    txHashOrOrderId: string,
+  ): Promise<deBridgeOrderStatusResponse[]> {
     return checkDebridgeTransactionStatus(this, txHashOrOrderId);
   }
 

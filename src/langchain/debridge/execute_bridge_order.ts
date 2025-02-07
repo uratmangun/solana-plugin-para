@@ -16,7 +16,10 @@ export class ExecuteDebridgeOrderTool extends Tool {
   protected async _call(input: string): Promise<string> {
     try {
       const parsedInput = JSON.parse(input);
-      const signature = await executeDebridgeBridgeOrder(this.solanaKit, parsedInput.transactionData);
+      const signature = await executeDebridgeBridgeOrder(
+        this.solanaKit,
+        parsedInput.transactionData,
+      );
 
       return JSON.stringify({
         status: "success",

@@ -1,6 +1,9 @@
 import { SolanaAgentKit } from "../../agent";
 import { DEBRIDGE_API } from "../../constants";
-import { deBridgeOrderStatusResponse, deBridgeOrderIdsResponse } from "../../types";
+import {
+  deBridgeOrderStatusResponse,
+  deBridgeOrderIdsResponse,
+} from "../../types";
 
 /**
  * Check the status of a bridge transaction using its transaction hash
@@ -11,7 +14,7 @@ import { deBridgeOrderStatusResponse, deBridgeOrderIdsResponse } from "../../typ
  */
 export async function checkDebridgeTransactionStatus(
   agent: SolanaAgentKit,
-  txHash: string
+  txHash: string,
 ): Promise<deBridgeOrderStatusResponse[]> {
   // First get the order IDs for the transaction
   const orderIdsUrl = `${DEBRIDGE_API}/dln/tx/${txHash}/order-ids`;
@@ -22,7 +25,7 @@ export async function checkDebridgeTransactionStatus(
     if (responseData.errorCode === 2) {
       throw new Error("Invalid transaction hash format");
     } else {
-      throw new Error(responseData.errorMessage || 'Unknown error');
+      throw new Error(responseData.errorMessage || "Unknown error");
     }
   }
 
@@ -36,7 +39,7 @@ export async function checkDebridgeTransactionStatus(
     orderIdsData.orderIds.map(async (orderId) => {
       const statusUrl = `${DEBRIDGE_API}/dln/order/${orderId}/status`;
       const statusResponse = await fetch(statusUrl);
-      
+
       if (!statusResponse.ok) {
         const text = await statusResponse.text();
         throw new Error(`Failed to get status for order ${orderId}: ${text}`);
@@ -46,7 +49,7 @@ export async function checkDebridgeTransactionStatus(
       // Add the deBridge app link
       statusData.orderLink = `https://app.debridge.finance/order?orderId=${orderId}`;
       return statusData;
-    })
+    }),
   );
 
   return statuses;

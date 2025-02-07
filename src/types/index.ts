@@ -416,7 +416,15 @@ export interface deBridgeOrderIdsResponse {
 
 export interface deBridgeOrderStatusResponse {
   orderId: string;
-  status: "None" | "Created" | "Fulfilled" | "SentUnlock" | "OrderCancelled" | "SentOrderCancel" | "ClaimedUnlock" | "ClaimedOrderCancel";
+  status:
+    | "None"
+    | "Created"
+    | "Fulfilled"
+    | "SentUnlock"
+    | "OrderCancelled"
+    | "SentOrderCancel"
+    | "ClaimedUnlock"
+    | "ClaimedOrderCancel";
   srcChainTxHash?: string;
   dstChainTxHash?: string;
   orderLink?: string;
@@ -429,34 +437,54 @@ export const EVM_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 
 // Chain ID validation schema
 export const chainIdSchema = z.string().refine(
-    (val) => {
-        const num = Number.parseInt(val, 10);
-        // Regular chain IDs (1-99999)
-        if (num > 0 && num < 100000) return true;
-        // Special chain IDs (100000000+)
-        if (num >= 100000000) return true;
-        // Solana chain ID (7565164)
-        if (num === 7565164) return true;
-        return false;
-    },
-    {
-        message: "Chain ID must be either 1-99999, 7565164 (Solana), or 100000000+",
+  (val) => {
+    const num = Number.parseInt(val, 10);
+    // Regular chain IDs (1-99999)
+    if (num > 0 && num < 100000) {
+      return true;
     }
+    // Special chain IDs (100000000+)
+    if (num >= 100000000) {
+      return true;
+    }
+    // Solana chain ID (7565164)
+    if (num === 7565164) {
+      return true;
+    }
+    return false;
+  },
+  {
+    message: "Chain ID must be either 1-99999, 7565164 (Solana), or 100000000+",
+  },
 );
 
 // Token info parameters schema
 export const getDebridgeTokensInfoSchema = z.object({
-    /** Chain ID to query tokens for */
-    chainId: chainIdSchema.describe("Chain ID to get token information for. Examples: '1' (Ethereum), '56' (BNB Chain), '7565164' (Solana)"),
+  /** Chain ID to query tokens for */
+  chainId: chainIdSchema.describe(
+    "Chain ID to get token information for. Examples: '1' (Ethereum), '56' (BNB Chain), '7565164' (Solana)",
+  ),
 
-    /** Optional token address to filter results */
-    tokenAddress: z.string().optional().describe("Token address to query information for. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address"),
+  /** Optional token address to filter results */
+  tokenAddress: z
+    .string()
+    .optional()
+    .describe(
+      "Token address to query information for. For EVM chains: use 0x-prefixed address. For Solana: use base58 token address",
+    ),
 
-    /** Optional search term to filter tokens by name or symbol */
-    search: z.string().optional().describe("Search term to filter tokens by name or symbol (e.g., 'USDC', 'Ethereum')"),
+  /** Optional search term to filter tokens by name or symbol */
+  search: z
+    .string()
+    .optional()
+    .describe(
+      "Search term to filter tokens by name or symbol (e.g., 'USDC', 'Ethereum')",
+    ),
 });
 
-export type GetDebridgeTokensInfoParams = z.infer<typeof getDebridgeTokensInfoSchema>;
+export type GetDebridgeTokensInfoParams = z.infer<
+  typeof getDebridgeTokensInfoSchema
+>;
 
 export interface FluxbeamServerResponse {
   signature: string;

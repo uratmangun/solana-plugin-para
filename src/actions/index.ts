@@ -193,7 +193,8 @@ export const ACTIONS = {
   DEBRIDGE_GET_SUPPORTED_CHAINS_ACTION: getDebridgeSupportedChainsAction,
   DEBRIDGE_GET_TOKENS_INFO_ACTION: getDebridgeTokensInfoAction,
   DEBRIDGE_CREATE_BRIDGE_ORDER_ACTION: createDebridgeBridgeOrderAction,
-  DEBRIDGE_CHECK_TRANSACTION_STATUS_ACTION: checkDebridgeTransactionStatusAction,
+  DEBRIDGE_CHECK_TRANSACTION_STATUS_ACTION:
+    checkDebridgeTransactionStatusAction,
   DEBRIDGE_EXECUTE_BRIDGE_ORDER_ACTION: executeDebridgeBridgeOrderAction,
   SOLUTIOFI_CLOSE_ACCOUNTS_ACTION: closeAccountsAction,
   SOLUTIOFI_BURN_TOKENS_ACTION: burnTokensAction,

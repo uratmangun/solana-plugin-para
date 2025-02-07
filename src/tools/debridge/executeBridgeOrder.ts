@@ -13,13 +13,13 @@ export async function executeDebridgeBridgeOrder(
 ): Promise<string> {
   // Convert transaction data to buffer
   const txBuffer = Buffer.from(transactionData.substring(2), "hex");
-  
+
   // Deserialize transaction
   const transaction = VersionedTransaction.deserialize(txBuffer);
 
   if (!transaction.message.staticAccountKeys?.length) {
     throw new Error(
-      "Invalid transaction: No account keys found in the transaction"
+      "Invalid transaction: No account keys found in the transaction",
     );
   }
 
@@ -34,8 +34,8 @@ export async function executeDebridgeBridgeOrder(
   const signature = await agent.connection.sendTransaction(transaction, {
     skipPreflight: false,
     preflightCommitment: "confirmed",
-    maxRetries: 3
+    maxRetries: 3,
   });
-  
+
   return signature;
 }

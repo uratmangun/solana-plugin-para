@@ -11,32 +11,38 @@ const checkDebridgeTransactionStatusAction: Action = {
     "get bridge status",
     "bridge transaction status",
   ],
-  description: "Check the status of a cross-chain bridge transaction on deBridge",
+  description:
+    "Check the status of a cross-chain bridge transaction on deBridge",
   examples: [
     [
       {
         input: {
-          txHash: "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
+          txHash:
+            "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
         },
         output: {
           status: "success",
           message: "Bridge transaction status retrieved successfully",
           transaction: {
             hash: "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
-            explorerUrl: "https://explorer.solana.com/tx/5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX"
+            explorerUrl:
+              "https://explorer.solana.com/tx/5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
           },
           orders: [
             {
               status: "completed",
-              srcChainTxHash: "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
+              srcChainTxHash:
+                "5v6Jx3qHsNaQvPe1Cs3AooAiY2ZnutxQHNJrHw9SwJzAeaDXMaD2JYGE579CFk88jMFw4YiKqmLUc6QCAwvhjKQX",
               dstChainTxHash: "0x1234567890abcdef",
-              orderLink: "https://app.debridge.finance/order?orderId=0x9876543210",
-            }
-          ]
+              orderLink:
+                "https://app.debridge.finance/order?orderId=0x9876543210",
+            },
+          ],
         },
-        explanation: "Check the status of a bridge transaction from Solana to Ethereum"
-      }
-    ]
+        explanation:
+          "Check the status of a bridge transaction from Solana to Ethereum",
+      },
+    ],
   ],
   schema: z.object({
     txHash: z.string().describe("Transaction hash to check status for"),
@@ -50,14 +56,14 @@ const checkDebridgeTransactionStatusAction: Action = {
         message: "Bridge transaction status retrieved successfully",
         transaction: {
           hash: input.txHash,
-          explorerUrl: `https://explorer.solana.com/tx/${input.txHash}`
+          explorerUrl: `https://explorer.solana.com/tx/${input.txHash}`,
         },
-        orders
+        orders,
       };
     } catch (error: any) {
       return {
         status: "error",
-        message: error.message
+        message: error.message,
       };
     }
   },

@@ -18,7 +18,8 @@ export class CheckDebridgeStatusTool extends Tool {
       if (!txHashOrOrderId) {
         throw new Error("Missing txHashOrOrderId in input");
       }
-      const result = await this.solanaKit.checkDebridgeTransactionStatus(txHashOrOrderId);
+      const result =
+        await this.solanaKit.checkDebridgeTransactionStatus(txHashOrOrderId);
       return JSON.stringify({
         status: "success",
         message: "Successfully retrieved bridge order status",
