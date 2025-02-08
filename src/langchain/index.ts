@@ -33,6 +33,8 @@ export * from "./allora";
 export * from "./solutiofi";
 export * from "./switchboard";
 export * from "./elfa_ai";
+export * from "./debridge";
+export * from "./fluxbeam";
 
 import type { SolanaAgentKit } from "../agent";
 import {
@@ -155,6 +157,7 @@ import {
   ElfaSearchMentionsTool,
   ElfaGetTopMentionsTool,
   ElfaAccountSmartStatsTool,
+  SolanaFluxbeamCreatePoolTool,
 } from "./index";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
@@ -278,5 +281,6 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new ElfaSearchMentionsTool(solanaKit),
     new ElfaGetTopMentionsTool(solanaKit),
     new ElfaAccountSmartStatsTool(solanaKit),
+    new SolanaFluxbeamCreatePoolTool(solanaKit),
   ];
 }
