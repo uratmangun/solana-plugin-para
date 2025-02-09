@@ -1,5 +1,4 @@
-import { Action } from "solana-agent-kit"
-import { SolanaAgentKit } from "solana-agent-kit"
+import { Action , SolanaAgentKit } from "solana-agent-kit"
 import { z } from "zod";
 import { closeEmptyTokenAccounts } from "../tools";
 

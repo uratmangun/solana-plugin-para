@@ -6,8 +6,6 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
@@ -24,11 +22,10 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
       "@packages/*": ["packages/*"]
     }
   },
-  "include": ["src/**/*", "packages/**/*"],
-  "exclude": ["node_modules", "dist", "packages"]
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
   

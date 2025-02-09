@@ -1,10 +1,10 @@
-import { SolanaAgentKit } from "../../src";
-import { createVercelAITools } from "../../src";
+import { SolanaAgentKit } from "../../packages/core/src";
+import { createVercelAITools } from "../../packages/core/src";
 import * as dotenv from "dotenv";
 import * as readline from "readline";
 import { streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-
+import { TokenPlugin } from "../../packages/plugin-token";
 dotenv.config();
 
 function validateEnvironment(): void {
@@ -93,6 +93,8 @@ async function runChatMode() {
       OPENAI_API_KEY: process.env.OPENAI_API_KEY!,
     },
   );
+
+  solanaAgent.use(TokenPlugin);
 
   const tools = createVercelAITools(solanaAgent);
 
