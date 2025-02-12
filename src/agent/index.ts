@@ -164,6 +164,12 @@ import {
   GetAssetsByCreatorRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
+import getLatestPools from "../tools/coingecko/get_latest_pools";
+import getTokenInfo from "../tools/coingecko/get_token_info";
+import getTokenPriceData from "../tools/coingecko/get_token_price_data";
+import getTopGainers from "../tools/coingecko/get_top_gainers";
+import getTrendingPools from "../tools/coingecko/get_trending_pools";
+import getTrendingTokens from "../tools/coingecko/get_trending_tokens";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1157,5 +1163,32 @@ export class SolanaAgentKit {
       token_b,
       token_b_amount,
     );
+  }
+
+  async getCoingeckoLatestPools() {
+    return await getLatestPools(this);
+  }
+
+  async getTokenInfoUsingCoingecko(tokenAddress: string) {
+    return await getTokenInfo(this, tokenAddress);
+  }
+
+  async getTokenPriceDataUsingCoingecko(...tokenAddresses: string[]) {
+    return await getTokenPriceData(this, tokenAddresses);
+  }
+
+  async getTopGainersOnCoingecko(
+    duration?: "1h" | "24h" | "7d" | "14d" | "30d" | "60d" | "1y",
+    noOfCoins?: 300 | 500 | 1000 | "all",
+  ) {
+    return await getTopGainers(this, duration, noOfCoins);
+  }
+
+  async getCoingeckoTrendingPools(duration?: "5m" | "1h" | "24h" | "6h") {
+    return await getTrendingPools(this, duration);
+  }
+
+  async getTrendingTokensOnCoingecko() {
+    return await getTrendingTokens(this);
   }
 }
