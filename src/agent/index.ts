@@ -135,6 +135,12 @@ import {
   TargetTokenStruct,
   InputAssetStruct,
   fluxBeamCreatePool,
+  getLatestPools,
+  getTokenInfo,
+  getTokenPriceData,
+  getTopGainers,
+  getTrendingPools,
+  getTrendingTokens,
 } from "../tools";
 import {
   Config,
@@ -164,12 +170,6 @@ import {
   GetAssetsByCreatorRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
-import getLatestPools from "../tools/coingecko/get_latest_pools";
-import getTokenInfo from "../tools/coingecko/get_token_info";
-import getTokenPriceData from "../tools/coingecko/get_token_price_data";
-import getTopGainers from "../tools/coingecko/get_top_gainers";
-import getTrendingPools from "../tools/coingecko/get_trending_pools";
-import getTrendingTokens from "../tools/coingecko/get_trending_tokens";
 
 /**
  * Main class for interacting with Solana blockchain

@@ -1,6 +1,6 @@
 import { SolanaAgentKit } from "../../agent";
 
-export default async function getLatestPools(agent: SolanaAgentKit) {
+export async function getLatestPools(agent: SolanaAgentKit) {
   try {
     if (!agent.config.COINGECKO_PRO_API_KEY) {
       throw new Error("No CoinGecko Pro API key provided");

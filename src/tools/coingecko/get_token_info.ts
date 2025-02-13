@@ -1,6 +1,6 @@
 import { SolanaAgentKit } from "../../agent";
 
-export default async function getTokenInfo(
+export async function getTokenInfo(
   agent: SolanaAgentKit,
   tokenAddress: string,
 ) {

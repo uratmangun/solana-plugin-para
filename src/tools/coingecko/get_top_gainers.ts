@@ -1,6 +1,6 @@
 import { SolanaAgentKit } from "../../agent";
 
-export default async function getTopGainers(
+export async function getTopGainers(
   agent: SolanaAgentKit,
   duration: "1h" | "24h" | "7d" | "14d" | "30d" | "60d" | "1y" = "24h",
   topCoins: 300 | 500 | 1000 | "all" = "all",

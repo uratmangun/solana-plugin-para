@@ -1,6 +1,6 @@
 import { SolanaAgentKit } from "../../agent";
 
-export default async function getTrendingPools(
+export async function getTrendingPools(
   agent: SolanaAgentKit,
   duration: "5m" | "1h" | "24h" | "6h" = "24h",
 ) {
