@@ -1,17 +1,18 @@
 {
-    "name": "@solana-agent-kit/plugin-blinks",
-    "version": "1.0.0",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-      "build": "tsc",
-      "test": "jest"
-    },
-    "dependencies": {
-      "solana-agent-kit": "workspace:*",
-      "@solana/web3.js": "^1.98.0"
-    },
-    "peerDependencies": {
-      "solana-agent-kit": "^1.0.0"
-    }
+  "name": "@solana-agent-kit/plugin-blinks",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0",
+    "solana-agent-kit": "workspace:*",
+    "zod": "^3.24.1"
+  },
+  "peerDependencies": {
+    "solana-agent-kit": "^1.0.0"
   }
+}

@@ -5,6 +5,7 @@ import { z } from "zod";
 export interface Plugin {
   name: string;
   methods: Record<string, Function>;
+  actions: Action[];
   initialize(agent: SolanaAgentKit): void;
 }
 
@@ -15,6 +16,10 @@ export interface Config {
   FLASH_PRIVILEGE?: string;
   FLEXLEND_API_KEY?: string;
   HELIUS_API_KEY?: string;
+  ALLORA_API_KEY?: string;
+  ALLORA_API_URL?: string;
+  ALLORA_NETWORK?: string;
+  ETHEREUM_PRIVATE_KEY?: string;
 }
 
 export interface PumpFunTokenOptions {
