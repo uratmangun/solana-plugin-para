@@ -11,9 +11,12 @@ async function main() {
     }
   );
 
+
   // Load all plugins
   agent
-    .use(TokenPlugin)
+    .use(TokenPlugin);
+
+  console.log("Available methods on agent:", Object.keys(agent));
 
   console.log("Testing Token Plugin...");
   // Add your token plugin test here
