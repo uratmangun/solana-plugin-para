@@ -1,4 +1,4 @@
-import {SolanaAgentKit} from 'solana-agent-kit';
+import {SolanaAgentKit , createVercelAITools} from 'solana-agent-kit';
 import TokenPlugin from '@solana-agent-kit/plugin-token';
 
 async function main() {
@@ -11,15 +11,18 @@ async function main() {
     }
   );
 
-
   // Load all plugins
-  agent
-    .use(TokenPlugin);
-
+  agent.use(TokenPlugin);
+  
   console.log("Available methods on agent:", Object.keys(agent));
 
+  const tools = createVercelAITools(agent, TokenPlugin.actions);
+  console.log(tools)
+
+  // Test a method
   console.log("Testing Token Plugin...");
-  // Add your token plugin test here
+  const tokenData = await agent.getTokenDataByAddress("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  console.log("USDC Token Data:", tokenData);
 
   console.log("Testing NFT Plugin...");
   // Add your NFT plugin test here
