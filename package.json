@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "connect any ai agents to solana protocols",
   "scripts": {
+    "clean": "turbo run clean",
     "build": "turbo run build",
     "build:core": "turbo run build --filter=solana-agent-kit",
     "build:plugin-token": "turbo run build --filter=@solana-agent-kit/plugin-token",
@@ -11,7 +12,6 @@
     "build:plugin-misc": "turbo run build --filter=@solana-agent-kit/plugin-misc",
     "build:plugin-blinks": "turbo run build --filter=@solana-agent-kit/plugin-blinks",
     "docs": "typedoc src --out docs",
-    "test": "turbo run test",
     "generate": "tsx src/utils/keypair.ts",
     "lint": "turbo run lint",
     "lint:fix": "eslint . --ext .ts --fix",
