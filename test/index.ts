@@ -1,10 +1,10 @@
-import { SolanaAgentKit } from 'solana-agent-kit';
-import { TokenPlugin } from '@solana-agent-kit/plugin-token';
+import {SolanaAgentKit} from 'solana-agent-kit';
+import TokenPlugin from '@solana-agent-kit/plugin-token';
 
 async function main() {
   // Initialize agent with your test wallet
   const agent = new SolanaAgentKit(
-    process.env.PRIVATE_KEY!,
+    "process.env.PRIVATE_KEY"!,
     process.env.RPC_URL || "https://api.devnet.solana.com",
     {
       OPENAI_API_KEY: process.env.OPENAI_API_KEY

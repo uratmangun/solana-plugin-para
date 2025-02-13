@@ -8,6 +8,13 @@
     "build": "tsc",
     "test": "jest"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "dependencies": {
     "@lightprotocol/compressed-token": "^0.20.0",
     "@lightprotocol/stateless.js": "^0.20.0",
