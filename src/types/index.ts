@@ -19,6 +19,7 @@ export interface Config {
   ALLORA_NETWORK?: string;
   ELFA_AI_API_KEY?: string;
   COINGECKO_PRO_API_KEY?: string;
+  COINGECKO_DEMO_API_KEY?: string;
 }
 
 export interface Creator {
