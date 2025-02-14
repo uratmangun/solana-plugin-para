@@ -176,7 +176,7 @@ import {
   getSmartMentions,
   getTopMentionsByTicker,
   searchMentionsByKeywords,
-  getTrendingTokens,
+  getTrendingTokensUsingElfaAi,
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
 
@@ -1186,6 +1186,11 @@ export class SolanaAgentKit {
 
   async getTrendingTokens(): Promise<any> {
     const response = await getTrendingTokens(this);
+    return response;
+  }
+
+  async getTrendingTokensUsingElfaAi(): Promise<any> {
+    const response = await getTrendingTokensUsingElfaAi(this);
     return response;
   }
 

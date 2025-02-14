@@ -77,7 +77,7 @@ export async function searchMentionsByKeywords(
   return response.data;
 }
 
-export async function getTrendingTokens(
+export async function getTrendingTokensUsingElfaAi(
   agent: SolanaAgentKit,
   timeWindow: string = "24h",
   page: number = 1,
