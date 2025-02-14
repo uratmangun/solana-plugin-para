@@ -15,7 +15,7 @@ import { SolanaAgentKit } from "solana-agent-kit";
  * @param tokenAmount Payment amount for the task
  * @returns Object containing task creation transaction and generated taskId
  */
-export async function create_gibwork_task(
+export async function createGibworkTask(
   agent: SolanaAgentKit,
   title: string,
   content: string,

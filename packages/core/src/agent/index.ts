@@ -19,6 +19,8 @@ export class SolanaAgentKit {
   public config: Config;
   private plugins: Map<string, Plugin> = new Map();
 
+  [key: string]: any;
+
   /**
    * @deprecated Using openai_api_key directly in constructor is deprecated.
    * Please use the new constructor with Config object instead:

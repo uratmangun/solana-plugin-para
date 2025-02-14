@@ -1,11 +1,12 @@
 import {SolanaAgentKit , createVercelAITools} from 'solana-agent-kit';
 import TokenPlugin from '@solana-agent-kit/plugin-token';
+import NFTPlugin from '@solana-agent-kit/plugin-nft';
 
 async function main() {
   // Initialize agent with your test wallet
   const agent = new SolanaAgentKit(
-    "process.env.PRIVATE_KEY"!,
-    process.env.RPC_URL || "https://api.devnet.solana.com",
+    process.env.WALLET_PRIVATE_KEY!,
+    process.env.RPC_URL!,
     {
       OPENAI_API_KEY: process.env.OPENAI_API_KEY
     }
@@ -13,6 +14,7 @@ async function main() {
 
   // Load all plugins
   agent.use(TokenPlugin);
+  agent.use(NFTPlugin);
   
   console.log("Available methods on agent:", Object.keys(agent));
 
@@ -21,7 +23,7 @@ async function main() {
 
   // Test a method
   console.log("Testing Token Plugin...");
-  const tokenData = await agent.getTokenDataByAddress("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+  const tokenData = await agent.getAsset("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
   console.log("USDC Token Data:", tokenData);
 
   console.log("Testing NFT Plugin...");

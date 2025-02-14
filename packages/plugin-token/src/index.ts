@@ -15,14 +15,8 @@ import { stakeWithJup } from './jupiter/tools/stake_with_jup';
 import { trade } from './jupiter/tools/trade';
 import { sendCompressedAirdrop } from './lightprotocol/tools/send_compressed_airdrop';
 
-// Export types and utilities that might be needed by consumers
-export * from './jupiter/types';
-export * from './dexscreener/tools';
-export * from './jupiter/tools';
-export * from './lightprotocol/tools';
-
 // Define and export the plugin
-export const TokenPlugin: Plugin = {
+const TokenPlugin: Plugin = {
   name: 'token',
   
   // Combine all tools
@@ -47,14 +41,21 @@ export const TokenPlugin: Plugin = {
   ],
 
   // Initialize function
-  async initialize(kit: SolanaAgentKit) {
+  initialize: function(agent: SolanaAgentKit): void {
+
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === 'function') {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
+
     // Any necessary initialization logic
-    // For example, validating required config values
-    if (!kit.config.OPENAI_API_KEY) {
+    if (!agent.config.OPENAI_API_KEY) {
       console.warn('Warning: OPENAI_API_KEY not provided in config');
     }
   }
 };
 
 // Default export for convenience
-export default TokenPlugin;
+export = TokenPlugin;

@@ -2,7 +2,7 @@ import { Action } from "solana-agent-kit";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
 import { PublicKey } from "@solana/web3.js";
-import { create_gibwork_task } from "../tools";
+import { createGibworkTask } from "../tools";
 
 const createGibworkTaskAction: Action = {
   name: "CREATE_GIBWORK_TASK",
@@ -57,7 +57,7 @@ const createGibworkTaskAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const responseData = await create_gibwork_task(
+      const responseData = await createGibworkTask(
         agent,
         input.title,
         input.content,
