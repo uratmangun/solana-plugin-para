@@ -1,7 +1,9 @@
 {
   "name": "solana-agent-kit",
-  "version": "1.0.0",
   "description": "connect any ai agents to solana protocols",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
@@ -16,7 +18,9 @@
     "lint": "turbo run lint",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "version-packages": "changeset version",
+    "publish-packages": "turbo run build && changeset publish"
   },
   "engines": {
     "node": ">=22.0.0",
@@ -32,6 +36,7 @@
   "author": "sendaifun",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@changesets/cli": "^2.27.12",
     "@types/node": "^22.10.2",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",

@@ -1,6 +1,9 @@
 {
   "name": "@solana-agent-kit/plugin-defi",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -32,6 +35,6 @@
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.98.0",
-    "solana-agent-kit": "^1.0.0"
+    "solana-agent-kit": "2.0.0-beta.1"
   }
 }
