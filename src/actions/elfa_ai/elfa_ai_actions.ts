@@ -270,7 +270,10 @@ export const elfaGetTopMentionsByTickerAction: Action = {
     ],
   ],
   schema: z.object({
-    ticker: z.string().min(1).describe("Ticker symbol to retrieve mentions for"),
+    ticker: z
+      .string()
+      .min(1)
+      .describe("Ticker symbol to retrieve mentions for"),
     timeWindow: z
       .string()
       .min(1)
