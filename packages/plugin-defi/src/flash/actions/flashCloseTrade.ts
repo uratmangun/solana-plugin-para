@@ -1,4 +1,4 @@
-import { Action , SolanaAgentKit} from "solana-agent-kit";
+import { Action, SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
 import { flashCloseTrade } from "../tools";
 

@@ -4,7 +4,7 @@ import {
   PumpfunLaunchResponse,
   PumpFunTokenOptions,
   SolanaAgentKit,
-} from "solana-agent-kit"
+} from "solana-agent-kit";
 
 async function uploadMetadata(
   tokenName: string,

@@ -1,10 +1,9 @@
-import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 
 export interface Plugin {
   name: string;
-  methods: Record<string, Function>;
+  methods: Record<string, () => void>;
   actions: Action[];
   initialize(agent: SolanaAgentKit): void;
 }
@@ -52,7 +51,6 @@ export interface LuloAccountDetailsResponse {
     minimumRate: string;
   };
 }
-
 
 export interface FetchPriceResponse {
   status: "success" | "error";

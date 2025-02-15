@@ -1,5 +1,5 @@
 import { VersionedTransaction } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Stake SOL with Jup validator

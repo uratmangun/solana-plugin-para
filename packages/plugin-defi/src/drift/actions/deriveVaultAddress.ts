@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action , SolanaAgentKit} from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { getVaultAddress } from "../tools";
 
 const deriveDriftVaultAddressAction: Action = {

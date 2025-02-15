@@ -1,10 +1,11 @@
 import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 import { rock_paper_scissor } from "./sendarcade/tools/rock_paper_scissor";
 import rockPaperScissorAction from "./sendarcade/actions/rockPaperScissors";
+
 // Define and export the plugin
-const BlinksPlugin: Plugin = {
-  name: 'blinks',
-  
+const BlinksPlugin = {
+  name: "blinks",
+
   // Combine all tools
   methods: {
     // Sendarcade methods
@@ -18,21 +19,20 @@ const BlinksPlugin: Plugin = {
   ],
 
   // Initialize function
-  initialize: function(agent: SolanaAgentKit): void {
-
+  initialize: function (agent: SolanaAgentKit): void {
     // Initialize all methods with the agent instance
     Object.entries(this.methods).forEach(([methodName, method]) => {
-      if (typeof method === 'function') {
+      if (typeof method === "function") {
         this.methods[methodName] = method.bind(null, agent);
       }
     });
 
     // Any necessary initialization logic
     if (!agent.config.OPENAI_API_KEY) {
-      console.warn('Warning: OPENAI_API_KEY not provided in config');
+      console.warn("Warning: OPENAI_API_KEY not provided in config");
     }
-  }
-};
+  },
+} satisfies Plugin;
 
 // Default export for convenience
 export = BlinksPlugin;

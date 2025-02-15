@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action , SolanaAgentKit} from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { requestUnstakeFromDriftInsuranceFund } from "../tools";
 
 const requestUnstakeFromDriftInsuranceFundAction: Action = {

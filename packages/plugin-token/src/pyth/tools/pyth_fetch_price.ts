@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { PythPriceFeedIDItem } from "solana-agent-kit"
+import { PythPriceFeedIDItem } from "solana-agent-kit";
 
 /**
  * Fetch the price feed ID for a given token symbol from Pyth

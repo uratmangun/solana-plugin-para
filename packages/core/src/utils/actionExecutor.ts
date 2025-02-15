@@ -1,6 +1,6 @@
 import { Action } from "../types/action";
 import { SolanaAgentKit } from "../agent";
-  
+
 /**
  * Execute an action with the given input
  */

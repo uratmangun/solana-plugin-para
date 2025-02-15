@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import {

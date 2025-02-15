@@ -3,38 +3,47 @@ import bs58 from "bs58";
 import { Config, Plugin } from "../types";
 
 /**
- * Main class for interacting with Solana blockchain
- * Provides a unified interface for token operations, NFT management, trading and more
- *
- * @class SolanaAgentKit
- * @property {@link Connection} connection - Solana RPC connection
- * @property {@link Keypair} wallet - Wallet keypair for signing transactions
- * @property {@link PublicKey} wallet_address - Public key of the wallet
- * @property {@link Config} config - Configuration object
+ * Defines a type that merges all plugin methods into the `methods` object
  */
-export class SolanaAgentKit {
+type PluginMethods<T> = T extends Plugin ? T["methods"] : {};
+
+/**
+ * Main class for interacting with Solana blockchain.
+ *
+ * @example
+ * // Define a plugin
+ * const tokenPlugin = {
+ *    name: "tokenPlugin",
+ *    actions: [],
+ *    methods: {
+ *      transferToken: (to: string, amount: number) => {
+ *        console.log(`Transferring ${amount} to ${to}`);
+ *      },
+ *    },
+ *    initialize: (agent: any) => {},
+ * };
+ *
+ * @example
+ * // Create SolanaAgentKit instance
+ * const agent = new SolanaAgentKit("<privateKey>", "<rpcUrl>", {});
+ *
+ * @example
+ * // Add plugin
+ * const agentWithPlugin = agent.use(tokenPlugin);
+ *
+ * @example
+ * // Use plugin method
+ * agentWithPlugin.methods.transferToken("SomePublicKey", 100);
+ */
+export class SolanaAgentKit<TPlugins = {}> {
   public connection: Connection;
   public wallet: Keypair;
   public wallet_address: PublicKey;
   public config: Config;
   private plugins: Map<string, Plugin> = new Map();
 
-  [key: string]: any;
+  public methods: TPlugins = {} as TPlugins;
 
-  /**
-   * @deprecated Using openai_api_key directly in constructor is deprecated.
-   * Please use the new constructor with Config object instead:
-   * @example
-   * const agent = new SolanaAgentKit(privateKey, rpcUrl, {
-   *   OPENAI_API_KEY: 'your-key'
-   * });
-   */
-  constructor(
-    private_key: string,
-    rpc_url: string,
-    openai_api_key: string | null,
-  );
-  constructor(private_key: string, rpc_url: string, config: Config);
   constructor(
     private_key: string,
     rpc_url: string,
@@ -46,7 +55,6 @@ export class SolanaAgentKit {
     this.wallet = Keypair.fromSecretKey(bs58.decode(private_key));
     this.wallet_address = this.wallet.publicKey;
 
-    // Handle both old and new patterns
     if (typeof configOrKey === "string" || configOrKey === null) {
       this.config = { OPENAI_API_KEY: configOrKey || "" };
     } else {
@@ -54,21 +62,26 @@ export class SolanaAgentKit {
     }
   }
 
-  use(plugin: Plugin): this {
+  /**
+   * Adds a plugin and registers its methods inside `methods`
+   */
+  use<P extends Plugin>(
+    plugin: P,
+  ): SolanaAgentKit<TPlugins & PluginMethods<P>> {
     if (this.plugins.has(plugin.name)) {
       throw new Error(`Plugin ${plugin.name} is already registered`);
     }
-    plugin.initialize(this);
-    
-    // Add all plugin methods to the agent instance
+    plugin.initialize(this as SolanaAgentKit);
+
+    // Register plugin methods inside `methods`
     Object.entries(plugin.methods).forEach(([methodName, method]) => {
-      if ((this as any)[methodName]) {
-        throw new Error(`Method ${methodName} already exists on SolanaAgentKit`);
+      if ((this.methods as any)[methodName]) {
+        throw new Error(`Method ${methodName} already exists in methods`);
       }
-      (this as any)[methodName] = method.bind(plugin);
+      (this.methods as any)[methodName] = method.bind(plugin);
     });
 
     this.plugins.set(plugin.name, plugin);
-    return this;
+    return this as SolanaAgentKit<TPlugins & PluginMethods<P>>;
   }
 }

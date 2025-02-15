@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { SolanaAgentKit , Action} from "solana-agent-kit";
+import type { SolanaAgentKit, Action } from "solana-agent-kit";
 import { depositToDriftUserAccount } from "../tools";
 
 const depositToDriftUserAccountAction: Action = {
