@@ -2,193 +2,206 @@ import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import Adrena actions & tools
 import {
-  openPerpTradeLongAction,
-  openPerpTradeShortAction,
-  closePerpTradeLongAction,
-  closePerpTradeShortAction,
-} from './adrena/actions/adrenaPerpTrading';
-import { openPerpTradeLong, openPerpTradeShort, closePerpTradeLong, closePerpTradeShort } from './adrena/tools';
+	openPerpTradeLongAction,
+	openPerpTradeShortAction,
+	closePerpTradeLongAction,
+	closePerpTradeShortAction,
+} from "./adrena/actions/adrenaPerpTrading";
+import {
+	openPerpTradeLong,
+	openPerpTradeShort,
+	closePerpTradeLong,
+	closePerpTradeShort,
+} from "./adrena/tools";
 
 // Import Flash actions & tools
-import flashCloseTradeAction from './flash/actions/flashCloseTrade';
-import flashOpenTradeAction from './flash/actions/flashOpenTrade';
-import { flashCloseTrade, flashOpenTrade } from './flash/tools';
+import flashCloseTradeAction from "./flash/actions/flashCloseTrade";
+import flashOpenTradeAction from "./flash/actions/flashOpenTrade";
+import { flashCloseTrade, flashOpenTrade } from "./flash/tools";
 
 // Import Lulo actions & tools
-import lendAssetAction from './lulo/actions/lendAsset';
-import luloLendAction from './lulo/actions/luloLend';
-import luloWithdrawAction from './lulo/actions/luloWithdraw';
-import { lendAsset, luloLend, luloWithdraw } from './lulo/tools';
+import lendAssetAction from "./lulo/actions/lendAsset";
+import luloLendAction from "./lulo/actions/luloLend";
+import luloWithdrawAction from "./lulo/actions/luloWithdraw";
+import { lendAsset, luloLend, luloWithdraw } from "./lulo/tools";
 
 // Import Manifest tools
-import { limitOrder, cancelAllOrders, withdrawAll, manifestCreateMarket } from './manifest/tools';
+import {
+	limitOrder,
+	cancelAllOrders,
+	withdrawAll,
+	manifestCreateMarket,
+} from "./manifest/tools";
 
 // Import Meteora actions & tools
-import createMeteoraDLMMPoolAction from './meteora/actions/createMeteoraDLMMPool';
-import createMeteoraDynamicAMMPoolAction from './meteora/actions/createMeteoraDynamicAMMPool';
-import { createMeteoraDlmmPool, createMeteoraDynamicAMMPool } from './meteora/tools';
+import createMeteoraDLMMPoolAction from "./meteora/actions/createMeteoraDLMMPool";
+import createMeteoraDynamicAMMPoolAction from "./meteora/actions/createMeteoraDynamicAMMPool";
+import {
+	createMeteoraDlmmPool,
+	createMeteoraDynamicAMMPool,
+} from "./meteora/tools";
 
 // Import Openbook actions
-import createOpenbookMarketAction from './openbook/actions/createOpenbookMarket';
+import createOpenbookMarketAction from "./openbook/actions/createOpenbookMarket";
 
 // Import Orca actions
-import createOrcaSingleSidedWhirlpoolAction from './orca/actions/createOrcaSingleSidedWhirlpool';
+import createOrcaSingleSidedWhirlpoolAction from "./orca/actions/createOrcaSingleSidedWhirlpool";
 
 // Import Raydium actions
-import raydiumCreateAmmV4Action from './raydium/actions/raydiumCreateAmmV4';
-import raydiumCreateClmmAction from './raydium/actions/raydiumCreateClmm';
-import raydiumCreateCpmmAction from './raydium/actions/raydiumCreateCpmm';
+import raydiumCreateAmmV4Action from "./raydium/actions/raydiumCreateAmmV4";
+import raydiumCreateClmmAction from "./raydium/actions/raydiumCreateClmm";
+import raydiumCreateCpmmAction from "./raydium/actions/raydiumCreateCpmm";
 
 // Import Solayer actions
-import stakeWithSolayerAction from './solayer/actions/stakeWithSolayer';
+import stakeWithSolayerAction from "./solayer/actions/stakeWithSolayer";
 
 // Import Voltr actions
-import depositVoltrStrategyAction from './voltr/actions/depositStrategy';
-import getVoltrPositionValuesAction from './voltr/actions/getPositionValues';
-import withdrawVoltrStrategyAction from './voltr/actions/withdrawStrategy';
+import depositVoltrStrategyAction from "./voltr/actions/depositStrategy";
+import getVoltrPositionValuesAction from "./voltr/actions/getPositionValues";
+import withdrawVoltrStrategyAction from "./voltr/actions/withdrawStrategy";
 
 // Import Openbook tools
-import { openbookCreateMarket } from './openbook/tools';
+import { openbookCreateMarket } from "./openbook/tools";
 
 // Import Orca tools
-import { 
-  orcaClosePosition,
-  orcaCreateCLMM,
-  orcaCreateSingleSidedLiquidityPool,
-  orcaFetchPositions,
-  orcaOpenCenteredPositionWithLiquidity,
-  orcaOpenSingleSidedPosition
-} from './orca/tools';
+import {
+	orcaClosePosition,
+	orcaCreateCLMM,
+	orcaCreateSingleSidedLiquidityPool,
+	orcaFetchPositions,
+	orcaOpenCenteredPositionWithLiquidity,
+	orcaOpenSingleSidedPosition,
+} from "./orca/tools";
 
 // Import Raydium tools
-import { 
-  raydiumCreateAmmV4,
-  raydiumCreateClmm,
-  raydiumCreateCpmm 
-} from './raydium';
+import {
+	raydiumCreateAmmV4,
+	raydiumCreateClmm,
+	raydiumCreateCpmm,
+} from "./raydium";
 
 // Import Solayer tools
-import { stakeWithSolayer } from './solayer/tools';
+import { stakeWithSolayer } from "./solayer/tools";
 
 // Import Voltr tools
-import { 
-  voltrDepositStrategy,
-  voltrGetPositionValues,
-  voltrWithdrawStrategy 
-} from './voltr/tools';
+import {
+	voltrDepositStrategy,
+	voltrGetPositionValues,
+	voltrWithdrawStrategy,
+} from "./voltr/tools";
 
 // Define and export the plugin
-const DefiPlugin: Plugin = {
-  name: 'defi',
-  
-  // Combine all tools
-  methods: {
-    // Adrena methods
-    openPerpTradeLong,
-    openPerpTradeShort,
-    closePerpTradeLong,
-    closePerpTradeShort,
+const DefiPlugin = {
+	name: "defi",
 
-    // Flash methods
-    flashCloseTrade,
-    flashOpenTrade,
+	// Combine all tools
+	methods: {
+		// Adrena methods
+		openPerpTradeLong,
+		openPerpTradeShort,
+		closePerpTradeLong,
+		closePerpTradeShort,
 
-    // Lulo methods
-    lendAsset,
-    luloLend,
-    luloWithdraw,
+		// Flash methods
+		flashCloseTrade,
+		flashOpenTrade,
 
-    // Manifest methods
-    limitOrder,
-    cancelAllOrders,
-    withdrawAll,
-    manifestCreateMarket,
+		// Lulo methods
+		lendAsset,
+		luloLend,
+		luloWithdraw,
 
-    // Meteora methods
-    createMeteoraDlmmPool,
-    createMeteoraDynamicAMMPool,
+		// Manifest methods
+		limitOrder,
+		cancelAllOrders,
+		withdrawAll,
+		manifestCreateMarket,
 
-    // Openbook methods
-    openbookCreateMarket,
+		// Meteora methods
+		createMeteoraDlmmPool,
+		createMeteoraDynamicAMMPool,
 
-    // Orca methods
-    orcaClosePosition,
-    orcaCreateCLMM,
-    orcaCreateSingleSidedLiquidityPool,
-    orcaFetchPositions,
-    orcaOpenCenteredPositionWithLiquidity,
-    orcaOpenSingleSidedPosition,
+		// Openbook methods
+		openbookCreateMarket,
 
-    // Raydium methods
-    raydiumCreateAmmV4,
-    raydiumCreateClmm,
-    raydiumCreateCpmm,
+		// Orca methods
+		orcaClosePosition,
+		orcaCreateCLMM,
+		orcaCreateSingleSidedLiquidityPool,
+		orcaFetchPositions,
+		orcaOpenCenteredPositionWithLiquidity,
+		orcaOpenSingleSidedPosition,
 
-    // Solayer methods
-    stakeWithSolayer,
+		// Raydium methods
+		raydiumCreateAmmV4,
+		raydiumCreateClmm,
+		raydiumCreateCpmm,
 
-    // Voltr methods
-    voltrDepositStrategy,
-    voltrGetPositionValues,
-    voltrWithdrawStrategy,
-  },
+		// Solayer methods
+		stakeWithSolayer,
 
-  // Combine all actions
-  actions: [
-    // Adrena actions
-    openPerpTradeLongAction,
-    openPerpTradeShortAction,
-    closePerpTradeLongAction,
-    closePerpTradeShortAction,
+		// Voltr methods
+		voltrDepositStrategy,
+		voltrGetPositionValues,
+		voltrWithdrawStrategy,
+	},
 
-    // Flash actions
-    flashCloseTradeAction,
-    flashOpenTradeAction,
+	// Combine all actions
+	actions: [
+		// Adrena actions
+		openPerpTradeLongAction,
+		openPerpTradeShortAction,
+		closePerpTradeLongAction,
+		closePerpTradeShortAction,
 
-    // Lulo actions
-    lendAssetAction,
-    luloLendAction,
-    luloWithdrawAction,
+		// Flash actions
+		flashCloseTradeAction,
+		flashOpenTradeAction,
 
-    // Meteora actions
-    createMeteoraDLMMPoolAction,
-    createMeteoraDynamicAMMPoolAction,
+		// Lulo actions
+		lendAssetAction,
+		luloLendAction,
+		luloWithdrawAction,
 
-    // Openbook actions
-    createOpenbookMarketAction,
+		// Meteora actions
+		createMeteoraDLMMPoolAction,
+		createMeteoraDynamicAMMPoolAction,
 
-    // Orca actions
-    createOrcaSingleSidedWhirlpoolAction,
+		// Openbook actions
+		createOpenbookMarketAction,
 
-    // Raydium actions
-    raydiumCreateAmmV4Action,
-    raydiumCreateClmmAction,
-    raydiumCreateCpmmAction,
+		// Orca actions
+		createOrcaSingleSidedWhirlpoolAction,
 
-    // Solayer actions
-    stakeWithSolayerAction,
+		// Raydium actions
+		raydiumCreateAmmV4Action,
+		raydiumCreateClmmAction,
+		raydiumCreateCpmmAction,
 
-    // Voltr actions
-    depositVoltrStrategyAction,
-    getVoltrPositionValuesAction,
-    withdrawVoltrStrategyAction,
-  ],
+		// Solayer actions
+		stakeWithSolayerAction,
 
-  // Initialize function
-  initialize: function(agent: SolanaAgentKit): void {
-    // Initialize all methods with the agent instance
-    Object.entries(this.methods).forEach(([methodName, method]) => {
-      if (typeof method === 'function') {
-        this.methods[methodName] = method.bind(null, agent);
-      }
-    });
+		// Voltr actions
+		depositVoltrStrategyAction,
+		getVoltrPositionValuesAction,
+		withdrawVoltrStrategyAction,
+	],
 
-    // Any necessary initialization logic
-    if (!agent.config.OPENAI_API_KEY) {
-      console.warn('Warning: OPENAI_API_KEY not provided in config');
-    }
-  }
-};
+	// Initialize function
+	initialize: function (agent: SolanaAgentKit): void {
+		// Initialize all methods with the agent instance
+		Object.entries(this.methods).forEach(([methodName, method]) => {
+			if (typeof method === "function") {
+				this.methods[methodName] = method.bind(null, agent);
+			}
+		});
+
+		// Any necessary initialization logic
+		if (!agent.config.OPENAI_API_KEY) {
+			console.warn("Warning: OPENAI_API_KEY not provided in config");
+		}
+	},
+} satisfies Plugin;
 
 // Default export for convenience
 export = DefiPlugin;
