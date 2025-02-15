@@ -4,34 +4,34 @@ import rockPaperScissorAction from "./sendarcade/actions/rockPaperScissors";
 
 // Define and export the plugin
 const BlinksPlugin = {
-	name: "blinks",
+  name: "blinks",
 
-	// Combine all tools
-	methods: {
-		// Sendarcade methods
-		rock_paper_scissor,
-	},
+  // Combine all tools
+  methods: {
+    // Sendarcade methods
+    rock_paper_scissor,
+  },
 
-	// Combine all actions
-	actions: [
-		// Sendarcade actions
-		rockPaperScissorAction,
-	],
+  // Combine all actions
+  actions: [
+    // Sendarcade actions
+    rockPaperScissorAction,
+  ],
 
-	// Initialize function
-	initialize: function (agent: SolanaAgentKit): void {
-		// Initialize all methods with the agent instance
-		Object.entries(this.methods).forEach(([methodName, method]) => {
-			if (typeof method === "function") {
-				this.methods[methodName] = method.bind(null, agent);
-			}
-		});
+  // Initialize function
+  initialize: function (agent: SolanaAgentKit): void {
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === "function") {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
 
-		// Any necessary initialization logic
-		if (!agent.config.OPENAI_API_KEY) {
-			console.warn("Warning: OPENAI_API_KEY not provided in config");
-		}
-	},
+    // Any necessary initialization logic
+    if (!agent.config.OPENAI_API_KEY) {
+      console.warn("Warning: OPENAI_API_KEY not provided in config");
+    }
+  },
 } satisfies Plugin;
 
 // Default export for convenience

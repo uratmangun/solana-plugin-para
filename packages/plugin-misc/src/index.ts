@@ -17,77 +17,77 @@ import parseSolanaTransactionAction from "./helius/actions/parseTransaction";
 
 // Import all tools
 import {
-	getAllDomainsTLDs,
-	getOwnedAllDomains,
-	getOwnedDomainsForTLD,
-	resolveAllDomains,
+  getAllDomainsTLDs,
+  getOwnedAllDomains,
+  getOwnedDomainsForTLD,
+  resolveAllDomains,
 } from "./alldomains/tools";
 import {
-	getAllTopics,
-	getInferenceByTopicId,
-	getPriceInference,
+  getAllTopics,
+  getInferenceByTopicId,
+  getPriceInference,
 } from "./allora/tools";
 import { createGibworkTask } from "./gibwork/tools";
 import {
-	create_HeliusWebhook,
-	deleteHeliusWebhook,
-	getAssetsByOwner,
-	getHeliusWebhook,
-	parseTransaction,
+  create_HeliusWebhook,
+  deleteHeliusWebhook,
+  getAssetsByOwner,
+  getHeliusWebhook,
+  parseTransaction,
 } from "./helius/tools";
 
 // Define and export the plugin
 const MiscPlugin = {
-	name: "misc",
+  name: "misc",
 
-	// Combine all tools
-	methods: {
-		getAllDomainsTLDs,
-		getOwnedAllDomains,
-		getOwnedDomainsForTLD,
-		resolveAllDomains,
-		getAllTopics,
-		getInferenceByTopicId,
-		getPriceInference,
-		createGibworkTask,
-		create_HeliusWebhook,
-		deleteHeliusWebhook,
-		getAssetsByOwner,
-		getHeliusWebhook,
-		parseTransaction,
-	},
+  // Combine all tools
+  methods: {
+    getAllDomainsTLDs,
+    getOwnedAllDomains,
+    getOwnedDomainsForTLD,
+    resolveAllDomains,
+    getAllTopics,
+    getInferenceByTopicId,
+    getPriceInference,
+    createGibworkTask,
+    create_HeliusWebhook,
+    deleteHeliusWebhook,
+    getAssetsByOwner,
+    getHeliusWebhook,
+    parseTransaction,
+  },
 
-	// Combine all actions
-	actions: [
-		getAllDomainsTLDsAction,
-		getOwnedAllDomainsAction,
-		getOwnedDomainsForTLDAction,
-		resolveDomainAction,
-		getAllTopicsAction,
-		getInferenceByTopicIdAction,
-		getPriceInferenceAction,
-		createGibworkTaskAction,
-		createWebhookAction,
-		deleteWebhookAction,
-		getAssetsByOwnerAction,
-		getWebhookAction,
-		parseSolanaTransactionAction,
-	],
+  // Combine all actions
+  actions: [
+    getAllDomainsTLDsAction,
+    getOwnedAllDomainsAction,
+    getOwnedDomainsForTLDAction,
+    resolveDomainAction,
+    getAllTopicsAction,
+    getInferenceByTopicIdAction,
+    getPriceInferenceAction,
+    createGibworkTaskAction,
+    createWebhookAction,
+    deleteWebhookAction,
+    getAssetsByOwnerAction,
+    getWebhookAction,
+    parseSolanaTransactionAction,
+  ],
 
-	// Initialize function
-	initialize: function (agent: SolanaAgentKit): void {
-		// Initialize all methods with the agent instance
-		Object.entries(this.methods).forEach(([methodName, method]) => {
-			if (typeof method === "function") {
-				this.methods[methodName] = method.bind(null, agent);
-			}
-		});
+  // Initialize function
+  initialize: function (agent: SolanaAgentKit): void {
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === "function") {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
 
-		// Any necessary initialization logic
-		if (!agent.config.OPENAI_API_KEY) {
-			console.warn("Warning: OPENAI_API_KEY not provided in config");
-		}
-	},
+    // Any necessary initialization logic
+    if (!agent.config.OPENAI_API_KEY) {
+      console.warn("Warning: OPENAI_API_KEY not provided in config");
+    }
+  },
 } satisfies Plugin;
 
 // Default export for convenience

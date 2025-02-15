@@ -1,4 +1,4 @@
-import { TokenCheck } from "solana-agent-kit"
+import { TokenCheck } from "solana-agent-kit";
 
 const BASE_URL = "https://api.rugcheck.xyz/v1";
 

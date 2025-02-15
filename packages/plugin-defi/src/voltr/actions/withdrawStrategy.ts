@@ -1,4 +1,4 @@
-import type { Action , SolanaAgentKit} from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
 import { PublicKey } from "@solana/web3.js";
 import { BN } from "bn.js";

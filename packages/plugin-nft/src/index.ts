@@ -11,19 +11,19 @@ import searchAssetsAction from "./metaplex/actions/searchAssets";
 
 // Import Tensor actions
 import {
-	listNFTForSaleAction,
-	cancelNFTListingAction,
+  listNFTForSaleAction,
+  cancelNFTListingAction,
 } from "./tensor/actions/tensorTrade";
 
 // Import Metaplex tools
 import {
-	deploy_collection,
-	deploy_token,
-	get_asset,
-	get_assets_by_authority,
-	get_assets_by_creator,
-	mintCollectionNFT,
-	search_assets,
+  deploy_collection,
+  deploy_token,
+  get_asset,
+  get_assets_by_authority,
+  get_assets_by_creator,
+  mintCollectionNFT,
+  search_assets,
 } from "./metaplex/tools";
 
 // Import Tensor tools
@@ -31,64 +31,64 @@ import { listNFTForSale, cancelListing } from "./tensor/tools/tensor_trade";
 
 // Import 3Land tools
 import {
-	createCollection,
-	createSingle,
+  createCollection,
+  createSingle,
 } from "./3land/tools/create_3land_collectible";
 
 // Define and export the plugin
 const NFTPlugin = {
-	name: "nft",
+  name: "nft",
 
-	// Combine all tools
-	methods: {
-		// Metaplex methods
-		deployCollection: deploy_collection,
-		deployToken: deploy_token,
-		getAsset: get_asset,
-		getAssetsByAuthority: get_assets_by_authority,
-		getAssetsByCreator: get_assets_by_creator,
-		mintCollectionNFT: mintCollectionNFT,
-		searchAssets: search_assets,
+  // Combine all tools
+  methods: {
+    // Metaplex methods
+    deployCollection: deploy_collection,
+    deployToken: deploy_token,
+    getAsset: get_asset,
+    getAssetsByAuthority: get_assets_by_authority,
+    getAssetsByCreator: get_assets_by_creator,
+    mintCollectionNFT: mintCollectionNFT,
+    searchAssets: search_assets,
 
-		// Tensor methods
-		listNFTForSale,
-		cancelListing,
+    // Tensor methods
+    listNFTForSale,
+    cancelListing,
 
-		// 3Land methods
-		create3LandCollection: createCollection,
-		create3LandSingle: createSingle,
-	},
+    // 3Land methods
+    create3LandCollection: createCollection,
+    create3LandSingle: createSingle,
+  },
 
-	// Combine all actions
-	actions: [
-		// Metaplex actions
-		deployCollectionAction,
-		deployTokenAction,
-		getAssetAction,
-		getAssetsByAuthorityAction,
-		getAssetsByCreatorAction,
-		mintNFTAction,
-		searchAssetsAction,
+  // Combine all actions
+  actions: [
+    // Metaplex actions
+    deployCollectionAction,
+    deployTokenAction,
+    getAssetAction,
+    getAssetsByAuthorityAction,
+    getAssetsByCreatorAction,
+    mintNFTAction,
+    searchAssetsAction,
 
-		// Tensor actions
-		listNFTForSaleAction,
-		cancelNFTListingAction,
-	],
+    // Tensor actions
+    listNFTForSaleAction,
+    cancelNFTListingAction,
+  ],
 
-	// Initialize function
-	initialize: function (agent: SolanaAgentKit): void {
-		// Initialize all methods with the agent instance
-		Object.entries(this.methods).forEach(([methodName, method]) => {
-			if (typeof method === "function") {
-				this.methods[methodName] = method.bind(null, agent);
-			}
-		});
+  // Initialize function
+  initialize: function (agent: SolanaAgentKit): void {
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === "function") {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
 
-		// Any necessary initialization logic
-		if (!agent.config.OPENAI_API_KEY) {
-			console.warn("Warning: OPENAI_API_KEY not provided in config");
-		}
-	},
+    // Any necessary initialization logic
+    if (!agent.config.OPENAI_API_KEY) {
+      console.warn("Warning: OPENAI_API_KEY not provided in config");
+    }
+  },
 } satisfies Plugin;
 
 // Default export for convenience

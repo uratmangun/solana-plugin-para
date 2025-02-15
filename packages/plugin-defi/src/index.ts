@@ -2,16 +2,16 @@ import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import Adrena actions & tools
 import {
-	openPerpTradeLongAction,
-	openPerpTradeShortAction,
-	closePerpTradeLongAction,
-	closePerpTradeShortAction,
+  openPerpTradeLongAction,
+  openPerpTradeShortAction,
+  closePerpTradeLongAction,
+  closePerpTradeShortAction,
 } from "./adrena/actions/adrenaPerpTrading";
 import {
-	openPerpTradeLong,
-	openPerpTradeShort,
-	closePerpTradeLong,
-	closePerpTradeShort,
+  openPerpTradeLong,
+  openPerpTradeShort,
+  closePerpTradeLong,
+  closePerpTradeShort,
 } from "./adrena/tools";
 
 // Import Flash actions & tools
@@ -27,18 +27,18 @@ import { lendAsset, luloLend, luloWithdraw } from "./lulo/tools";
 
 // Import Manifest tools
 import {
-	limitOrder,
-	cancelAllOrders,
-	withdrawAll,
-	manifestCreateMarket,
+  limitOrder,
+  cancelAllOrders,
+  withdrawAll,
+  manifestCreateMarket,
 } from "./manifest/tools";
 
 // Import Meteora actions & tools
 import createMeteoraDLMMPoolAction from "./meteora/actions/createMeteoraDLMMPool";
 import createMeteoraDynamicAMMPoolAction from "./meteora/actions/createMeteoraDynamicAMMPool";
 import {
-	createMeteoraDlmmPool,
-	createMeteoraDynamicAMMPool,
+  createMeteoraDlmmPool,
+  createMeteoraDynamicAMMPool,
 } from "./meteora/tools";
 
 // Import Openbook actions
@@ -65,19 +65,19 @@ import { openbookCreateMarket } from "./openbook/tools";
 
 // Import Orca tools
 import {
-	orcaClosePosition,
-	orcaCreateCLMM,
-	orcaCreateSingleSidedLiquidityPool,
-	orcaFetchPositions,
-	orcaOpenCenteredPositionWithLiquidity,
-	orcaOpenSingleSidedPosition,
+  orcaClosePosition,
+  orcaCreateCLMM,
+  orcaCreateSingleSidedLiquidityPool,
+  orcaFetchPositions,
+  orcaOpenCenteredPositionWithLiquidity,
+  orcaOpenSingleSidedPosition,
 } from "./orca/tools";
 
 // Import Raydium tools
 import {
-	raydiumCreateAmmV4,
-	raydiumCreateClmm,
-	raydiumCreateCpmm,
+  raydiumCreateAmmV4,
+  raydiumCreateClmm,
+  raydiumCreateCpmm,
 } from "./raydium";
 
 // Import Solayer tools
@@ -85,122 +85,122 @@ import { stakeWithSolayer } from "./solayer/tools";
 
 // Import Voltr tools
 import {
-	voltrDepositStrategy,
-	voltrGetPositionValues,
-	voltrWithdrawStrategy,
+  voltrDepositStrategy,
+  voltrGetPositionValues,
+  voltrWithdrawStrategy,
 } from "./voltr/tools";
 
 // Define and export the plugin
 const DefiPlugin = {
-	name: "defi",
+  name: "defi",
 
-	// Combine all tools
-	methods: {
-		// Adrena methods
-		openPerpTradeLong,
-		openPerpTradeShort,
-		closePerpTradeLong,
-		closePerpTradeShort,
+  // Combine all tools
+  methods: {
+    // Adrena methods
+    openPerpTradeLong,
+    openPerpTradeShort,
+    closePerpTradeLong,
+    closePerpTradeShort,
 
-		// Flash methods
-		flashCloseTrade,
-		flashOpenTrade,
+    // Flash methods
+    flashCloseTrade,
+    flashOpenTrade,
 
-		// Lulo methods
-		lendAsset,
-		luloLend,
-		luloWithdraw,
+    // Lulo methods
+    lendAsset,
+    luloLend,
+    luloWithdraw,
 
-		// Manifest methods
-		limitOrder,
-		cancelAllOrders,
-		withdrawAll,
-		manifestCreateMarket,
+    // Manifest methods
+    limitOrder,
+    cancelAllOrders,
+    withdrawAll,
+    manifestCreateMarket,
 
-		// Meteora methods
-		createMeteoraDlmmPool,
-		createMeteoraDynamicAMMPool,
+    // Meteora methods
+    createMeteoraDlmmPool,
+    createMeteoraDynamicAMMPool,
 
-		// Openbook methods
-		openbookCreateMarket,
+    // Openbook methods
+    openbookCreateMarket,
 
-		// Orca methods
-		orcaClosePosition,
-		orcaCreateCLMM,
-		orcaCreateSingleSidedLiquidityPool,
-		orcaFetchPositions,
-		orcaOpenCenteredPositionWithLiquidity,
-		orcaOpenSingleSidedPosition,
+    // Orca methods
+    orcaClosePosition,
+    orcaCreateCLMM,
+    orcaCreateSingleSidedLiquidityPool,
+    orcaFetchPositions,
+    orcaOpenCenteredPositionWithLiquidity,
+    orcaOpenSingleSidedPosition,
 
-		// Raydium methods
-		raydiumCreateAmmV4,
-		raydiumCreateClmm,
-		raydiumCreateCpmm,
+    // Raydium methods
+    raydiumCreateAmmV4,
+    raydiumCreateClmm,
+    raydiumCreateCpmm,
 
-		// Solayer methods
-		stakeWithSolayer,
+    // Solayer methods
+    stakeWithSolayer,
 
-		// Voltr methods
-		voltrDepositStrategy,
-		voltrGetPositionValues,
-		voltrWithdrawStrategy,
-	},
+    // Voltr methods
+    voltrDepositStrategy,
+    voltrGetPositionValues,
+    voltrWithdrawStrategy,
+  },
 
-	// Combine all actions
-	actions: [
-		// Adrena actions
-		openPerpTradeLongAction,
-		openPerpTradeShortAction,
-		closePerpTradeLongAction,
-		closePerpTradeShortAction,
+  // Combine all actions
+  actions: [
+    // Adrena actions
+    openPerpTradeLongAction,
+    openPerpTradeShortAction,
+    closePerpTradeLongAction,
+    closePerpTradeShortAction,
 
-		// Flash actions
-		flashCloseTradeAction,
-		flashOpenTradeAction,
+    // Flash actions
+    flashCloseTradeAction,
+    flashOpenTradeAction,
 
-		// Lulo actions
-		lendAssetAction,
-		luloLendAction,
-		luloWithdrawAction,
+    // Lulo actions
+    lendAssetAction,
+    luloLendAction,
+    luloWithdrawAction,
 
-		// Meteora actions
-		createMeteoraDLMMPoolAction,
-		createMeteoraDynamicAMMPoolAction,
+    // Meteora actions
+    createMeteoraDLMMPoolAction,
+    createMeteoraDynamicAMMPoolAction,
 
-		// Openbook actions
-		createOpenbookMarketAction,
+    // Openbook actions
+    createOpenbookMarketAction,
 
-		// Orca actions
-		createOrcaSingleSidedWhirlpoolAction,
+    // Orca actions
+    createOrcaSingleSidedWhirlpoolAction,
 
-		// Raydium actions
-		raydiumCreateAmmV4Action,
-		raydiumCreateClmmAction,
-		raydiumCreateCpmmAction,
+    // Raydium actions
+    raydiumCreateAmmV4Action,
+    raydiumCreateClmmAction,
+    raydiumCreateCpmmAction,
 
-		// Solayer actions
-		stakeWithSolayerAction,
+    // Solayer actions
+    stakeWithSolayerAction,
 
-		// Voltr actions
-		depositVoltrStrategyAction,
-		getVoltrPositionValuesAction,
-		withdrawVoltrStrategyAction,
-	],
+    // Voltr actions
+    depositVoltrStrategyAction,
+    getVoltrPositionValuesAction,
+    withdrawVoltrStrategyAction,
+  ],
 
-	// Initialize function
-	initialize: function (agent: SolanaAgentKit): void {
-		// Initialize all methods with the agent instance
-		Object.entries(this.methods).forEach(([methodName, method]) => {
-			if (typeof method === "function") {
-				this.methods[methodName] = method.bind(null, agent);
-			}
-		});
+  // Initialize function
+  initialize: function (agent: SolanaAgentKit): void {
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === "function") {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
 
-		// Any necessary initialization logic
-		if (!agent.config.OPENAI_API_KEY) {
-			console.warn("Warning: OPENAI_API_KEY not provided in config");
-		}
-	},
+    // Any necessary initialization logic
+    if (!agent.config.OPENAI_API_KEY) {
+      console.warn("Warning: OPENAI_API_KEY not provided in config");
+    }
+  },
 } satisfies Plugin;
 
 // Default export for convenience

@@ -59,7 +59,7 @@ export async function initClients(
       return tx;
     },
   };
-  
+
   const driftClient = new DriftClient({
     connection: agent.connection,
     wallet,

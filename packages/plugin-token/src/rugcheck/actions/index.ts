@@ -1,2 +1,2 @@
 // TODO: Add actions here
-export {}
+export {};

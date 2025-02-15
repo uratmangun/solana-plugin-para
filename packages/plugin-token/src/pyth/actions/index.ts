@@ -1,1 +1,1 @@
-export * from "./pythFetchPrice"
+export * from "./pythFetchPrice";

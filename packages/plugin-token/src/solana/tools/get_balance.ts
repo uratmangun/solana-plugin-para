@@ -1,5 +1,5 @@
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Get the balance of SOL or an SPL token for the agent's wallet

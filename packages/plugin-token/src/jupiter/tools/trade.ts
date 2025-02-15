@@ -1,5 +1,5 @@
 import { VersionedTransaction, PublicKey } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 import {
   TOKENS,
   DEFAULT_OPTIONS,

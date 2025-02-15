@@ -3,7 +3,7 @@ import {
   ParsedAccountData,
   PublicKey,
 } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Get the balance of SOL or an SPL token for the specified wallet address (other than the agent's wallet)

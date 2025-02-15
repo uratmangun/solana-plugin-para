@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { doesUserHaveDriftAccount } from "../tools";
-import type { Action , SolanaAgentKit} from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 
 export const doesUserHaveDriftAccountAction: Action = {
   name: "DOES_USER_HAVE_DRIFT_ACCOUNT",

@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "solana-agent-kit"
+import { SolanaAgentKit } from "solana-agent-kit";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 /**

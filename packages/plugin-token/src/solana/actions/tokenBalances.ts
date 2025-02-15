@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
-import { Action , SolanaAgentKit } from "solana-agent-kit"
+import { Action, SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
 import { get_token_balance } from "../tools";
 
@@ -20,7 +20,7 @@ const tokenBalancesAction: Action = {
         input: {},
         output: {
           status: "success",
-          balance: {  
+          balance: {
             sol: 100,
             tokens: [
               {
