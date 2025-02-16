@@ -1,5 +1,6 @@
-import { SolanaAgentKit } from "../agent";
-import { z } from "zod";
+import type { Transaction, VersionedTransaction } from "@solana/web3.js";
+import type { SolanaAgentKit } from "../agent";
+import type { z } from "zod";
 
 export interface Plugin {
   name: string;
@@ -8,7 +9,18 @@ export interface Plugin {
   initialize(agent: SolanaAgentKit): void;
 }
 
+export type TransactionOrVersionedTransaction =
+  | Transaction
+  | VersionedTransaction;
+
 export interface Config {
+  signTransaction: (
+    transaction: TransactionOrVersionedTransaction,
+  ) => Promise<TransactionOrVersionedTransaction>;
+  sendTransaction: (
+    transaction: TransactionOrVersionedTransaction,
+  ) => Promise<string>;
+  signOnly?: boolean;
   OPENAI_API_KEY?: string;
   JUPITER_REFERRAL_ACCOUNT?: string;
   JUPITER_FEE_BPS?: number;

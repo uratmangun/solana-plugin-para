@@ -1,11 +1,10 @@
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
-import bs58 from "bs58";
-import { Config, Plugin } from "../types";
+import { Connection, PublicKey } from "@solana/web3.js";
+import type { Config, Plugin } from "../types";
 
 /**
  * Defines a type that merges all plugin methods into the `methods` object
  */
-type PluginMethods<T> = T extends Plugin ? T["methods"] : {};
+type PluginMethods<T> = T extends Plugin ? T["methods"] : Record<string, never>;
 
 /**
  * Main class for interacting with Solana blockchain.
@@ -35,31 +34,19 @@ type PluginMethods<T> = T extends Plugin ? T["methods"] : {};
  * // Use plugin method
  * agentWithPlugin.methods.transferToken("SomePublicKey", 100);
  */
-export class SolanaAgentKit<TPlugins = {}> {
+export class SolanaAgentKit<TPlugins = Record<string, never>> {
   public connection: Connection;
-  public wallet: Keypair;
   public wallet_address: PublicKey;
   public config: Config;
   private plugins: Map<string, Plugin> = new Map();
 
   public methods: TPlugins = {} as TPlugins;
 
-  constructor(
-    private_key: string,
-    rpc_url: string,
-    configOrKey: Config | string | null,
-  ) {
-    this.connection = new Connection(
-      rpc_url || "https://api.mainnet-beta.solana.com",
-    );
-    this.wallet = Keypair.fromSecretKey(bs58.decode(private_key));
-    this.wallet_address = this.wallet.publicKey;
+  constructor(publicKey: string, rpc_url: string, config: Config) {
+    this.connection = new Connection(rpc_url);
+    this.wallet_address = new PublicKey(publicKey);
 
-    if (typeof configOrKey === "string" || configOrKey === null) {
-      this.config = { OPENAI_API_KEY: configOrKey || "" };
-    } else {
-      this.config = configOrKey;
-    }
+    this.config = config;
   }
 
   /**
@@ -74,12 +61,13 @@ export class SolanaAgentKit<TPlugins = {}> {
     plugin.initialize(this as SolanaAgentKit);
 
     // Register plugin methods inside `methods`
-    Object.entries(plugin.methods).forEach(([methodName, method]) => {
-      if ((this.methods as any)[methodName]) {
+    for (const [methodName, method] of Object.entries(plugin.methods)) {
+      if ((this.methods as Record<string, unknown>)[methodName]) {
         throw new Error(`Method ${methodName} already exists in methods`);
       }
-      (this.methods as any)[methodName] = method.bind(plugin);
-    });
+      (this.methods as Record<string, unknown>)[methodName] =
+        method.bind(plugin);
+    }
 
     this.plugins.set(plugin.name, plugin);
     return this as SolanaAgentKit<TPlugins & PluginMethods<P>>;
