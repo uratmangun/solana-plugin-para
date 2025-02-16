@@ -127,11 +127,13 @@ export async function startMcpServer(
     version: string;
   }
 ) {
-  const server = createMcpServer(actions, solanaAgentKit, options);
-  console.log("MCP server created");
-  const transport = new StdioServerTransport();
-  console.log("Stdio transport created");
-  await server.connect(transport);
-  console.log("MCP server started");
-  return server;
+  try {
+    const server = createMcpServer(actions, solanaAgentKit, options);
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    return server;
+  } catch (error) {
+    console.error("Error starting MCP server", error);
+    throw error;
+  }
 }
