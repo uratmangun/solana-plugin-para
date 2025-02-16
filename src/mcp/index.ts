@@ -24,13 +24,14 @@ export function createMcpServer(
 
   // Convert each action to an MCP tool
   for (const [key, action] of Object.entries(actions)) {
+      const { result, keys } = zodToMCPShape(action.schema);
     server.tool(
       action.name,
       action.description,
-      zodToMCPShape(action.schema),
+      result,
       async (params) => {
         try {
-          // Execute the action handler
+          // Execute the action handler with the params directly
           const result = await action.handler(solanaAgentKit, params);
           
           // Format the result as MCP tool response
@@ -43,6 +44,7 @@ export function createMcpServer(
             ]
           };
         } catch (error) {
+          console.error("error", error);
           // Handle errors in MCP format
           return {
             isError: true,
@@ -98,9 +100,24 @@ Explanation: ${ex.explanation}
 
   return server;
 }
-
 /**
  * Helper to start the MCP server with stdio transport
+ * 
+ * @param actions - The actions to expose to the MCP server
+ * @param solanaAgentKit - The Solana agent kit
+ * @param options - The options for the MCP server
+ * @returns The MCP server
+ * @throws Error if the MCP server fails to start
+ * @example 
+ * import { ACTIONS } from "./actions";
+ * import { startMcpServer } from "./mcpWrapper";
+ *
+ * const solanaAgentKit = new SolanaAgentKit();
+ * 
+ * startMcpServer(ACTIONS, solanaAgentKit, {
+ *   name: "solana-actions",
+ *   version: "1.0.0"
+ * });
  */
 export async function startMcpServer(
   actions: Record<string, Action>,
@@ -118,17 +135,3 @@ export async function startMcpServer(
   console.log("MCP server started");
   return server;
 }
-
-/**
- * Example usage:
- *
- * import { ACTIONS } from "./actions";
- * import { startMcpServer } from "./mcpWrapper";
- *
- * const solanaAgentKit = new SolanaAgentKit();
- * 
- * startMcpServer(ACTIONS, solanaAgentKit, {
- *   name: "solana-actions",
- *   version: "1.0.0"
- * });
- */
