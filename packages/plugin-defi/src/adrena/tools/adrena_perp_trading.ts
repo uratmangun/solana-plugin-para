@@ -1,7 +1,7 @@
 import {
   PublicKey,
   SystemProgram,
-  TransactionInstruction,
+  type TransactionInstruction,
 } from "@solana/web3.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
 import { TOKENS, DEFAULT_OPTIONS } from "./utils/constants";
@@ -9,7 +9,7 @@ import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { BN } from "@coral-xyz/anchor";
 
 import AdrenaClient from "./utils/anchor/AdrenaClient";
-import { sendTx } from "solana-agent-kit";
+import { signOrSendTX } from "solana-agent-kit";
 
 const PRICE_DECIMALS = 10;
 const ADRENA_PROGRAM_ID = new PublicKey(
@@ -19,7 +19,7 @@ const ADRENA_PROGRAM_ID = new PublicKey(
 // i.e percentage = -2 (for -2%)
 // i.e percentage = 5 (for 5%)
 function applySlippage(nb: BN, percentage: number): BN {
-  const negative = percentage < 0 ? true : false;
+  const negative = percentage < 0;
 
   // Do x10_000 so percentage can be up to 4 decimals
   const percentageBN = new BN(
@@ -46,7 +46,7 @@ export async function closePerpTradeShort({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet.publicKey;
+  const owner = agent.wallet_address;
 
   const custody = client.getCustodyByMint(tradeMint);
   const collateralCustody = client.getCustodyByMint(TOKENS.USDC);
@@ -129,7 +129,7 @@ export async function closePerpTradeShort({
     })
     .instruction();
 
-  return sendTx(agent, [...preInstructions, instruction]);
+  return signOrSendTX(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -147,7 +147,7 @@ export async function closePerpTradeLong({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet.publicKey;
+  const owner = agent.wallet_address;
 
   const custody = client.getCustodyByMint(tradeMint);
 
@@ -224,7 +224,7 @@ export async function closePerpTradeLong({
     })
     .instruction();
 
-  return sendTx(agent, [...preInstructions, instruction]);
+  return signOrSendTX(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -249,10 +249,10 @@ export async function openPerpTradeLong({
   leverage?: number;
   tradeMint?: PublicKey;
   slippage?: number;
-}): Promise<string> {
+}) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet.publicKey;
+  const owner = agent.wallet_address;
 
   const collateralAccount = AdrenaClient.findATAAddressSync(owner, tradeMint);
   const fundingAccount = AdrenaClient.findATAAddressSync(owner, collateralMint);
@@ -297,8 +297,7 @@ export async function openPerpTradeLong({
   );
 
   const scaledCollateralAmount = new BN(
-    collateralAmount *
-      Math.pow(10, client.getCustodyByMint(collateralMint).decimals),
+    collateralAmount * 10 ** client.getCustodyByMint(collateralMint).decimals,
   );
 
   const preInstructions: TransactionInstruction[] = [];
@@ -357,7 +356,7 @@ export async function openPerpTradeLong({
     })
     .instruction();
 
-  return sendTx(agent, [...preInstructions, instruction]);
+  return signOrSendTX(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -382,10 +381,10 @@ export async function openPerpTradeShort({
   leverage?: number;
   tradeMint?: PublicKey;
   slippage?: number;
-}): Promise<string> {
+}) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet.publicKey;
+  const owner = agent.wallet_address;
 
   const collateralAccount = AdrenaClient.findATAAddressSync(owner, tradeMint);
   const fundingAccount = AdrenaClient.findATAAddressSync(owner, collateralMint);
@@ -457,8 +456,7 @@ export async function openPerpTradeShort({
   );
 
   const scaledCollateralAmount = new BN(
-    collateralAmount *
-      Math.pow(10, client.getCustodyByMint(collateralMint).decimals),
+    collateralAmount * 10 ** client.getCustodyByMint(collateralMint).decimals,
   );
 
   const instruction = await client.program.methods
@@ -502,5 +500,5 @@ export async function openPerpTradeShort({
     })
     .instruction();
 
-  return sendTx(agent, [...preInstructions, instruction]);
+  return signOrSendTX(agent, [...preInstructions, instruction]);
 }

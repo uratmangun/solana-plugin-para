@@ -6,23 +6,22 @@ import {
 import {
   Keypair,
   PublicKey,
-  sendAndConfirmTransaction,
   SystemProgram,
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
-import type { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 import type { BatchOrderPattern, OrderParams } from "../types";
 
 export async function manifestCreateMarket(
   agent: SolanaAgentKit,
   baseMint: PublicKey,
   quoteMint: PublicKey,
-): Promise<string[]> {
+) {
   const marketKeypair: Keypair = Keypair.generate();
   const FIXED_MANIFEST_HEADER_SIZE: number = 256;
   const createAccountIx: TransactionInstruction = SystemProgram.createAccount({
-    fromPubkey: agent.wallet.publicKey,
+    fromPubkey: agent.wallet_address,
     newAccountPubkey: marketKeypair.publicKey,
     space: FIXED_MANIFEST_HEADER_SIZE,
     lamports: await agent.connection.getMinimumBalanceForRentExemption(
@@ -31,7 +30,7 @@ export async function manifestCreateMarket(
     programId: new PublicKey("MNFSTqtC93rEfYHB6hF82sKdZpUDFWkViLByLd1k1Ms"),
   });
   const createMarketIx = ManifestClient["createMarketIx"](
-    agent.wallet.publicKey,
+    agent.wallet_address,
     baseMint,
     quoteMint,
     marketKeypair.publicKey,
@@ -40,11 +39,8 @@ export async function manifestCreateMarket(
   const tx: Transaction = new Transaction();
   tx.add(createAccountIx);
   tx.add(createMarketIx);
-  const signature = await sendAndConfirmTransaction(agent.connection, tx, [
-    agent.wallet,
-    marketKeypair,
-  ]);
-  return [signature, marketKeypair.publicKey.toBase58()];
+
+  return [await signOrSendTX(agent, tx), marketKeypair.publicKey.toBase58()];
 }
 
 /**
@@ -62,12 +58,12 @@ export async function limitOrder(
   quantity: number,
   side: string,
   price: number,
-): Promise<string> {
+) {
   try {
-    const mfxClient = await ManifestClient.getClientForMarket(
+    const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet,
+      agent.wallet_address,
     );
 
     const orderParams: WrapperPlaceOrderParamsExternal = {
@@ -81,16 +77,14 @@ export async function limitOrder(
 
     const depositPlaceOrderIx: TransactionInstruction[] =
       await mfxClient.placeOrderWithRequiredDepositIxs(
-        agent.wallet.publicKey,
+        agent.wallet_address,
         orderParams,
       );
-    const signature = await sendAndConfirmTransaction(
-      agent.connection,
-      new Transaction().add(...depositPlaceOrderIx),
-      [agent.wallet],
-    );
 
-    return signature;
+    return await signOrSendTX(
+      agent,
+      new Transaction().add(...depositPlaceOrderIx),
+    );
   } catch (error: any) {
     throw new Error(`Limit Order failed: ${error.message}`);
   }
@@ -105,22 +99,17 @@ export async function limitOrder(
 export async function cancelAllOrders(
   agent: SolanaAgentKit,
   marketId: PublicKey,
-): Promise<string> {
+) {
   try {
-    const mfxClient = await ManifestClient.getClientForMarket(
+    const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet,
+      agent.wallet_address,
     );
 
-    const cancelAllOrdersIx = await mfxClient.cancelAllIx();
-    const signature = await sendAndConfirmTransaction(
-      agent.connection,
-      new Transaction().add(cancelAllOrdersIx),
-      [agent.wallet],
-    );
+    const cancelAllOrdersIx = mfxClient.cancelAllIx();
 
-    return signature;
+    return await signOrSendTX(agent, new Transaction().add(cancelAllOrdersIx));
   } catch (error: any) {
     throw new Error(`Cancel all orders failed: ${error.message}`);
   }
@@ -132,25 +121,17 @@ export async function cancelAllOrders(
  * @param marketId Public key for the manifest market
  * @returns Transaction signature
  */
-export async function withdrawAll(
-  agent: SolanaAgentKit,
-  marketId: PublicKey,
-): Promise<string> {
+export async function withdrawAll(agent: SolanaAgentKit, marketId: PublicKey) {
   try {
-    const mfxClient = await ManifestClient.getClientForMarket(
+    const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet,
+      agent.wallet_address,
     );
 
-    const withdrawAllIx = await mfxClient.withdrawAllIx();
-    const signature = await sendAndConfirmTransaction(
-      agent.connection,
-      new Transaction().add(...withdrawAllIx),
-      [agent.wallet],
-    );
+    const withdrawAllIx = mfxClient.withdrawAllIx();
 
-    return signature;
+    return await signOrSendTX(agent, new Transaction().add(...withdrawAllIx));
   } catch (error: any) {
     throw new Error(`Withdraw all failed: ${error.message}`);
   }
@@ -256,14 +237,14 @@ export async function batchOrder(
   agent: SolanaAgentKit,
   marketId: PublicKey,
   orders: OrderParams[],
-): Promise<string> {
+) {
   try {
     validateNoCrossedOrders(orders);
 
-    const mfxClient = await ManifestClient.getClientForMarket(
+    const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet,
+      agent.wallet_address,
     );
 
     const placeParams: WrapperPlaceOrderParamsExternal[] = orders.map(
@@ -277,19 +258,13 @@ export async function batchOrder(
       }),
     );
 
-    const batchOrderIx: TransactionInstruction = await mfxClient.batchUpdateIx(
+    const batchOrderIx: TransactionInstruction = mfxClient.batchUpdateIx(
       placeParams,
       [],
       true,
     );
 
-    const signature = await sendAndConfirmTransaction(
-      agent.connection,
-      new Transaction().add(batchOrderIx),
-      [agent.wallet],
-    );
-
-    return signature;
+    return await signOrSendTX(agent, new Transaction().add(batchOrderIx));
   } catch (error: any) {
     throw new Error(`Batch Order failed: ${error.message}`);
   }

@@ -17,6 +17,9 @@ export interface Config {
   signTransaction: (
     transaction: TransactionOrVersionedTransaction,
   ) => Promise<TransactionOrVersionedTransaction>;
+  signAllTransactions: (
+    transactions: TransactionOrVersionedTransaction[],
+  ) => Promise<TransactionOrVersionedTransaction[]>;
   sendTransaction: (
     transaction: TransactionOrVersionedTransaction,
   ) => Promise<string>;

@@ -3,7 +3,7 @@ import BN from "bn.js";
 import { PublicKey } from "@solana/web3.js";
 import DLMM, { ActivationType } from "@meteora-ag/dlmm";
 import { getMint } from "@solana/spl-token";
-import { sendTx } from "solana-agent-kit";
+import { sendTx, signOrSendTX } from "solana-agent-kit";
 
 /**
  * Create Meteora DLMM pool
@@ -30,7 +30,7 @@ export async function createMeteoraDlmmPool(
   activationType: ActivationType,
   hasAlphaVault: boolean,
   activationPoint: BN | undefined,
-): Promise<string> {
+) {
   const tokenAMintInfo = await getMint(agent.connection, tokenAMint);
   const tokenBMintInfo = await getMint(agent.connection, tokenBMint);
 
@@ -62,9 +62,5 @@ export async function createMeteoraDlmmPool(
     },
   );
 
-  const initPoolTxHash = await sendTx(agent, initPoolTx.instructions, [
-    agent.wallet,
-  ]);
-
-  return initPoolTxHash;
+  return signOrSendTX(agent, initPoolTx, undefined, "max");
 }

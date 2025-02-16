@@ -136,11 +136,12 @@ export async function sendTx(
   agent: SolanaAgentKit,
   instructions: TransactionInstruction[],
   otherKeypairs?: Keypair[],
+  feeTier?: keyof typeof feeTiers,
 ) {
   const ixComputeBudget = await getComputeBudgetInstructions(
     agent,
     instructions,
-    "mid",
+    feeTier ?? "mid",
   );
   const allInstructions = [
     ixComputeBudget.computeBudgetLimitInstruction,
@@ -191,18 +192,33 @@ export async function sendTx(
 
 export async function signOrSendTX(
   agent: SolanaAgentKit,
-  instructions: TransactionInstruction[],
+  instructionsOrTransaction:
+    | TransactionInstruction[]
+    | Transaction
+    | VersionedTransaction,
   otherKeypairs?: Keypair[],
+  feeTier?: keyof typeof feeTiers,
 ): Promise<string | TransactionOrVersionedTransaction> {
+  if (
+    instructionsOrTransaction instanceof Transaction ||
+    instructionsOrTransaction instanceof VersionedTransaction
+  ) {
+    if (agent.config.signOnly) {
+      return instructionsOrTransaction;
+    }
+
+    return await agent.config.sendTransaction(instructionsOrTransaction);
+  }
+
   const ixComputeBudget = await getComputeBudgetInstructions(
     agent,
-    instructions,
-    "mid",
+    instructionsOrTransaction,
+    feeTier ?? "mid",
   );
   const allInstructions = [
     ixComputeBudget.computeBudgetLimitInstruction,
     ixComputeBudget.computeBudgetPriorityFeeInstructions,
-    ...instructions,
+    ...instructionsOrTransaction,
   ];
   const { blockhash } = await agent.connection.getLatestBlockhash();
   const messageV0 = new TransactionMessage({
@@ -219,5 +235,5 @@ export async function signOrSendTX(
     return signedTransaction;
   }
 
-  return sendTx(agent, instructions, otherKeypairs);
+  return sendTx(agent, instructionsOrTransaction, otherKeypairs, feeTier);
 }

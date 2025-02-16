@@ -46,17 +46,12 @@ export async function initClients(
   },
 ) {
   const wallet: IWallet = {
-    publicKey: agent.wallet.publicKey,
-    payer: agent.wallet,
+    publicKey: agent.wallet_address,
     signAllTransactions: async (txs) => {
-      for (const tx of txs) {
-        tx.sign(agent.wallet);
-      }
-      return txs;
+      return (await agent.config.signAllTransactions(txs)) as Transaction[];
     },
     signTransaction: async (tx) => {
-      tx.sign(agent.wallet);
-      return tx;
+      return (await agent.config.signTransaction(tx)) as Transaction;
     },
   };
 
@@ -118,7 +113,7 @@ export async function createDriftUserAccount(
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
         new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
     });
     const userAccountExists = await user.exists();
@@ -138,7 +133,7 @@ export async function createDriftUserAccount(
       const [txSignature, account] =
         await driftClient.initializeUserAccountAndDepositCollateral(
           depositAmount,
-          getAssociatedTokenAddressSync(token.mint, agent.wallet.publicKey),
+          getAssociatedTokenAddressSync(token.mint, agent.wallet_address),
         );
 
       await cleanUp();
@@ -172,7 +167,7 @@ export async function depositToDriftUserAccount(
 ) {
   try {
     const { driftClient, cleanUp } = await initClients(agent);
-    const publicKey = agent.wallet.publicKey;
+    const publicKey = agent.wallet_address;
     const user = new User({
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
@@ -216,9 +211,9 @@ export async function depositToDriftUserAccount(
       }),
     );
     tx.recentBlockhash = latestBlockhash.blockhash;
-    tx.sign(agent.wallet);
+    const signedTx = await agent.config.signTransaction(tx);
     const txSignature = await driftClient.txSender.sendRawTransaction(
-      tx.serialize(),
+      signedTx.serialize(),
       { ...driftClient.opts },
     );
 
@@ -242,7 +237,7 @@ export async function withdrawFromDriftUserAccount(
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
         new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
     });
     const userAccountExists = await user.exists();
@@ -269,7 +264,7 @@ export async function withdrawFromDriftUserAccount(
       driftClient.getWithdrawalIxs(
         withdrawAmount,
         token.marketIndex,
-        getAssociatedTokenAddressSync(token.mint, agent.wallet.publicKey),
+        getAssociatedTokenAddressSync(token.mint, agent.wallet_address),
         !isBorrow,
       ),
       driftClient.connection.getLatestBlockhash(),
@@ -281,10 +276,10 @@ export async function withdrawFromDriftUserAccount(
       }),
     );
     tx.recentBlockhash = latestBlockhash.blockhash;
-    tx.sign(agent.wallet);
+    const signedTx = await agent.config.signTransaction(tx);
 
     const txSignature = await driftClient.txSender.sendRawTransaction(
-      tx.serialize(),
+      signedTx.serialize(),
       { ...driftClient.opts },
     );
 
@@ -322,7 +317,7 @@ export async function driftPerpTrade(
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
         new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
     });
     const userAccountExists = await user.exists();
@@ -412,7 +407,7 @@ export async function doesUserHaveDriftAccount(agent: SolanaAgentKit) {
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
         new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
     });
     await user.subscribe();
@@ -442,7 +437,7 @@ export async function driftUserAccountInfo(agent: SolanaAgentKit) {
       driftClient,
       userAccountPublicKey: getUserAccountPublicKeySync(
         new PublicKey(DRIFT_PROGRAM_ID),
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
     });
     const userAccountExists = await user.exists();
@@ -527,7 +522,7 @@ export async function stakeToDriftInsuranceFund(
     const deriveInsuranceFundStakeAccount =
       getInsuranceFundStakeAccountPublicKey(
         driftClient.program.programId,
-        agent.wallet.publicKey,
+        agent.wallet_address,
         token.marketIndex,
       );
     let shouldCreateAccount = false;
@@ -548,7 +543,7 @@ export async function stakeToDriftInsuranceFund(
       marketIndex: token.marketIndex,
       collateralAccountPublicKey: getAssociatedTokenAddressSync(
         token.mint,
-        agent.wallet.publicKey,
+        agent.wallet_address,
       ),
       initializeStakeAccount: shouldCreateAccount,
       txParams: {
@@ -628,7 +623,7 @@ export async function unstakeFromDriftInsuranceFund(
 
     const signature = await driftClient.removeInsuranceFundStake(
       token.marketIndex,
-      getAssociatedTokenAddressSync(token.mint, agent.wallet.publicKey),
+      getAssociatedTokenAddressSync(token.mint, agent.wallet_address),
       {
         computeUnitsPrice: MINIMUM_COMPUTE_PRICE_FOR_COMPLEX_ACTIONS,
       },

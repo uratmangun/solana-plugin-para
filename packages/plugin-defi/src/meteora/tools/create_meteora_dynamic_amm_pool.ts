@@ -3,7 +3,7 @@ import type { SolanaAgentKit } from "solana-agent-kit";
 import BN from "bn.js";
 import { PublicKey } from "@solana/web3.js";
 import { CustomizableParams } from "@mercurial-finance/dynamic-amm-sdk/dist/cjs/src/amm/types";
-import { sendTx } from "solana-agent-kit";
+import { sendTx, signOrSendTX } from "solana-agent-kit";
 
 /**
  * Create Meteora Dynamic AMM pool
@@ -27,7 +27,7 @@ export async function createMeteoraDynamicAMMPool(
   tokenAAmount: BN,
   tokenBAmount: BN,
   customizableParams: CustomizableParams,
-): Promise<string> {
+) {
   const initPoolTx =
     await AmmImpl.createCustomizablePermissionlessConstantProductPool(
       agent.connection,
@@ -39,9 +39,5 @@ export async function createMeteoraDynamicAMMPool(
       customizableParams,
     );
 
-  const initPoolTxHash = await sendTx(agent, initPoolTx.instructions, [
-    agent.wallet,
-  ]);
-
-  return initPoolTxHash;
+  return await signOrSendTX(agent, initPoolTx, undefined, "max");
 }
