@@ -1,5 +1,5 @@
 import { VersionedTransaction, PublicKey } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import {
   TOKENS,
   DEFAULT_OPTIONS,
@@ -23,7 +23,7 @@ export async function trade(
   inputAmount: number,
   inputMint: PublicKey = TOKENS.USDC,
   slippageBps: number = DEFAULT_OPTIONS.SLIPPAGE_BPS,
-): Promise<string> {
+) {
   try {
     // Check if input token is native SOL
     const isNativeSol = inputMint.equals(TOKENS.SOL);
@@ -82,11 +82,8 @@ export async function trade(
     const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
 
     const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
-    // Sign and send transaction
-    transaction.sign([agent.wallet]);
-    const signature = await agent.connection.sendTransaction(transaction);
-
-    return signature;
+    // Sign or send transaction
+    return await signOrSendTX(agent, transaction);
   } catch (error: any) {
     throw new Error(`Swap failed: ${error.message}`);
   }

@@ -1,4 +1,8 @@
-import { SolanaAgentKit } from "solana-agent-kit";
+import {
+  signOrSendTX,
+  SolanaAgentKit,
+  TransactionOrVersionedTransaction,
+} from "solana-agent-kit";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import {
@@ -20,9 +24,9 @@ export async function transfer(
   to: PublicKey,
   amount: number,
   mint?: PublicKey,
-): Promise<string> {
+) {
   try {
-    let tx: string;
+    let tx: string | TransactionOrVersionedTransaction;
 
     if (!mint) {
       // Transfer native SOL
@@ -34,7 +38,7 @@ export async function transfer(
         }),
       );
 
-      tx = await agent.connection.sendTransaction(transaction, [agent.wallet]);
+      tx = await signOrSendTX(agent, transaction);
     } else {
       // Transfer SPL token
       const fromAta = await getAssociatedTokenAddress(
@@ -56,7 +60,7 @@ export async function transfer(
         ),
       );
 
-      tx = await agent.connection.sendTransaction(transaction, [agent.wallet]);
+      tx = await signOrSendTX(agent, transaction);
     }
 
     return tx;
