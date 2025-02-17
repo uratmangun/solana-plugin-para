@@ -38,7 +38,7 @@ export async function createGibworkTask(
           content: content,
           requirements: requirements,
           tags: tags,
-          payer: payer?.toBase58() || agent.wallet.publicKey.toBase58(),
+          payer: payer?.toBase58() || agent.wallet_address.toBase58(),
           token: {
             mintAddress: tokenMintAddress.toBase58(),
             amount: tokenAmount,
@@ -58,11 +58,14 @@ export async function createGibworkTask(
     );
     const tx = VersionedTransaction.deserialize(serializedTransaction);
 
-    tx.sign([agent.wallet]);
-    const signature = await agent.connection.sendTransaction(tx, {
-      preflightCommitment: "confirmed",
-      maxRetries: 3,
-    });
+    const signedTx = await agent.config.signTransaction(tx);
+    const signature = await agent.connection.sendTransaction(
+      signedTx as VersionedTransaction,
+      {
+        preflightCommitment: "confirmed",
+        maxRetries: 3,
+      },
+    );
 
     const latestBlockhash = await agent.connection.getLatestBlockhash();
     await agent.connection.confirmTransaction({

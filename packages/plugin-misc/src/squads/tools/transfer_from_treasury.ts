@@ -1,4 +1,4 @@
-import { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import {
   PublicKey,
   SystemProgram,
@@ -29,13 +29,12 @@ export async function multisig_transfer_from_treasury(
   to: PublicKey,
   vaultIndex: number = 0,
   mint?: PublicKey,
-): Promise<string> {
+) {
   try {
     let transferInstruction: TransactionInstruction;
 
-    const createKey = agent.wallet;
     const [multisigPda] = multisig.getMultisigPda({
-      createKey: createKey.publicKey,
+      createKey: agent.wallet_address,
     });
     const multisigInfo = await Multisig.fromAccountAddress(
       agent.connection,
@@ -87,11 +86,7 @@ export async function multisig_transfer_from_treasury(
       transactionMessage: transferMessage,
     });
 
-    multisigTx.sign([agent.wallet]);
-    const tx = await agent.connection.sendRawTransaction(
-      multisigTx.serialize(),
-    );
-    return tx;
+    return await signOrSendTX(agent, multisigTx);
   } catch (error: any) {
     throw new Error(`Transfer failed: ${error}`);
   }

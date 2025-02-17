@@ -3,7 +3,6 @@ import {
   Transaction,
   SystemProgram,
   LAMPORTS_PER_SOL,
-  sendAndConfirmTransaction,
   PublicKey,
   ComputeBudgetProgram,
 } from "@solana/web3.js";
@@ -13,7 +12,7 @@ import {
   getMint,
   createAssociatedTokenAccountInstruction,
 } from "@solana/spl-token";
-import { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 
 const MINIMUM_SOL_BALANCE = 0.003 * LAMPORTS_PER_SOL;
 
@@ -21,7 +20,7 @@ export async function create_TipLink(
   agent: SolanaAgentKit,
   amount: number,
   splmintAddress?: PublicKey,
-): Promise<{ url: string; signature: string }> {
+) {
   try {
     const tiplink = await TipLink.create();
 
@@ -35,12 +34,11 @@ export async function create_TipLink(
         }),
       );
 
-      const signature = await sendAndConfirmTransaction(
-        agent.connection,
-        transaction,
-        [agent.wallet],
-        { commitment: "confirmed" },
-      );
+      if (agent.config.signOnly) {
+        return await agent.config.signTransaction(transaction);
+      }
+
+      const signature = (await signOrSendTX(agent, transaction)) as string;
 
       return {
         url: tiplink.url.toString(),
@@ -93,12 +91,11 @@ export async function create_TipLink(
         ),
       );
 
-      const signature = await sendAndConfirmTransaction(
-        agent.connection,
-        transaction,
-        [agent.wallet],
-        { commitment: "confirmed" },
-      );
+      if (agent.config.signOnly) {
+        return await agent.config.signTransaction(transaction);
+      }
+
+      const signature = (await signOrSendTX(agent, transaction)) as string;
 
       return {
         url: tiplink.url.toString(),

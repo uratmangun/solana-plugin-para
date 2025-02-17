@@ -1,6 +1,6 @@
 import * as multisig from "@sqds/multisig";
 import { PublicKey } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Creates a new Squads multisig account.
@@ -14,12 +14,12 @@ import { SolanaAgentKit } from "solana-agent-kit";
 export async function create_squads_multisig(
   agent: SolanaAgentKit,
   creator: PublicKey,
-): Promise<string> {
+) {
   const connection = agent.connection;
-  const createKey = agent.wallet; // can be any keypair, using the agent wallet as only one multisig is required
+  // const createKey = agent.wallet; // can be any keypair, using the agent wallet as only one multisig is required
 
   const [multisigPda] = multisig.getMultisigPda({
-    createKey: createKey.publicKey,
+    createKey: agent.wallet_address,
   });
 
   const programConfigPda = multisig.getProgramConfigPda({})[0];
@@ -34,8 +34,8 @@ export async function create_squads_multisig(
   const tx = multisig.transactions.multisigCreateV2({
     blockhash: (await connection.getLatestBlockhash()).blockhash,
     treasury: configTreasury,
-    createKey: createKey.publicKey,
-    creator: agent.wallet.publicKey,
+    createKey: agent.wallet_address,
+    creator: agent.wallet_address,
     multisigPda,
     configAuthority: null,
     timeLock: 0,
@@ -43,7 +43,7 @@ export async function create_squads_multisig(
     rentCollector: null,
     members: [
       {
-        key: agent.wallet.publicKey,
+        key: agent.wallet_address,
         permissions: multisig.types.Permissions.all(),
       },
       {
@@ -53,9 +53,5 @@ export async function create_squads_multisig(
     ],
   });
 
-  tx.sign([agent.wallet, createKey]);
-
-  const txId = connection.sendRawTransaction(tx.serialize());
-
-  return txId;
+  return signOrSendTX(agent, tx);
 }
