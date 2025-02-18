@@ -19,7 +19,6 @@ import {
 import { sendTx } from "solana-agent-kit";
 import { Percentage } from "@orca-so/common-sdk";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
-import { Wallet } from "./utils/keypair";
 
 /**
  * # Opens a Single-Sided Liquidity Position in an Orca Whirlpool
@@ -61,10 +60,15 @@ export async function orcaOpenSingleSidedPosition(
   inputAmount: Decimal,
 ): Promise<string> {
   try {
-    const wallet = new Wallet(agent.wallet);
     const ctx = WhirlpoolContext.from(
       agent.connection,
-      wallet,
+      {
+        publicKey: agent.wallet_address,
+        // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
+        signAllTransactions: agent.config.signAllTransactions,
+        // @ts-expect-error - reference above
+        signTransaction: agent.config.signTransaction,
+      },
       ORCA_WHIRLPOOL_PROGRAM_ID,
     );
     const client = buildWhirlpoolClient(ctx);

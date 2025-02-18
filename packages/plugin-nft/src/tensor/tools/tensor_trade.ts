@@ -1,7 +1,7 @@
-import { SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import { TensorSwapSDK } from "@tensor-oss/tensorswap-sdk";
 import { PublicKey, Transaction } from "@solana/web3.js";
-import { AnchorProvider, Wallet } from "@coral-xyz/anchor";
+import { AnchorProvider } from "@coral-xyz/anchor";
 import { BN } from "bn.js";
 import {
   getAssociatedTokenAddress,
@@ -13,7 +13,7 @@ export async function listNFTForSale(
   agent: SolanaAgentKit,
   nftMint: PublicKey,
   price: number,
-): Promise<string> {
+) {
   try {
     if (!PublicKey.isOnCurve(nftMint)) {
       throw new Error("Invalid NFT mint address");
@@ -41,7 +41,13 @@ export async function listNFTForSale(
 
     const provider = new AnchorProvider(
       agent.connection,
-      new Wallet(agent.wallet),
+      {
+        publicKey: agent.wallet_address,
+        // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
+        signAllTransactions: agent.config.signAllTransactions,
+        // @ts-expect-error - reference above
+        signTransaction: agent.config.signTransaction,
+      },
       AnchorProvider.defaultOptions(),
     );
 
@@ -63,23 +69,23 @@ export async function listNFTForSale(
 
     const transaction = new Transaction();
     transaction.add(...tx.ixs);
-    return await agent.connection.sendTransaction(transaction, [
-      agent.wallet,
-      ...tx.extraSigners,
-    ]);
+    return await signOrSendTX(agent, transaction, tx.extraSigners);
   } catch (error: any) {
     console.error("Full error details:", error);
     throw error;
   }
 }
 
-export async function cancelListing(
-  agent: SolanaAgentKit,
-  nftMint: PublicKey,
-): Promise<string> {
+export async function cancelListing(agent: SolanaAgentKit, nftMint: PublicKey) {
   const provider = new AnchorProvider(
     agent.connection,
-    new Wallet(agent.wallet),
+    {
+      publicKey: agent.wallet_address,
+      // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
+      signAllTransactions: agent.config.signAllTransactions,
+      // @ts-expect-error - reference above
+      signTransaction: agent.config.signTransaction,
+    },
     AnchorProvider.defaultOptions(),
   );
 
@@ -102,8 +108,5 @@ export async function cancelListing(
 
   const transaction = new Transaction();
   transaction.add(...tx.ixs);
-  return await agent.connection.sendTransaction(transaction, [
-    agent.wallet,
-    ...tx.extraSigners,
-  ]);
+  return await signOrSendTX(agent, transaction, tx.extraSigners);
 }
