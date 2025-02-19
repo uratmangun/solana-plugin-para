@@ -33,7 +33,7 @@ export async function multisig_deposit_to_treasury(
       vaultIndex = 0;
     }
     const [multisigPda] = multisig.getMultisigPda({
-      createKey: agent.wallet_address,
+      createKey: agent.wallet.publicKey,
     });
     const [vaultPda] = multisig.getVaultPda({
       multisigPda,
@@ -44,7 +44,7 @@ export async function multisig_deposit_to_treasury(
       // Transfer native SOL
       const transaction = new Transaction().add(
         SystemProgram.transfer({
-          fromPubkey: agent.wallet_address,
+          fromPubkey: agent.wallet.publicKey,
           toPubkey: to,
           lamports: amount * LAMPORTS_PER_SOL,
         }),
@@ -55,7 +55,7 @@ export async function multisig_deposit_to_treasury(
       // Transfer SPL token
       const fromAta = await getAssociatedTokenAddress(
         mint,
-        agent.wallet_address,
+        agent.wallet.publicKey,
       );
       const transaction = new Transaction();
       const toAta = await getAssociatedTokenAddress(mint, to, true);
@@ -64,7 +64,7 @@ export async function multisig_deposit_to_treasury(
       if (!toTokenAccountInfo) {
         transaction.add(
           createAssociatedTokenAccountInstruction(
-            agent.wallet_address,
+            agent.wallet.publicKey,
             toAta,
             to,
             mint,
@@ -79,7 +79,7 @@ export async function multisig_deposit_to_treasury(
         createTransferInstruction(
           fromAta,
           toAta,
-          agent.wallet_address,
+          agent.wallet.publicKey,
           adjustedAmount,
         ),
       );

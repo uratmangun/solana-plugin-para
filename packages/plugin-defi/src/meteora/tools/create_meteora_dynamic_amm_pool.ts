@@ -31,7 +31,7 @@ export async function createMeteoraDynamicAMMPool(
   const initPoolTx =
     await AmmImpl.createCustomizablePermissionlessConstantProductPool(
       agent.connection,
-      agent.wallet_address,
+      agent.wallet.publicKey,
       tokenAMint,
       tokenBMint,
       tokenAAmount,

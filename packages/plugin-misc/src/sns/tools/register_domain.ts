@@ -26,7 +26,7 @@ export async function registerDomain(
     const space = spaceKB * 1_000;
 
     const buyerTokenAccount = getAssociatedTokenAddressSync(
-      agent.wallet_address,
+      agent.wallet.publicKey,
       TOKENS.USDC,
     );
 
@@ -35,7 +35,7 @@ export async function registerDomain(
       agent.connection,
       name,
       space,
-      agent.wallet_address,
+      agent.wallet.publicKey,
       buyerTokenAccount,
     );
 
@@ -44,7 +44,7 @@ export async function registerDomain(
     transaction.recentBlockhash = (
       await agent.connection.getLatestBlockhash()
     ).blockhash;
-    transaction.feePayer = agent.wallet_address;
+    transaction.feePayer = agent.wallet.publicKey;
 
     // Sign or send transaction
     return await signOrSendTX(agent, transaction);

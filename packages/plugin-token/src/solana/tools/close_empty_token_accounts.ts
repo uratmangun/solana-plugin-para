@@ -75,7 +75,7 @@ async function create_close_instruction(
   const instructions = [];
 
   const ata_accounts = await agent.connection.getTokenAccountsByOwner(
-    agent.wallet_address,
+    agent.wallet.publicKey,
     { programId: token_program },
     "confirmed",
   );
@@ -94,8 +94,8 @@ async function create_close_instruction(
     ) {
       const closeInstruction = createCloseAccountInstruction(
         ata_accounts.value[i].pubkey,
-        agent.wallet_address,
-        agent.wallet_address,
+        agent.wallet.publicKey,
+        agent.wallet.publicKey,
         [],
         token_program,
       );

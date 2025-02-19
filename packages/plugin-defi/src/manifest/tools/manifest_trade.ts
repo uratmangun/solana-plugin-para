@@ -21,7 +21,7 @@ export async function manifestCreateMarket(
   const marketKeypair: Keypair = Keypair.generate();
   const FIXED_MANIFEST_HEADER_SIZE: number = 256;
   const createAccountIx: TransactionInstruction = SystemProgram.createAccount({
-    fromPubkey: agent.wallet_address,
+    fromPubkey: agent.wallet.publicKey,
     newAccountPubkey: marketKeypair.publicKey,
     space: FIXED_MANIFEST_HEADER_SIZE,
     lamports: await agent.connection.getMinimumBalanceForRentExemption(
@@ -30,7 +30,7 @@ export async function manifestCreateMarket(
     programId: new PublicKey("MNFSTqtC93rEfYHB6hF82sKdZpUDFWkViLByLd1k1Ms"),
   });
   const createMarketIx = ManifestClient["createMarketIx"](
-    agent.wallet_address,
+    agent.wallet.publicKey,
     baseMint,
     quoteMint,
     marketKeypair.publicKey,
@@ -63,7 +63,7 @@ export async function limitOrder(
     const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
 
     const orderParams: WrapperPlaceOrderParamsExternal = {
@@ -77,7 +77,7 @@ export async function limitOrder(
 
     const depositPlaceOrderIx: TransactionInstruction[] =
       await mfxClient.placeOrderWithRequiredDepositIxs(
-        agent.wallet_address,
+        agent.wallet.publicKey,
         orderParams,
       );
 
@@ -104,7 +104,7 @@ export async function cancelAllOrders(
     const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
 
     const cancelAllOrdersIx = mfxClient.cancelAllIx();
@@ -126,7 +126,7 @@ export async function withdrawAll(agent: SolanaAgentKit, marketId: PublicKey) {
     const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
 
     const withdrawAllIx = mfxClient.withdrawAllIx();
@@ -244,7 +244,7 @@ export async function batchOrder(
     const mfxClient = await ManifestClient.getClientForMarketNoPrivateKey(
       agent.connection,
       marketId,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
 
     const placeParams: WrapperPlaceOrderParamsExternal[] = orders.map(

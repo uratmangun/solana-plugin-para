@@ -77,7 +77,7 @@ export async function voltrWithdrawStrategy(
       instructionDiscriminator,
     },
     {
-      manager: agent.wallet_address,
+      manager: agent.wallet.publicKey,
       vault,
       vaultAssetMint,
       strategy,

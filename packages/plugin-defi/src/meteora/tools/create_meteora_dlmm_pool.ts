@@ -55,7 +55,7 @@ export async function createMeteoraDlmmPool(
     new BN(feeBps),
     activationType,
     hasAlphaVault,
-    agent.wallet_address,
+    agent.wallet.publicKey,
     activationPoint,
     {
       cluster: "mainnet-beta",

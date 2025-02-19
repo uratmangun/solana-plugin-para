@@ -83,17 +83,17 @@ export async function sendCompressedAirdrop(
   }
 
   try {
-    await getAssociatedTokenAddress(mintAddress, agent.wallet_address);
+    await getAssociatedTokenAddress(mintAddress, agent.wallet.publicKey);
   } catch (error) {
     const associatedToken = getAssociatedTokenAddressSync(
       mintAddress,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
     setupTransaction.add(
       createAssociatedTokenAccountInstruction(
-        agent.wallet_address,
+        agent.wallet.publicKey,
         associatedToken,
-        agent.wallet_address,
+        agent.wallet.publicKey,
         mintAddress,
       ),
     );
@@ -103,7 +103,7 @@ export async function sendCompressedAirdrop(
     const createTokenPoolInstruction =
       await CompressedTokenProgram.createTokenPool({
         mint: mintAddress,
-        feePayer: agent.wallet_address,
+        feePayer: agent.wallet.publicKey,
       });
     setupTransaction.add(createTokenPoolInstruction);
   } catch (error: any) {
@@ -145,7 +145,7 @@ async function processAll(
 
   const sourceTokenAccount = getAssociatedTokenAddressSync(
     mint,
-    agent.wallet_address,
+    agent.wallet.publicKey,
   );
 
   const maxRecipientsPerInstruction = 5;
@@ -178,8 +178,8 @@ async function processAll(
         const batch = recipientBatch.slice(i, i + maxRecipientsPerInstruction);
         compressIxPromises.push(
           CompressedTokenProgram.compress({
-            payer: agent.wallet_address,
-            owner: agent.wallet_address,
+            payer: agent.wallet.publicKey,
+            owner: agent.wallet.publicKey,
             source: sourceTokenAccount,
             toAddress: batch,
             amount: batch.map(() => amount),
@@ -198,7 +198,7 @@ async function processAll(
   const { blockhash } = await agent.connection.getLatestBlockhash();
   const tx = buildTx(
     transaction.instructions,
-    agent.wallet_address,
+    agent.wallet.publicKey,
     blockhash,
     [lookupTableAccount],
   );

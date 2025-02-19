@@ -51,18 +51,18 @@ export async function mintCollectionNFT(
       collection: collection,
       name: metadata.name,
       uri: metadata.uri,
-      owner: fromWeb3JsPublicKey(recipient ?? agent.wallet_address),
+      owner: fromWeb3JsPublicKey(recipient ?? agent.wallet.publicKey),
     }).build(umi);
 
     const compatibleTx = toWeb3JsLegacyTransaction(tx);
-    compatibleTx.feePayer = agent.wallet_address;
+    compatibleTx.feePayer = agent.wallet.publicKey;
 
     if (agent.config.signOnly) {
       return {
         mint: toWeb3JsPublicKey(assetSigner.publicKey),
         // Note: Token account is now handled automatically by the create instruction
         metadata: toWeb3JsPublicKey(assetSigner.publicKey),
-        signedTransaction: await agent.config.signTransaction(compatibleTx),
+        signedTransaction: await agent.wallet.signTransaction(compatibleTx),
       };
     }
 

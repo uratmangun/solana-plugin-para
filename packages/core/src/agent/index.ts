@@ -1,5 +1,5 @@
-import { Connection, PublicKey } from "@solana/web3.js";
-import type { Config, Plugin } from "../types";
+import { Connection } from "@solana/web3.js";
+import type { Config, Plugin, BaseWallet } from "../types";
 
 /**
  * Defines a type that merges all plugin methods into the `methods` object
@@ -24,28 +24,32 @@ type PluginMethods<T> = T extends Plugin ? T["methods"] : Record<string, never>;
  *
  * @example
  * // Create SolanaAgentKit instance
- * const agent = new SolanaAgentKit("<privateKey>", "<rpcUrl>", {});
+ * const agent = new SolanaAgentKit({
+ *  signTransaction: async (tx) => {},
+ *  signAllTransactions: async (txs) => {},
+ *  sendTransaction: async (tx) => {},
+ *  publicKey: "SomePublicKey",
+ * }, "<rpcUrl>", {});
  *
  * @example
  * // Add plugin
- * const agentWithPlugin = agent.use(tokenPlugin);
+ * const agentWithPlugins = agent.use(tokenPlugin);
  *
  * @example
  * // Use plugin method
- * agentWithPlugin.methods.transferToken("SomePublicKey", 100);
+ * agentWithPlugins.methods.transferToken("SomePublicKey", 100);
  */
 export class SolanaAgentKit<TPlugins = Record<string, never>> {
   public connection: Connection;
-  public wallet_address: PublicKey;
   public config: Config;
+  public wallet: BaseWallet;
   private plugins: Map<string, Plugin> = new Map();
 
   public methods: TPlugins = {} as TPlugins;
 
-  constructor(publicKey: string, rpc_url: string, config: Config) {
+  constructor(wallet: BaseWallet, rpc_url: string, config: Config) {
     this.connection = new Connection(rpc_url);
-    this.wallet_address = new PublicKey(publicKey);
-
+    this.wallet = wallet;
     this.config = config;
   }
 

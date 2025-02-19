@@ -34,7 +34,7 @@ export async function multisig_transfer_from_treasury(
     let transferInstruction: TransactionInstruction;
 
     const [multisigPda] = multisig.getMultisigPda({
-      createKey: agent.wallet_address,
+      createKey: agent.wallet.publicKey,
     });
     const multisigInfo = await Multisig.fromAccountAddress(
       agent.connection,
@@ -50,7 +50,7 @@ export async function multisig_transfer_from_treasury(
     if (!mint) {
       // Transfer native SOL
       transferInstruction = SystemProgram.transfer({
-        fromPubkey: agent.wallet_address,
+        fromPubkey: agent.wallet.publicKey,
         toPubkey: to,
         lamports: amount * LAMPORTS_PER_SOL,
       });
@@ -64,7 +64,7 @@ export async function multisig_transfer_from_treasury(
       transferInstruction = createTransferInstruction(
         fromAta,
         toAta,
-        agent.wallet_address,
+        agent.wallet.publicKey,
         adjustedAmount,
       );
     }
@@ -77,10 +77,10 @@ export async function multisig_transfer_from_treasury(
 
     const multisigTx = multisig.transactions.vaultTransactionCreate({
       blockhash: (await agent.connection.getLatestBlockhash()).blockhash,
-      feePayer: agent.wallet_address,
+      feePayer: agent.wallet.publicKey,
       multisigPda,
       transactionIndex,
-      creator: agent.wallet_address,
+      creator: agent.wallet.publicKey,
       vaultIndex: 0,
       ephemeralSigners: 0,
       transactionMessage: transferMessage,

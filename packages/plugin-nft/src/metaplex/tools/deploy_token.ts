@@ -57,17 +57,17 @@ export async function deploy_token(
         mintV1(umi, {
           mint: mint.publicKey,
           tokenStandard: TokenStandard.Fungible,
-          tokenOwner: fromWeb3JsPublicKey(agent.wallet_address),
+          tokenOwner: fromWeb3JsPublicKey(agent.wallet.publicKey),
           amount: initialSupply * Math.pow(10, decimals),
         }),
       );
     }
 
     const tx = toWeb3JsLegacyTransaction(builder.build(umi));
-    tx.feePayer = agent.wallet_address;
+    tx.feePayer = agent.wallet.publicKey;
 
     if (agent.config.signOnly) {
-      return await agent.config.signTransaction(tx);
+      return await agent.wallet.signTransaction(tx);
     }
 
     await signOrSendTX(agent, tx);

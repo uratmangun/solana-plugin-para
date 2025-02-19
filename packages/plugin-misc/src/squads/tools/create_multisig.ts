@@ -19,7 +19,7 @@ export async function create_squads_multisig(
   // const createKey = agent.wallet; // can be any keypair, using the agent wallet as only one multisig is required
 
   const [multisigPda] = multisig.getMultisigPda({
-    createKey: agent.wallet_address,
+    createKey: agent.wallet.publicKey,
   });
 
   const programConfigPda = multisig.getProgramConfigPda({})[0];
@@ -34,8 +34,8 @@ export async function create_squads_multisig(
   const tx = multisig.transactions.multisigCreateV2({
     blockhash: (await connection.getLatestBlockhash()).blockhash,
     treasury: configTreasury,
-    createKey: agent.wallet_address,
-    creator: agent.wallet_address,
+    createKey: agent.wallet.publicKey,
+    creator: agent.wallet.publicKey,
     multisigPda,
     configAuthority: null,
     timeLock: 0,
@@ -43,7 +43,7 @@ export async function create_squads_multisig(
     rentCollector: null,
     members: [
       {
-        key: agent.wallet_address,
+        key: agent.wallet.publicKey,
         permissions: multisig.types.Permissions.all(),
       },
       {

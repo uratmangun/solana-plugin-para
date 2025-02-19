@@ -97,16 +97,15 @@ async function swapSolana(
     tipLamports: jitoTip,
     jitoAccount: jitoConfig.jitoAccount,
     jitoSendUrl: jitoConfig.sendBundleUrl,
-    signAllTransactions: agent.config.signAllTransactions,
+    signAllTransactions: agent.wallet.signAllTransactions,
   };
 
   const swapRes = await swapFromSolana(
     quote,
-    agent.wallet_address.toBase58(),
+    agent.wallet.publicKey.toBase58(),
     dstAddr,
     null,
-    // @ts-expect-error - false type mismatch
-    agent.config.signTransaction,
+    agent.wallet.signTransaction,
     agent.connection,
     [],
     { skipPreflight: true },

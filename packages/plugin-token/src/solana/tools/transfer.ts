@@ -32,7 +32,7 @@ export async function transfer(
       // Transfer native SOL
       const transaction = new Transaction().add(
         SystemProgram.transfer({
-          fromPubkey: agent.wallet_address,
+          fromPubkey: agent.wallet.publicKey,
           toPubkey: to,
           lamports: amount * LAMPORTS_PER_SOL,
         }),
@@ -43,7 +43,7 @@ export async function transfer(
       // Transfer SPL token
       const fromAta = await getAssociatedTokenAddress(
         mint,
-        agent.wallet_address,
+        agent.wallet.publicKey,
       );
       const toAta = await getAssociatedTokenAddress(mint, to);
 
@@ -55,7 +55,7 @@ export async function transfer(
         createTransferInstruction(
           fromAta,
           toAta,
-          agent.wallet_address,
+          agent.wallet.publicKey,
           adjustedAmount,
         ),
       );

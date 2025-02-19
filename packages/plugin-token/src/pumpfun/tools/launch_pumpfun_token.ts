@@ -66,7 +66,7 @@ async function createTokenTransaction(
   options?: PumpFunTokenOptions,
 ) {
   const payload = {
-    publicKey: agent.wallet_address.toBase58(),
+    publicKey: agent.wallet.publicKey.toBase58(),
     action: "create",
     tokenMetadata: {
       name: metadataResponse.metadata.name,
@@ -139,7 +139,7 @@ export async function launchPumpFunToken(
 
     if (agent.config.signOnly) {
       return {
-        signedTransaction: await agent.config.signTransaction(tx),
+        signedTransaction: await agent.wallet.signTransaction(tx),
         mint: mintKeypair.publicKey.toBase58(),
         metadataUri: metadataResponse.metadataUri,
       };

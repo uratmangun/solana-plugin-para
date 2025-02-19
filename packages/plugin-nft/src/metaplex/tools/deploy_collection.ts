@@ -36,7 +36,7 @@ export async function deploy_collection(
       percentage: creator.percentage,
     })) || [
       {
-        address: publicKey(agent.wallet_address.toString()),
+        address: publicKey(agent.wallet.publicKey.toString()),
         percentage: 100,
       },
     ];
@@ -57,18 +57,18 @@ export async function deploy_collection(
     }).build(umi);
 
     const compatibleTx = toWeb3JsLegacyTransaction(tx);
-    compatibleTx.feePayer = agent.wallet_address;
+    compatibleTx.feePayer = agent.wallet.publicKey;
 
     if (agent.config.signOnly) {
       return {
         collectionAddress: toWeb3JsPublicKey(collectionSigner.publicKey),
-        signedTransaction: await agent.config.signTransaction(compatibleTx),
+        signedTransaction: await agent.wallet.signTransaction(compatibleTx),
       };
     }
 
     return {
       collectionAddress: toWeb3JsPublicKey(collectionSigner.publicKey),
-      signature: await agent.config.sendTransaction(compatibleTx),
+      signature: await agent.wallet.sendTransaction(compatibleTx),
     };
   } catch (error: any) {
     throw new Error(`Collection deployment failed: ${error.message}`);

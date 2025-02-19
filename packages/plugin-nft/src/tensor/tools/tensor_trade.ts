@@ -24,7 +24,10 @@ export async function listNFTForSale(
       throw new Error(`NFT mint ${nftMint.toString()} does not exist`);
     }
 
-    const ata = await getAssociatedTokenAddress(nftMint, agent.wallet_address);
+    const ata = await getAssociatedTokenAddress(
+      nftMint,
+      agent.wallet.publicKey,
+    );
 
     try {
       const tokenAccount = await getAccount(agent.connection, ata);
@@ -42,11 +45,9 @@ export async function listNFTForSale(
     const provider = new AnchorProvider(
       agent.connection,
       {
-        publicKey: agent.wallet_address,
-        // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
-        signAllTransactions: agent.config.signAllTransactions,
-        // @ts-expect-error - reference above
-        signTransaction: agent.config.signTransaction,
+        publicKey: agent.wallet.publicKey,
+        signAllTransactions: agent.wallet.signAllTransactions,
+        signTransaction: agent.wallet.signTransaction,
       },
       AnchorProvider.defaultOptions(),
     );
@@ -55,16 +56,16 @@ export async function listNFTForSale(
     const priceInLamports = new BN(price * 1e9);
     const nftSource = await getAssociatedTokenAddress(
       nftMint,
-      agent.wallet_address,
+      agent.wallet.publicKey,
     );
 
     const { tx } = await tensorSwapSdk.list({
       nftMint,
       nftSource,
-      owner: agent.wallet_address,
+      owner: agent.wallet.publicKey,
       price: priceInLamports,
       tokenProgram: TOKEN_PROGRAM_ID,
-      payer: agent.wallet_address,
+      payer: agent.wallet.publicKey,
     });
 
     const transaction = new Transaction();
@@ -80,11 +81,9 @@ export async function cancelListing(agent: SolanaAgentKit, nftMint: PublicKey) {
   const provider = new AnchorProvider(
     agent.connection,
     {
-      publicKey: agent.wallet_address,
-      // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
-      signAllTransactions: agent.config.signAllTransactions,
-      // @ts-expect-error - reference above
-      signTransaction: agent.config.signTransaction,
+      publicKey: agent.wallet.publicKey,
+      signAllTransactions: agent.wallet.signAllTransactions,
+      signTransaction: agent.wallet.signTransaction,
     },
     AnchorProvider.defaultOptions(),
   );
@@ -92,7 +91,7 @@ export async function cancelListing(agent: SolanaAgentKit, nftMint: PublicKey) {
   const tensorSwapSdk = new TensorSwapSDK({ provider });
   const nftDest = await getAssociatedTokenAddress(
     nftMint,
-    agent.wallet_address,
+    agent.wallet.publicKey,
     false,
     TOKEN_PROGRAM_ID,
   );
@@ -100,9 +99,9 @@ export async function cancelListing(agent: SolanaAgentKit, nftMint: PublicKey) {
   const { tx } = await tensorSwapSdk.delist({
     nftMint,
     nftDest,
-    owner: agent.wallet_address,
+    owner: agent.wallet.publicKey,
     tokenProgram: TOKEN_PROGRAM_ID,
-    payer: agent.wallet_address,
+    payer: agent.wallet.publicKey,
     authData: null,
   });
 

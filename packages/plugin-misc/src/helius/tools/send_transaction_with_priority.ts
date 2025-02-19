@@ -42,16 +42,16 @@ export async function sendTransactionWithPriorityFee(
         await agent.connection.getLatestBlockhash();
       transaction.recentBlockhash = blockhash;
       transaction.lastValidBlockHeight = lastValidBlockHeight;
-      transaction.feePayer = agent.wallet_address;
+      transaction.feePayer = agent.wallet.publicKey;
 
       const transferIx = SystemProgram.transfer({
-        fromPubkey: agent.wallet_address,
+        fromPubkey: agent.wallet.publicKey,
         toPubkey: to,
         lamports: amount * LAMPORTS_PER_SOL,
       });
 
       transaction.add(transferIx);
-      const signedTx = await agent.config.signTransaction(transaction);
+      const signedTx = await agent.wallet.signTransaction(transaction);
 
       const response = await fetch(
         `https://mainnet.helius-rpc.com/?api-key=${agent.config.HELIUS_API_KEY}`,
@@ -88,7 +88,7 @@ export async function sendTransactionWithPriorityFee(
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
 
-      const txSignature = await agent.config.sendTransaction(transaction);
+      const txSignature = await agent.wallet.sendTransaction(transaction);
 
       return {
         transactionId: txSignature,
@@ -97,7 +97,7 @@ export async function sendTransactionWithPriorityFee(
     } else {
       const fromAta = await getAssociatedTokenAddress(
         splmintAddress,
-        agent.wallet_address,
+        agent.wallet.publicKey,
       );
       const toAta = await getAssociatedTokenAddress(splmintAddress, to);
 
@@ -109,7 +109,7 @@ export async function sendTransactionWithPriorityFee(
         await agent.connection.getLatestBlockhash();
       transaction.recentBlockhash = blockhash;
       transaction.lastValidBlockHeight = lastValidBlockHeight;
-      transaction.feePayer = agent.wallet_address;
+      transaction.feePayer = agent.wallet.publicKey;
 
       const response = await fetch(
         `https://mainnet.helius-rpc.com/?api-key=${agent.config.HELIUS_API_KEY}`,
@@ -144,7 +144,7 @@ export async function sendTransactionWithPriorityFee(
 
       transaction.add(
         createAssociatedTokenAccountInstruction(
-          agent.wallet_address,
+          agent.wallet.publicKey,
           toAta,
           to,
           splmintAddress,
@@ -155,7 +155,7 @@ export async function sendTransactionWithPriorityFee(
         createTransferInstruction(
           fromAta,
           toAta,
-          agent.wallet_address,
+          agent.wallet.publicKey,
           adjustedAmount,
         ),
       );
@@ -164,7 +164,7 @@ export async function sendTransactionWithPriorityFee(
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
 
-      const txSignature = await agent.config.sendTransaction(transaction);
+      const txSignature = await agent.wallet.sendTransaction(transaction);
 
       return {
         transactionId: txSignature,

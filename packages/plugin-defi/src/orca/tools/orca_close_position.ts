@@ -50,11 +50,9 @@ export async function orcaClosePosition(
     const ctx = WhirlpoolContext.from(
       agent.connection,
       {
-        publicKey: agent.wallet_address,
-        // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
-        signAllTransactions: agent.config.signAllTransactions,
-        // @ts-expect-error - reference above
-        signTransaction: agent.config.signTransaction,
+        publicKey: agent.wallet.publicKey,
+        signAllTransactions: agent.wallet.signAllTransactions,
+        signTransaction: agent.wallet.signTransaction,
       },
       ORCA_WHIRLPOOL_PROGRAM_ID,
     );

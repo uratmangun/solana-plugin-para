@@ -46,7 +46,7 @@ export async function closePerpTradeShort({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet_address;
+  const owner = agent.wallet.publicKey;
 
   const custody = client.getCustodyByMint(tradeMint);
   const collateralCustody = client.getCustodyByMint(TOKENS.USDC);
@@ -147,7 +147,7 @@ export async function closePerpTradeLong({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet_address;
+  const owner = agent.wallet.publicKey;
 
   const custody = client.getCustodyByMint(tradeMint);
 
@@ -252,7 +252,7 @@ export async function openPerpTradeLong({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet_address;
+  const owner = agent.wallet.publicKey;
 
   const collateralAccount = AdrenaClient.findATAAddressSync(owner, tradeMint);
   const fundingAccount = AdrenaClient.findATAAddressSync(owner, collateralMint);
@@ -384,7 +384,7 @@ export async function openPerpTradeShort({
 }) {
   const client = await AdrenaClient.load(agent);
 
-  const owner = agent.wallet_address;
+  const owner = agent.wallet.publicKey;
 
   const collateralAccount = AdrenaClient.findATAAddressSync(owner, tradeMint);
   const fundingAccount = AdrenaClient.findATAAddressSync(owner, collateralMint);

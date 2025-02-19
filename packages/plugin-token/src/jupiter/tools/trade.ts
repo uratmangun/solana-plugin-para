@@ -70,7 +70,7 @@ export async function trade(
         },
         body: JSON.stringify({
           quoteResponse,
-          userPublicKey: agent.wallet_address.toString(),
+          userPublicKey: agent.wallet.publicKey.toString(),
           wrapAndUnwrapSol: true,
           dynamicComputeUnitLimit: true,
           prioritizationFeeLamports: "auto",

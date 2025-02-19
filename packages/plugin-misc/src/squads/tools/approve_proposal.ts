@@ -15,7 +15,7 @@ export async function multisig_approve_proposal(
 ) {
   try {
     const [multisigPda] = multisig.getMultisigPda({
-      createKey: agent.wallet_address,
+      createKey: agent.wallet.publicKey,
     });
     const multisigInfo = await Multisig.fromAccountAddress(
       agent.connection,
@@ -30,10 +30,10 @@ export async function multisig_approve_proposal(
 
     const multisigTx = multisig.transactions.proposalApprove({
       blockhash: (await agent.connection.getLatestBlockhash()).blockhash,
-      feePayer: agent.wallet_address,
+      feePayer: agent.wallet.publicKey,
       multisigPda,
       transactionIndex: transactionIndex,
-      member: agent.wallet_address,
+      member: agent.wallet.publicKey,
     });
 
     return await signOrSendTX(agent, multisigTx);

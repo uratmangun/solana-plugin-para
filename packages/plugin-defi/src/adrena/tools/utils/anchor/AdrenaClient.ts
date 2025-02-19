@@ -42,11 +42,9 @@ export default class AdrenaClient {
       new AnchorProvider(
         agent.connection,
         {
-          publicKey: agent.wallet_address,
-          // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
-          signTransaction: agent.config.signTransaction,
-          // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
-          signAllTransactions: agent.config.signAllTransactions,
+          publicKey: agent.wallet.publicKey,
+          signTransaction: agent.wallet.signTransaction,
+          signAllTransactions: agent.wallet.signAllTransactions,
         },
         {
           commitment: "processed",
