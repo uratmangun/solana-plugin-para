@@ -39,10 +39,20 @@ export default class AdrenaClient {
     const program = new Program<Adrena>(
       ADRENA_IDL,
       AdrenaClient.programId,
-      new AnchorProvider(agent.connection, new NodeWallet(agent.wallet), {
-        commitment: "processed",
-        skipPreflight: true,
-      }),
+      new AnchorProvider(
+        agent.connection,
+        {
+          publicKey: agent.wallet_address,
+          // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
+          signTransaction: agent.config.signTransaction,
+          // @ts-expect-error - type generics mismatch TransactionOrVersionedTransaction should be assignable to T which extends Transaction | VersionedTransaction
+          signAllTransactions: agent.config.signAllTransactions,
+        },
+        {
+          commitment: "processed",
+          skipPreflight: true,
+        },
+      ),
     );
 
     const [cortex, mainPool] = await Promise.all([

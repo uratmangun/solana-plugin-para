@@ -2,6 +2,7 @@ import { Action } from "solana-agent-kit";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
 import { deploy_token } from "../tools";
+import { Transaction, VersionedTransaction } from "@solana/web3.js";
 
 const deployTokenAction: Action = {
   name: "DEPLOY_TOKEN",
@@ -65,6 +66,17 @@ const deployTokenAction: Action = {
         input.decimals,
         input.initialSupply,
       );
+
+      if (
+        result instanceof Transaction ||
+        result instanceof VersionedTransaction
+      ) {
+        return {
+          status: "success",
+          message: "Transaction generated successfully",
+          transaction: result,
+        };
+      }
 
       return {
         mint: result.mint.toString(),

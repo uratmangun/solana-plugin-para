@@ -4,7 +4,7 @@ import type { z } from "zod";
 
 export interface Plugin {
   name: string;
-  methods: Record<string, () => void>;
+  methods: Record<string, any>;
   actions: Action[];
   initialize(agent: SolanaAgentKit): void;
 }

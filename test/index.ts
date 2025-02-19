@@ -2,16 +2,41 @@ import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import NFTPlugin from "@solana-agent-kit/plugin-nft";
 import dotenv from "dotenv";
+import { Connection, Keypair, VersionedTransaction } from "@solana/web3.js";
+import bs58 from "bs58";
 
 dotenv.config();
 
 async function main() {
+  const keyPair = Keypair.fromSecretKey(
+    bs58.decode(process.env.SOLANA_PRIVATE_KEY as string),
+  );
+
   // Initialize agent with your test wallet
   const agent = new SolanaAgentKit(
     process.env.WALLET_PRIVATE_KEY!,
     process.env.RPC_URL!,
     {
       OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+      signOnly: true,
+      sendTransaction: async (tx) => {
+        const connection = new Connection(process.env.RPC_URL as string);
+        if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
+        else tx.sign(keyPair);
+        return await connection.sendRawTransaction(tx.serialize());
+      },
+      signTransaction: async (tx) => {
+        if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
+        else tx.sign(keyPair);
+        return tx;
+      },
+      signAllTransactions: async (txs) => {
+        txs.forEach((tx) => {
+          if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
+          else tx.sign(keyPair);
+        });
+        return txs;
+      },
     },
   )
     // Load all plugins

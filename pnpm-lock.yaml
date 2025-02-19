@@ -322,6 +322,43 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
 
+  test:
+    dependencies:
+      '@solana-agent-kit/plugin-blinks':
+        specifier: workspace:*
+        version: link:../packages/plugin-blinks
+      '@solana-agent-kit/plugin-defi':
+        specifier: workspace:*
+        version: link:../packages/plugin-defi
+      '@solana-agent-kit/plugin-misc':
+        specifier: workspace:*
+        version: link:../packages/plugin-misc
+      '@solana-agent-kit/plugin-nft':
+        specifier: workspace:*
+        version: link:../packages/plugin-nft
+      '@solana-agent-kit/plugin-token':
+        specifier: workspace:*
+        version: link:../packages/plugin-token
+      '@solana/web3.js':
+        specifier: ^1.98.0
+        version: 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      bs58:
+        specifier: ^6.0.0
+        version: 6.0.0
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
+      solana-agent-kit:
+        specifier: workspace:*
+        version: link:../packages/core
+    devDependencies:
+      tsx:
+        specifier: ^4.19.2
+        version: 4.19.2
+      typescript:
+        specifier: ^5.0.0
+        version: 5.7.2
+
 packages:
 
   '@0no-co/graphql.web@1.0.13':
