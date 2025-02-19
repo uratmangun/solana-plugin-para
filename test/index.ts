@@ -14,11 +14,8 @@ async function main() {
 
   // Initialize agent with your test wallet
   const agent = new SolanaAgentKit(
-    process.env.WALLET_PRIVATE_KEY!,
-    process.env.RPC_URL!,
     {
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-      signOnly: true,
+      publicKey: keyPair.publicKey,
       sendTransaction: async (tx) => {
         const connection = new Connection(process.env.RPC_URL as string);
         if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
@@ -37,6 +34,11 @@ async function main() {
         });
         return txs;
       },
+    },
+    process.env.RPC_URL!,
+    {
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+      signOnly: true,
     },
   )
     // Load all plugins
