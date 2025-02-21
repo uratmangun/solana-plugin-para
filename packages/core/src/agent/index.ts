@@ -1,5 +1,5 @@
 import { Connection } from "@solana/web3.js";
-import type { Config, Plugin, BaseWallet } from "../types";
+import type { Config, Plugin, BaseWallet, Action } from "../types";
 
 /**
  * Defines a type that merges all plugin methods into the `methods` object
@@ -46,6 +46,7 @@ export class SolanaAgentKit<TPlugins = Record<string, never>> {
   private plugins: Map<string, Plugin> = new Map();
 
   public methods: TPlugins = {} as TPlugins;
+  public actions: Action[] = [];
 
   constructor(wallet: BaseWallet, rpc_url: string, config: Config) {
     this.connection = new Connection(rpc_url);
@@ -60,7 +61,7 @@ export class SolanaAgentKit<TPlugins = Record<string, never>> {
     plugin: P,
   ): SolanaAgentKit<TPlugins & PluginMethods<P>> {
     if (this.plugins.has(plugin.name)) {
-      throw new Error(`Plugin ${plugin.name} is already registered`);
+      return this as SolanaAgentKit<TPlugins & PluginMethods<P>>;
     }
     plugin.initialize(this as SolanaAgentKit);
 
@@ -71,6 +72,10 @@ export class SolanaAgentKit<TPlugins = Record<string, never>> {
       }
       (this.methods as Record<string, unknown>)[methodName] =
         method.bind(plugin);
+    }
+
+    for (const action of plugin.actions) {
+      this.actions.push(action);
     }
 
     this.plugins.set(plugin.name, plugin);

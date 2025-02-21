@@ -70,7 +70,7 @@ const NFTPlugin = {
     mintNFTAction,
     searchAssetsAction,
 
-    // Tensor actions
+    // // Tensor actions
     listNFTForSaleAction,
     cancelNFTListingAction,
   ],

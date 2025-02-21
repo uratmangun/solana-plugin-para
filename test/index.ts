@@ -1,13 +1,41 @@
-import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
+import { SolanaAgentKit } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import NFTPlugin from "@solana-agent-kit/plugin-nft";
+import DefiPlugin from "@solana-agent-kit/plugin-defi";
+import MiscPlugin from "@solana-agent-kit/plugin-misc";
+import BlinksPlugin from "@solana-agent-kit/plugin-blinks";
 import dotenv from "dotenv";
 import { Connection, Keypair, VersionedTransaction } from "@solana/web3.js";
 import bs58 from "bs58";
+import { chooseMode, rl } from "utils";
+import aiTests from "agentTests";
 
 dotenv.config();
 
+function validateEnvironment(): void {
+  const missingVars: string[] = [];
+  const requiredVars = ["OPENAI_API_KEY", "RPC_URL", "SOLANA_PRIVATE_KEY"];
+
+  requiredVars.forEach((varName) => {
+    if (!process.env[varName]) {
+      missingVars.push(varName);
+    }
+  });
+
+  if (missingVars.length > 0) {
+    console.error("Error: Required environment variables are not set");
+    missingVars.forEach((varName) => {
+      console.error(`${varName}=your_${varName.toLowerCase()}_here`);
+    });
+    process.exit(1);
+  }
+}
+
+validateEnvironment();
+
 async function main() {
+  const mode = await chooseMode();
+
   const keyPair = Keypair.fromSecretKey(
     bs58.decode(process.env.SOLANA_PRIVATE_KEY as string),
   );
@@ -43,32 +71,17 @@ async function main() {
   )
     // Load all plugins
     .use(TokenPlugin)
-    .use(NFTPlugin);
+    .use(NFTPlugin)
+    .use(DefiPlugin)
+    .use(MiscPlugin)
+    .use(BlinksPlugin);
 
-  console.log("Available methods on agent:", Object.keys(agent));
+  if (mode === "agent") {
+    await aiTests(agent);
+  } else {
+  }
 
-  const tools = createVercelAITools(agent, TokenPlugin.actions);
-  console.log(tools);
-
-  // Test a method
-  console.log("Testing Token Plugin...");
-  const tokenData = await agent.methods.getAsset(
-    agent,
-    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-  );
-  console.log("USDC Token Data:", tokenData);
-
-  console.log("Testing NFT Plugin...");
-  // Add your NFT plugin test here
-
-  console.log("Testing DeFi Plugin...");
-  // Add your DeFi plugin test here
-
-  console.log("Testing Misc Plugin...");
-  // Add your misc plugin test here
-
-  console.log("Testing Blinks Plugin...");
-  // Add your blinks plugin test here
+  rl.close();
 }
 
 main()
