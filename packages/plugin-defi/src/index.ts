@@ -37,6 +37,21 @@ import limitOrderAction from "./manifest/actions/limitOrder";
 import cancelAllOrdersAction from "./manifest/actions/cancelAllOrders";
 import manifestCreateMarketAction from "./manifest/actions/manifestCreateMarket";
 
+// Import Debridge tools & actions
+import {
+  checkDebridgeTransactionStatus,
+  createDebridgeBridgeOrder,
+  executeDebridgeBridgeOrder,
+  getBridgeQuote,
+  getDebridgeSupportedChains,
+  getDebridgeTokensInfo,
+} from "./debridge/tools";
+import checkDebridgeTransactionStatusAction from "./debridge/actions/checkTransactionStatus";
+import createDebridgeBridgeOrderAction from "./debridge/actions/createBridgeOrder";
+import executeDebridgeBridgeOrderAction from "./debridge/actions/executeBridgeOrder";
+import getDebridgeSupportedChainsAction from "./debridge/actions/getSupportedChains";
+import getDebridgeTokensInfoAction from "./debridge/actions/getTokensInfo";
+
 // Import Meteora actions & tools
 import createMeteoraDLMMPoolAction from "./meteora/actions/createMeteoraDLMMPool";
 import createMeteoraDynamicAMMPoolAction from "./meteora/actions/createMeteoraDynamicAMMPool";
@@ -214,6 +229,14 @@ const DefiPlugin = {
     stakeToDriftInsuranceFund,
     requestUnstakeFromDriftInsuranceFund,
     unstakeFromDriftInsuranceFund,
+
+    // Debridge methods,
+    checkDebridgeTransactionStatus,
+    createDebridgeBridgeOrder,
+    executeDebridgeBridgeOrder,
+    getBridgeQuote,
+    getDebridgeSupportedChains,
+    getDebridgeTokensInfo,
   },
 
   // Combine all actions
@@ -275,6 +298,13 @@ const DefiPlugin = {
     getDriftLendAndBorrowAPYAction,
     driftPerpMarketFundingRateAction,
     requestUnstakeFromDriftInsuranceFundAction,
+
+    // Debridge actions
+    checkDebridgeTransactionStatusAction,
+    createDebridgeBridgeOrderAction,
+    executeDebridgeBridgeOrderAction,
+    getDebridgeSupportedChainsAction,
+    getDebridgeTokensInfoAction,
   ],
 
   // Initialize function
