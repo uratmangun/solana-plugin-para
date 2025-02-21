@@ -57,6 +57,8 @@ export interface Config {
   ALLORA_API_URL?: string;
   ALLORA_NETWORK?: string;
   ETHEREUM_PRIVATE_KEY?: string;
+  COINGECKO_PRO_API_KEY?: string;
+  COINGECKO_DEMO_API_KEY?: string;
 }
 
 export interface PumpFunTokenOptions {

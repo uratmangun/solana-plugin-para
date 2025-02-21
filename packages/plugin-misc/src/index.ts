@@ -44,6 +44,14 @@ import simulateFeedAction from "./switchboard/actions/simulateFeed";
 // tiplink
 import createTiplinkAction from "./tiplink/actions/createTiplinks";
 
+// coingecko
+import getCoingeckoLatestPoolsAction from "./coingecko/actions/getCoingeckoLatestPools";
+import getCoingeckoTokenInfoAction from "./coingecko/actions/getCoingeckoTokenInfo";
+import getCoingeckoTrendingPoolsAction from "./coingecko/actions/getCoingeckoTrendingPools";
+import getCoingeckoTrendingTokensAction from "./coingecko/actions/getCoingeckoTrendingTokens";
+import getCoingeckoTokenPriceDataAction from "./coingecko/actions/getCoingeckoTokenPriceData";
+import getCoingeckoTopGainersAction from "./coingecko/actions/getCoingeckoTopGainers";
+
 // Import all tools
 import {
   getAllDomainsTLDs,
@@ -83,6 +91,14 @@ import {
 } from "./squads/tools";
 import { simulate_switchboard_feed } from "./switchboard/tools";
 import { create_TipLink } from "./tiplink/tools";
+import {
+  getTokenInfo,
+  getTopGainers,
+  getLatestPools,
+  getTrendingPools,
+  getTokenPriceData,
+  getTrendingTokens,
+} from "./coingecko/tools";
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -118,6 +134,12 @@ const MiscPlugin = {
     multisig_transfer_from_treasury,
     simulate_switchboard_feed,
     create_TipLink,
+    getCoingeckoTokenInfo: getTokenInfo,
+    getCoingeckoTopGainers: getTopGainers,
+    getCoingeckoLatestPools: getLatestPools,
+    getCoingeckoTrendingPools: getTrendingPools,
+    getCoingeckoTokenPriceData: getTokenPriceData,
+    getCoingeckoTrendingTokens: getTrendingTokens,
   },
 
   // Combine all actions
@@ -149,6 +171,12 @@ const MiscPlugin = {
     approveMultisigProposalAction,
     simulateFeedAction,
     createTiplinkAction,
+    getCoingeckoTokenInfoAction,
+    getCoingeckoTopGainersAction,
+    getCoingeckoLatestPoolsAction,
+    getCoingeckoTrendingPoolsAction,
+    getCoingeckoTrendingTokensAction,
+    getCoingeckoTokenPriceDataAction,
   ],
 
   // Initialize function
