@@ -25,13 +25,17 @@ import luloLendAction from "./lulo/actions/luloLend";
 import luloWithdrawAction from "./lulo/actions/luloWithdraw";
 import { lendAsset, luloLend, luloWithdraw } from "./lulo/tools";
 
-// Import Manifest tools
+// Import Manifest tools & actions
 import {
   limitOrder,
   cancelAllOrders,
   withdrawAll,
   manifestCreateMarket,
 } from "./manifest/tools";
+import withdrawAllAction from "./manifest/actions/withdrawAll";
+import limitOrderAction from "./manifest/actions/limitOrder";
+import cancelAllOrdersAction from "./manifest/actions/cancelAllOrders";
+import manifestCreateMarketAction from "./manifest/actions/manifestCreateMarket";
 
 // Import Meteora actions & tools
 import createMeteoraDLMMPoolAction from "./meteora/actions/createMeteoraDLMMPool";
@@ -228,6 +232,12 @@ const DefiPlugin = {
     lendAssetAction,
     luloLendAction,
     luloWithdrawAction,
+
+    // Manifest actions
+    withdrawAllAction,
+    limitOrderAction,
+    cancelAllOrdersAction,
+    manifestCreateMarketAction,
 
     // Meteora actions
     createMeteoraDLMMPoolAction,
