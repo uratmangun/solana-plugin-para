@@ -39,10 +39,22 @@ import {
   getTokenAddressFromTicker,
   getTokenDataByTicker,
 } from "./dexscreener/tools";
-import { fetchPrice } from "./jupiter/tools/fetch_price";
-import { stakeWithJup } from "./jupiter/tools/stake_with_jup";
-import { trade } from "./jupiter/tools/trade";
-import { sendCompressedAirdrop } from "./lightprotocol/tools/send_compressed_airdrop";
+import { fetchPrice, stakeWithJup, trade } from "./jupiter/tools";
+import { sendCompressedAirdrop } from "./lightprotocol/tools";
+import {
+  closeEmptyTokenAccounts,
+  getTPS,
+  get_balance,
+  get_balance_other,
+  get_token_balance,
+  request_faucet_funds,
+  transfer,
+} from "./solana/tools";
+import { swap } from "./mayan/tools";
+import { launchPumpFunToken } from "./pumpfun/tools";
+import { fetchPythPrice, fetchPythPriceFeedID } from "./pyth/tools";
+import { fetchTokenDetailedReport, fetchTokenReportSummary } from "./rugcheck";
+
 // Define and export the plugin
 const TokenPlugin = {
   name: "token",
@@ -56,6 +68,19 @@ const TokenPlugin = {
     stakeWithJup,
     trade,
     sendCompressedAirdrop,
+    closeEmptyTokenAccounts,
+    getTPS,
+    get_balance,
+    get_balance_other,
+    get_token_balance,
+    request_faucet_funds,
+    transfer,
+    swap,
+    launchPumpFunToken,
+    fetchPythPrice,
+    fetchPythPriceFeedID,
+    fetchTokenDetailedReport,
+    fetchTokenReportSummary,
   },
 
   // Combine all actions
