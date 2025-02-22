@@ -52,6 +52,10 @@ import executeDebridgeBridgeOrderAction from "./debridge/actions/executeBridgeOr
 import getDebridgeSupportedChainsAction from "./debridge/actions/getSupportedChains";
 import getDebridgeTokensInfoAction from "./debridge/actions/getTokensInfo";
 
+// Import Fluxbeam tools & actions
+import { fluxBeamCreatePool } from "./fluxbeam/tools/create_pool";
+import fluxbeamCreatePoolAction from "./fluxbeam/actions/createPool";
+
 // Import Meteora actions & tools
 import createMeteoraDLMMPoolAction from "./meteora/actions/createMeteoraDLMMPool";
 import createMeteoraDynamicAMMPoolAction from "./meteora/actions/createMeteoraDynamicAMMPool";
@@ -237,6 +241,9 @@ const DefiPlugin = {
     getBridgeQuote,
     getDebridgeSupportedChains,
     getDebridgeTokensInfo,
+
+    // Fluxbeam methods
+    fluxBeamCreatePool,
   },
 
   // Combine all actions
@@ -305,6 +312,9 @@ const DefiPlugin = {
     executeDebridgeBridgeOrderAction,
     getDebridgeSupportedChainsAction,
     getDebridgeTokensInfoAction,
+
+    // Fluxbeam actions
+    fluxbeamCreatePoolAction,
   ],
 
   // Initialize function
