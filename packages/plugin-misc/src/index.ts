@@ -52,6 +52,17 @@ import getCoingeckoTrendingTokensAction from "./coingecko/actions/getCoingeckoTr
 import getCoingeckoTokenPriceDataAction from "./coingecko/actions/getCoingeckoTokenPriceData";
 import getCoingeckoTopGainersAction from "./coingecko/actions/getCoingeckoTopGainers";
 
+// elfa ai
+import {
+  elfaApiKeyStatusAction,
+  elfaGetSmartMentionsAction,
+  elfaGetTopMentionsByTickerAction,
+  elfaPingAction,
+  elfaSearchMentionsByKeywordsAction,
+  elfaSmartTwitterAccountStats,
+  elfaTrendingTokensAction,
+} from "./elfaai/actions";
+
 // Import all tools
 import {
   getAllDomainsTLDs,
@@ -99,6 +110,15 @@ import {
   getTokenPriceData,
   getTrendingTokens,
 } from "./coingecko/tools";
+import {
+  getElfaAiApiKeyStatus,
+  getSmartMentions,
+  getSmartTwitterAccountStats,
+  getTopMentionsByTicker,
+  getTrendingTokensUsingElfaAi,
+  pingElfaAiApi,
+  searchMentionsByKeywords,
+} from "./elfaai/tools/elfa_ai_api";
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -140,6 +160,13 @@ const MiscPlugin = {
     getCoingeckoTrendingPools: getTrendingPools,
     getCoingeckoTokenPriceData: getTokenPriceData,
     getCoingeckoTrendingTokens: getTrendingTokens,
+    getElfaAiApiKeyStatus,
+    getSmartMentionsUsingElfaAi: getSmartMentions,
+    getSmartTwitterAccountStatsUsingElfaAi: getSmartTwitterAccountStats,
+    getTopMentionsByTickerUsingElfaAi: getTopMentionsByTicker,
+    getTrendingTokensUsingElfaAi,
+    pingElfaAiApi,
+    searchMentionsByKeywordsUsingElfaAi: searchMentionsByKeywords,
   },
 
   // Combine all actions
@@ -177,6 +204,13 @@ const MiscPlugin = {
     getCoingeckoTrendingPoolsAction,
     getCoingeckoTrendingTokensAction,
     getCoingeckoTokenPriceDataAction,
+    elfaApiKeyStatusAction,
+    elfaGetSmartMentionsAction,
+    elfaGetTopMentionsByTickerAction,
+    elfaPingAction,
+    elfaSearchMentionsByKeywordsAction,
+    elfaSmartTwitterAccountStats,
+    elfaTrendingTokensAction,
   ],
 
   // Initialize function

@@ -48,15 +48,19 @@ export interface BaseWallet {
 export interface Config {
   signOnly?: boolean;
   OPENAI_API_KEY?: string;
+  PERPLEXITY_API_KEY?: string;
   JUPITER_REFERRAL_ACCOUNT?: string;
   JUPITER_FEE_BPS?: number;
   FLASH_PRIVILEGE?: string;
   FLEXLEND_API_KEY?: string;
   HELIUS_API_KEY?: string;
+  PRIORITY_LEVEL?: "medium" | "high" | "veryHigh"; // medium, high, or veryHigh
+  SOLUTIOFI_API_KEY?: string;
+  ETHEREUM_PRIVATE_KEY?: string;
   ALLORA_API_KEY?: string;
   ALLORA_API_URL?: string;
   ALLORA_NETWORK?: string;
-  ETHEREUM_PRIVATE_KEY?: string;
+  ELFA_AI_API_KEY?: string;
   COINGECKO_PRO_API_KEY?: string;
   COINGECKO_DEMO_API_KEY?: string;
 }

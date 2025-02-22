@@ -204,6 +204,9 @@ importers:
       '@tiplink/api':
         specifier: ^0.3.1
         version: 0.3.1(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(sodium-native@3.4.1)(utf-8-validate@5.0.10)
+      axios:
+        specifier: ^1.7.9
+        version: 1.7.9
       bs58:
         specifier: ^6.0.0
         version: 6.0.0
