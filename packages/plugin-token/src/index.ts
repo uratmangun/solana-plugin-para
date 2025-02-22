@@ -33,6 +33,12 @@ import pythFetchPriceAction from "./pyth/actions/pythFetchPrice";
 // rugcheck
 import rugcheckAction from "./rugcheck/actions/rugcheck";
 
+// solutiofi
+import burnTokensUsingSolutiofiAction from "./solutiofi/actions/burnTokens";
+import spreadTokenUsingSolutiofiAction from "./solutiofi/actions/spreadToken";
+import closeAccountsUsingSolutiofiAction from "./solutiofi/actions/closeAccounts";
+import mergeTokensUsingSolutiofiAction from "./solutiofi/actions/mergeTokens";
+
 // Import all tools
 import {
   getTokenDataByAddress,
@@ -54,6 +60,12 @@ import { swap } from "./mayan/tools";
 import { launchPumpFunToken } from "./pumpfun/tools";
 import { fetchPythPrice, fetchPythPriceFeedID } from "./pyth/tools";
 import { fetchTokenDetailedReport, fetchTokenReportSummary } from "./rugcheck";
+import {
+  burnTokens,
+  closeAccounts,
+  mergeTokens,
+  spreadToken,
+} from "./solutiofi/tools/solutiofi";
 
 // Define and export the plugin
 const TokenPlugin = {
@@ -81,6 +93,10 @@ const TokenPlugin = {
     fetchPythPriceFeedID,
     fetchTokenDetailedReport,
     fetchTokenReportSummary,
+    burnTokensUsingSolutiofi: burnTokens,
+    closeAccountsUsingSolutiofi: closeAccounts,
+    mergeTokensUsingSolutiofi: mergeTokens,
+    spreadTokenUsingSolutiofi: spreadToken,
   },
 
   // Combine all actions
@@ -101,6 +117,10 @@ const TokenPlugin = {
     launchPumpfunTokenAction,
     pythFetchPriceAction,
     rugcheckAction,
+    burnTokensUsingSolutiofiAction,
+    spreadTokenUsingSolutiofiAction,
+    closeAccountsUsingSolutiofiAction,
+    mergeTokensUsingSolutiofiAction,
   ],
 
   // Initialize function
