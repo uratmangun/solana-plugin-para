@@ -66,7 +66,6 @@ async function main() {
     process.env.RPC_URL!,
     {
       OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-      signOnly: true,
     },
   )
     // Load all plugins

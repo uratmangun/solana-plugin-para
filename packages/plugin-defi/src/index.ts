@@ -96,6 +96,17 @@ import entryQuoteOfDriftPerpTradeAction from "./drift/actions/entryQuoteOfPerpTr
 import getDriftLendAndBorrowAPYAction from "./drift/actions/getLendAndBorrowAPY";
 import driftPerpMarketFundingRateAction from "./drift/actions/perpMarketFundingRate";
 import requestUnstakeFromDriftInsuranceFundAction from "./drift/actions/requestUnstakeFromDriftInsuranceFund";
+import vaultInfoAction from "./drift/actions/vaultInfo";
+import withdrawFromDriftVaultAction from "./drift/actions/withdrawFromVault";
+import withdrawFromDriftAccountAction from "./drift/actions/withdrawFromDriftAccount";
+import updateDriftVaultAction from "./drift/actions/updateVault";
+import updateDriftVaultDelegateAction from "./drift/actions/updateDriftVaultDelegate";
+import unstakeFromDriftInsuranceFundAction from "./drift/actions/unstakeFromDriftInsuranceFund";
+import tradeDriftPerpAccountAction from "./drift/actions/tradePerpAccount";
+import tradeDelegatedDriftVaultAction from "./drift/actions/tradeDelegatedDriftVault";
+import swapSpotTokenOnDriftAction from "./drift/actions/swapSpotToken";
+import stakeToDriftInsuranceFundAction from "./drift/actions/stakeToDriftInsuranceFund";
+import requestWithdrawalFromDriftVaultAction from "./drift/actions/requestWithdrawalFromVault";
 
 // Import Openbook tools
 import { openbookCreateMarket } from "./openbook/tools";
@@ -152,6 +163,11 @@ import {
   stakeToDriftInsuranceFund,
   requestUnstakeFromDriftInsuranceFund,
   unstakeFromDriftInsuranceFund,
+  getMarketIndexAndType,
+  getFundingRateAsPercentage,
+  getEntryQuoteOfPerpTrade,
+  validateAndEncodeAddress,
+  getL2OrderBook,
 } from "./drift/tools";
 
 // Define and export the plugin
@@ -233,6 +249,11 @@ const DefiPlugin = {
     stakeToDriftInsuranceFund,
     requestUnstakeFromDriftInsuranceFund,
     unstakeFromDriftInsuranceFund,
+    getDriftMarketIndexAndType: getMarketIndexAndType,
+    getDriftFundingRateAsPercentage: getFundingRateAsPercentage,
+    getEntryQuoteOfDriftPerpTrade: getEntryQuoteOfPerpTrade,
+    validateAndEncodeDriftAddress: validateAndEncodeAddress,
+    getDriftL2OrderBook: getL2OrderBook,
 
     // Debridge methods,
     checkDebridgeTransactionStatus,
@@ -305,6 +326,17 @@ const DefiPlugin = {
     getDriftLendAndBorrowAPYAction,
     driftPerpMarketFundingRateAction,
     requestUnstakeFromDriftInsuranceFundAction,
+    vaultInfoAction,
+    withdrawFromDriftVaultAction,
+    withdrawFromDriftAccountAction,
+    updateDriftVaultAction,
+    updateDriftVaultDelegateAction,
+    unstakeFromDriftInsuranceFundAction,
+    tradeDriftPerpAccountAction,
+    tradeDelegatedDriftVaultAction,
+    swapSpotTokenOnDriftAction,
+    stakeToDriftInsuranceFundAction,
+    requestWithdrawalFromDriftVaultAction,
 
     // Debridge actions
     checkDebridgeTransactionStatusAction,
