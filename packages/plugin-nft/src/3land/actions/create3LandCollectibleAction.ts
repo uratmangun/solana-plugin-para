@@ -1,4 +1,4 @@
-import type { Action, SolanaAgentKit } from "solana-agent-kit";
+import type { Action } from "solana-agent-kit";
 import { z } from "zod";
 import {
   createCollection,
@@ -79,7 +79,7 @@ const create3LandCollectibleAction: Action = {
     sellerFeeBasisPoints: z.number().min(0).max(10000).optional(),
     withPool: z.boolean().optional().default(false),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (agent, input: Record<string, any>) => {
     try {
       if (input.isCollection) {
         const collectionOpts: CreateCollectionOptions = {
@@ -125,7 +125,8 @@ const create3LandCollectibleAction: Action = {
       return {
         status: "success",
         message: "Single NFT created and listed successfully on 3Land",
-        nftAddress: result.toString(),
+        nftAddress: result.payerPublicKey,
+        transaction: result.transactionId,
       };
     } catch (error) {
       return {

@@ -9,6 +9,7 @@ import {
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 
 /**
  * Mint a new NFT as part of an existing collection
@@ -72,7 +73,7 @@ export async function mintCollectionNFT(
       mint: toWeb3JsPublicKey(assetSigner.publicKey),
       // Note: Token account is now handled automatically by the create instruction
       metadata: toWeb3JsPublicKey(assetSigner.publicKey),
-      signature: compatibleTx.signature,
+      signature: bs58.encode(compatibleTx.signature!),
     };
   } catch (error: any) {
     throw new Error(`Collection NFT minting failed: ${error.message}`);

@@ -59,7 +59,7 @@ const mergeTokensAction: Action = {
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
       const { inputAssets, outputMint, priorityFee } = input;
-      const result = await mergeTokens(
+      const transactions = await mergeTokens(
         agent,
         inputAssets as InputAssetStruct[],
         outputMint,
@@ -68,7 +68,7 @@ const mergeTokensAction: Action = {
 
       return {
         status: "success",
-        result,
+        transactions,
         message: "Successfully merged tokens",
       };
     } catch (error: any) {

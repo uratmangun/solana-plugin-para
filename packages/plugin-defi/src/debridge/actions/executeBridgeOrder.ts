@@ -45,17 +45,17 @@ const executeDebridgeBridgeOrderAction: Action = {
     input: Record<string, any>,
   ): Promise<Record<string, any>> => {
     try {
-      const signature = await executeDebridgeBridgeOrder(
+      const transaction = await executeDebridgeBridgeOrder(
         agent,
         input.transactionData,
       );
 
       return {
         status: "success",
-        signature,
+        transaction,
         message:
-          typeof signature === "string"
-            ? `Successfully executed bridge transaction. Signature: ${signature.slice(0, 4)}...`
+          typeof transaction === "string"
+            ? `Successfully executed bridge transaction. Signature: ${transaction.slice(0, 4)}...`
             : "Successfully generated transaction",
       };
     } catch (error: any) {

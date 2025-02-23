@@ -103,7 +103,7 @@ const fluxbeamCreatePoolAction: Action = {
           typeof txSignature === "string"
             ? "Pool created successfully on FluxBeam"
             : "Pool creation transaction successfully generated and signed",
-        tx: txSignature,
+        transaction: txSignature,
         token_a: input.token_a,
         token_a_amount: input.token_a_amount,
         token_b: input.token_b,

@@ -40,7 +40,7 @@ const limitOrderAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const signature = await limitOrder(
+      const transaction = await limitOrder(
         agent,
         new PublicKey(input.marketId),
         input.quantity,
@@ -50,7 +50,7 @@ const limitOrderAction: Action = {
 
       return {
         status: "success",
-        signature,
+        transaction,
         message: `Successfully placed ${input.side.toLowerCase()} limit order for ${input.quantity} tokens at ${input.price}`,
       };
     } catch (error: any) {

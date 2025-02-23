@@ -77,7 +77,7 @@ const spreadTokenAction: Action = {
 
       return {
         status: "success",
-        result,
+        transactions: result,
         message: "Successfully spread token",
       };
     } catch (error: any) {

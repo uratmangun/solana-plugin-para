@@ -37,7 +37,7 @@ const manifestCreateMarketAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const [signature, marketId] = await manifestCreateMarket(
+      const [transaction, marketId] = await manifestCreateMarket(
         agent,
         new PublicKey(input.baseMint),
         new PublicKey(input.quoteMint),
@@ -46,7 +46,7 @@ const manifestCreateMarketAction: Action = {
       return {
         status: "success",
         marketId,
-        signature,
+        transaction,
         message: "Successfully created Manifest market",
       };
     } catch (error: any) {

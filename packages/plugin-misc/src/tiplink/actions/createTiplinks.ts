@@ -1,6 +1,7 @@
 import { Action } from "solana-agent-kit";
 import { create_TipLink } from "../tools/create_tiplinks";
 import { z } from "zod";
+import { Transaction } from "@solana/web3.js";
 
 const createTiplinksAction: Action = {
   name: "CREATE_TIPLINKS_ACTION",
@@ -50,7 +51,11 @@ const createTiplinksAction: Action = {
         input.amount,
         input.splmintAddress,
       );
-      return res;
+      return res instanceof Transaction
+        ? {
+            transaction: res,
+          }
+        : res;
     } catch (e) {
       // @ts-expect-error - This is a valid error response
       return { status: "error", message: e.message };

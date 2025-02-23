@@ -34,11 +34,14 @@ const withdrawAllAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const signature = await withdrawAll(agent, new PublicKey(input.marketId));
+      const transaction = await withdrawAll(
+        agent,
+        new PublicKey(input.marketId),
+      );
 
       return {
         status: "success",
-        signature,
+        transaction,
         message: "Successfully withdrew all funds",
       };
     } catch (error: any) {

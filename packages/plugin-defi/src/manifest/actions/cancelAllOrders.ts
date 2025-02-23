@@ -34,14 +34,14 @@ const cancelAllOrdersAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const signature = await cancelAllOrders(
+      const transaction = await cancelAllOrders(
         agent,
         new PublicKey(input.marketId),
       );
 
       return {
         status: "success",
-        signature,
+        transaction,
         message: "Successfully cancelled all orders",
       };
     } catch (error: any) {
