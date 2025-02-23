@@ -56,6 +56,8 @@ export async function fluxBeamCreatePool(
     const TransactionBuf = Buffer.from(response.transaction, "base64");
 
     const transaction = VersionedTransaction.deserialize(TransactionBuf);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    transaction.message.recentBlockhash = blockhash;
 
     return await signOrSendTX(agent, transaction);
   } catch (error: any) {

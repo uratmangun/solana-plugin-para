@@ -85,6 +85,8 @@ export async function multisig_transfer_from_treasury(
       ephemeralSigners: 0,
       transactionMessage: transferMessage,
     });
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    multisigTx.message.recentBlockhash = blockhash;
 
     return await signOrSendTX(agent, multisigTx);
   } catch (error: any) {

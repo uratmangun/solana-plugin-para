@@ -82,6 +82,9 @@ export async function trade(
     const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
 
     const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    transaction.message.recentBlockhash = blockhash;
+
     // Sign or send transaction
     return await signOrSendTX(agent, transaction);
   } catch (error: any) {

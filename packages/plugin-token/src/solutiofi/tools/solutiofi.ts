@@ -42,6 +42,8 @@ export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
     );
     for (const transaction of versionedTxns) {
       try {
+        const { blockhash } = await agent.connection.getLatestBlockhash();
+        transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (error) {
@@ -72,6 +74,8 @@ export async function burnTokens(agent: SolanaAgentKit, mints: string[]) {
     );
     for (const transaction of versionedTxns) {
       try {
+        const { blockhash } = await agent.connection.getLatestBlockhash();
+        transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (error) {
@@ -109,6 +113,8 @@ export async function mergeTokens(
 
     for (const txn of swapData.transactions) {
       try {
+        const { blockhash } = await agent.connection.getLatestBlockhash();
+        txn.transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (error) {
@@ -146,6 +152,8 @@ export async function spreadToken(
 
     for (const txn of swapData.transactions) {
       try {
+        const { blockhash } = await agent.connection.getLatestBlockhash();
+        txn.transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (error) {

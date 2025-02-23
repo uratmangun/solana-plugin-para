@@ -70,6 +70,10 @@ export async function listNFTForSale(
 
     const transaction = new Transaction();
     transaction.add(...tx.ixs);
+
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+
     return await signOrSendTX(agent, transaction, tx.extraSigners);
   } catch (error: any) {
     console.error("Full error details:", error);
@@ -107,5 +111,8 @@ export async function cancelListing(agent: SolanaAgentKit, nftMint: PublicKey) {
 
   const transaction = new Transaction();
   transaction.add(...tx.ixs);
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  transaction.recentBlockhash = blockhash;
+
   return await signOrSendTX(agent, transaction, tx.extraSigners);
 }

@@ -49,6 +49,8 @@ export async function multisig_deposit_to_treasury(
           lamports: amount * LAMPORTS_PER_SOL,
         }),
       );
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
 
       tx = await signOrSendTX(agent, transaction);
     } else {
@@ -83,6 +85,10 @@ export async function multisig_deposit_to_treasury(
           adjustedAmount,
         ),
       );
+
+      transaction.recentBlockhash = (
+        await agent.connection.getLatestBlockhash()
+      ).blockhash;
 
       tx = await signOrSendTX(agent, transaction);
     }

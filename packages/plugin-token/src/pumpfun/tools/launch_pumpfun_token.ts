@@ -145,6 +145,9 @@ export async function launchPumpFunToken(
       };
     }
 
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    tx.message.recentBlockhash = blockhash;
+
     return {
       signature: (await signOrSendTX(agent, tx, [mintKeypair])) as string,
       mint: mintKeypair.publicKey.toBase58(),

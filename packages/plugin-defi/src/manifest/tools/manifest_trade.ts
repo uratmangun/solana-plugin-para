@@ -37,8 +37,10 @@ export async function manifestCreateMarket(
   );
 
   const tx: Transaction = new Transaction();
+  const { blockhash } = await agent.connection.getLatestBlockhash();
   tx.add(createAccountIx);
   tx.add(createMarketIx);
+  tx.recentBlockhash = blockhash;
 
   return [await signOrSendTX(agent, tx), marketKeypair.publicKey.toBase58()];
 }
@@ -80,11 +82,11 @@ export async function limitOrder(
         agent.wallet.publicKey,
         orderParams,
       );
+    const txn = new Transaction().add(...depositPlaceOrderIx);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    txn.recentBlockhash = blockhash;
 
-    return await signOrSendTX(
-      agent,
-      new Transaction().add(...depositPlaceOrderIx),
-    );
+    return await signOrSendTX(agent, txn);
   } catch (error: any) {
     throw new Error(`Limit Order failed: ${error.message}`);
   }
@@ -108,8 +110,11 @@ export async function cancelAllOrders(
     );
 
     const cancelAllOrdersIx = mfxClient.cancelAllIx();
+    const txn = new Transaction().add(cancelAllOrdersIx);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    txn.recentBlockhash = blockhash;
 
-    return await signOrSendTX(agent, new Transaction().add(cancelAllOrdersIx));
+    return await signOrSendTX(agent, txn);
   } catch (error: any) {
     throw new Error(`Cancel all orders failed: ${error.message}`);
   }
@@ -130,8 +135,11 @@ export async function withdrawAll(agent: SolanaAgentKit, marketId: PublicKey) {
     );
 
     const withdrawAllIx = mfxClient.withdrawAllIx();
+    const txn = new Transaction().add(...withdrawAllIx);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    txn.recentBlockhash = blockhash;
 
-    return await signOrSendTX(agent, new Transaction().add(...withdrawAllIx));
+    return await signOrSendTX(agent, txn);
   } catch (error: any) {
     throw new Error(`Withdraw all failed: ${error.message}`);
   }
@@ -263,8 +271,11 @@ export async function batchOrder(
       [],
       true,
     );
+    const txn = new Transaction().add(batchOrderIx);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    txn.recentBlockhash = blockhash;
 
-    return await signOrSendTX(agent, new Transaction().add(batchOrderIx));
+    return await signOrSendTX(agent, txn);
   } catch (error: any) {
     throw new Error(`Batch Order failed: ${error.message}`);
   }

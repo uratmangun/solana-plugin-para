@@ -34,6 +34,8 @@ export async function multisig_create_proposal(
       transactionIndex,
       creator: agent.wallet.publicKey,
     });
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    multisigTx.message.recentBlockhash = blockhash;
 
     return await signOrSendTX(agent, multisigTx);
   } catch (error: any) {

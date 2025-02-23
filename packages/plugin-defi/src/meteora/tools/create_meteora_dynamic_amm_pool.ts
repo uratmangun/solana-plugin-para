@@ -38,6 +38,8 @@ export async function createMeteoraDynamicAMMPool(
       tokenBAmount,
       customizableParams,
     );
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  initPoolTx.recentBlockhash = blockhash;
 
   return await signOrSendTX(agent, initPoolTx, undefined, "max");
 }

@@ -75,6 +75,8 @@ export async function raydiumCreateCpmm(
     //   microLamports: 46591500,
     // },
   });
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  transaction.message.recentBlockhash = blockhash;
 
   return signOrSendTX(agent, transaction);
 }

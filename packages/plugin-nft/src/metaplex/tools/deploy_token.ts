@@ -70,6 +70,9 @@ export async function deploy_token(
       return await agent.wallet.signTransaction(tx);
     }
 
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+
     await signOrSendTX(agent, tx);
     return {
       mint: toWeb3JsPublicKey(mint.publicKey),

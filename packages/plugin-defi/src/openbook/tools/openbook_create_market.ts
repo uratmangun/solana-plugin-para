@@ -48,6 +48,9 @@ export async function openbookCreateMarket(
 
   const txs = await Promise.all(
     transactions.map(async (tx) => {
+      tx.message.recentBlockhash = (
+        await agent.connection.getLatestBlockhash()
+      ).blockhash;
       return await signOrSendTX(agent, tx);
     }),
   );

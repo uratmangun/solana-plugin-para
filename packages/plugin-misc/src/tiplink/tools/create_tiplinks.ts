@@ -37,6 +37,8 @@ export async function create_TipLink(
       if (agent.config.signOnly) {
         return await agent.wallet.signTransaction(transaction);
       }
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
 
       const signature = (await signOrSendTX(agent, transaction)) as string;
 
@@ -94,6 +96,9 @@ export async function create_TipLink(
       if (agent.config.signOnly) {
         return await agent.wallet.signTransaction(transaction);
       }
+
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
 
       const signature = (await signOrSendTX(agent, transaction)) as string;
 

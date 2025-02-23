@@ -52,6 +52,8 @@ export async function create_squads_multisig(
       },
     ],
   });
+  const blockhash = (await connection.getLatestBlockhash()).blockhash;
+  tx.message.recentBlockhash = blockhash;
 
   return signOrSendTX(agent, tx);
 }

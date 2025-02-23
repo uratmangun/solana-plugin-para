@@ -22,7 +22,9 @@ export async function rock_paper_scissor(
 
     const data = await res.json();
     if (data.transaction) {
+      const { blockhash } = await agent.connection.getLatestBlockhash();
       const txn = Transaction.from(Buffer.from(data.transaction, "base64"));
+      txn.recentBlockhash = blockhash;
 
       if (agent.config.signOnly) {
         return signOrSendTX(agent, txn);
@@ -92,7 +94,8 @@ async function won(agent: SolanaAgentKit, href: string): Promise<string> {
     const data: any = await res.json();
     if (data.transaction) {
       const txn = Transaction.from(Buffer.from(data.transaction, "base64"));
-      // txn.partialSign(agent.wallet);
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      txn.recentBlockhash = blockhash;
       const signedTxn = await agent.wallet.signTransaction(txn);
       await agent.connection.sendRawTransaction(signedTxn.serialize(), {
         preflightCommitment: "confirmed",

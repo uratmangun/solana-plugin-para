@@ -61,6 +61,8 @@ export async function createMeteoraDlmmPool(
       cluster: "mainnet-beta",
     },
   );
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  initPoolTx.recentBlockhash = blockhash;
 
   return signOrSendTX(agent, initPoolTx, undefined, "max");
 }

@@ -38,7 +38,10 @@ export async function transfer(
         }),
       );
 
-      tx = await signOrSendTX(agent, transaction);
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+
+      tx = await signOrSendTX(agent, transaction.instructions);
     } else {
       // Transfer SPL token
       const fromAta = await getAssociatedTokenAddress(
@@ -60,7 +63,10 @@ export async function transfer(
         ),
       );
 
-      tx = await signOrSendTX(agent, transaction);
+      const { blockhash } = await agent.connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+
+      tx = await signOrSendTX(agent, transaction.instructions);
     }
 
     return tx;

@@ -67,6 +67,9 @@ export async function mintCollectionNFT(
       };
     }
 
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    compatibleTx.recentBlockhash = blockhash;
+
     await signOrSendTX(agent, compatibleTx);
 
     return {

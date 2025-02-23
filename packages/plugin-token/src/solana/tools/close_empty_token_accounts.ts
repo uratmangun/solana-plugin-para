@@ -53,6 +53,10 @@ export async function closeEmptyTokenAccounts(agent: SolanaAgentKit) {
         size,
       };
     }
+
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+
     const signature = (await signOrSendTX(agent, transaction)) as string;
 
     return { signature, size };

@@ -80,6 +80,8 @@ export async function raydiumCreateAmmV4(
     txVersion: TxVersion.V0,
     feeDestinationId: FEE_DESTINATION_ID,
   });
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  transaction.message.recentBlockhash = blockhash;
 
   return await signOrSendTX(agent, transaction);
 }
