@@ -168,6 +168,7 @@ import {
   getEntryQuoteOfPerpTrade,
   validateAndEncodeAddress,
   getL2OrderBook,
+  deriveDriftVaultAddress,
 } from "./drift/tools";
 
 // Define and export the plugin
@@ -227,10 +228,11 @@ const DefiPlugin = {
 
     // Drift methods,
     driftPerpTrade,
+    deriveDriftVaultAddress,
     calculatePerpMarketFundingRate,
-    createVault,
+    createDriftVault: createVault,
     createDriftUserAccount,
-    depositIntoVault,
+    depositIntoDriftVault: depositIntoVault,
     depositToDriftUserAccount,
     doesUserHaveDriftAccount,
     driftUserAccountInfo,
@@ -241,7 +243,7 @@ const DefiPlugin = {
     withdrawFromDriftVault,
     withdrawFromDriftUserAccount,
     requestWithdrawalFromVault,
-    updateVaultDelegate,
+    updateDriftVaultDelegate: updateVaultDelegate,
     getVaultInfo,
     getVaultAddress,
     tradeDriftVault,
