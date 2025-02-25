@@ -136,6 +136,12 @@ const result = await agent.deployToken(
   "uri", // uri
   "token", // symbol
   9, // decimals
+  {
+    mintAuthority: null, // by default, deployer account
+    freezeAuthority: null, // by default, deployer account
+    updateAuthority: undefined, // by default, deployer account
+    isMutable: false // by default, true
+  },
   1000000 // initial supply
 );
 
