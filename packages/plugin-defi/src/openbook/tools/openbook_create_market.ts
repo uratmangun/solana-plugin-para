@@ -4,15 +4,15 @@ import {
   TxVersion,
 } from "@raydium-io/raydium-sdk-v2";
 import { MintLayout, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { PublicKey } from "@solana/web3.js";
+import type { PublicKey } from "@solana/web3.js";
 import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 
 export async function openbookCreateMarket(
   agent: SolanaAgentKit,
   baseMint: PublicKey,
   quoteMint: PublicKey,
-  lotSize: number = 1,
-  tickSize: number = 0.01,
+  lotSize = 1,
+  tickSize = 0.01,
 ) {
   const raydium = await Raydium.load({
     connection: agent.connection,
