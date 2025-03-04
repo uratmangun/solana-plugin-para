@@ -1,17 +1,24 @@
 import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
-import { generateSigner } from "@metaplex-foundation/umi";
+import { generateSigner, none } from "@metaplex-foundation/umi";
 import {
   createFungible,
   mintV1,
   TokenStandard,
+  updateV1,
 } from "@metaplex-foundation/mpl-token-metadata";
 import {
   fromWeb3JsPublicKey,
   toWeb3JsLegacyTransaction,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
-import { mplToolbox } from "@metaplex-foundation/mpl-toolbox";
+import {
+  AuthorityType,
+  mplToolbox,
+  setAuthority,
+} from "@metaplex-foundation/mpl-toolbox";
+import { SPLAuthorityInput } from "../types";
+import { PublicKey } from "@solana/web3.js";
 
 /**
  * Deploy a new SPL token
@@ -28,13 +35,13 @@ export async function deploy_token(
   name: string,
   uri: string,
   symbol: string,
+  authority: SPLAuthorityInput,
   decimals: number = 9,
   initialSupply?: number,
 ) {
   try {
     // Create UMI instance from agent
     const umi = createUmi(agent.connection.rpcEndpoint).use(mplToolbox());
-    // umi.use(keypairIdentity(fromWeb3JsKeypair(agent.wallet)));
 
     // Create new token mint
     const mint = generateSigner(umi);
@@ -59,6 +66,67 @@ export async function deploy_token(
           tokenStandard: TokenStandard.Fungible,
           tokenOwner: fromWeb3JsPublicKey(agent.wallet.publicKey),
           amount: initialSupply * Math.pow(10, decimals),
+        }),
+      );
+    }
+
+    // Set default token authority
+    let defaultAuthority: SPLAuthorityInput = {
+      mintAuthority: agent.wallet.publicKey,
+      freezeAuthority: agent.wallet.publicKey,
+      updateAuthority: agent.wallet.publicKey,
+      isMutable: true,
+    };
+
+    if (authority.mintAuthority === null) {
+      defaultAuthority.mintAuthority = null;
+    } else if (authority.mintAuthority !== undefined) {
+      defaultAuthority.mintAuthority = new PublicKey(authority.mintAuthority);
+    }
+
+    if (authority.freezeAuthority === null) {
+      defaultAuthority.freezeAuthority = null;
+    } else if (authority.freezeAuthority !== undefined) {
+      defaultAuthority.freezeAuthority = new PublicKey(
+        authority.freezeAuthority,
+      );
+    }
+
+    if (
+      authority.updateAuthority !== undefined &&
+      authority.updateAuthority !== null
+    ) {
+      defaultAuthority.updateAuthority = new PublicKey(
+        authority.updateAuthority,
+      );
+    }
+
+    if (authority.isMutable !== undefined) {
+      defaultAuthority.isMutable = authority.isMutable;
+    }
+
+    if (defaultAuthority.mintAuthority !== agent.wallet.publicKey) {
+      builder = builder.add(
+        setAuthority(umi, {
+          owned: mint.publicKey,
+          owner: fromWeb3JsPublicKey(agent.wallet.publicKey),
+          authorityType: AuthorityType.MintTokens,
+          newAuthority: defaultAuthority.mintAuthority
+            ? fromWeb3JsPublicKey(defaultAuthority.mintAuthority)
+            : none(),
+        }),
+      );
+    }
+
+    if (defaultAuthority.freezeAuthority !== agent.wallet.publicKey) {
+      builder = builder.add(
+        setAuthority(umi, {
+          owned: mint.publicKey,
+          owner: fromWeb3JsPublicKey(agent.wallet.publicKey),
+          authorityType: AuthorityType.FreezeAccount,
+          newAuthority: defaultAuthority.freezeAuthority
+            ? fromWeb3JsPublicKey(defaultAuthority.freezeAuthority)
+            : none(),
         }),
       );
     }
