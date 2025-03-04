@@ -8,3 +8,6 @@ export { SolanaAgentKit, createVercelAITools, createMcpServer, startMcpServer };
 export * from "./types";
 export * from "./utils/actionExecutor";
 export * from "./utils/send_tx";
+
+// Export MCP server
+export * from "./utils/zodToMCPSchema";

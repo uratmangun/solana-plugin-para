@@ -26,7 +26,6 @@ import {
   get_assets_by_authority,
   get_assets_by_creator,
   mintCollectionNFT,
-  search_assets,
 } from "./metaplex/tools";
 
 // Import Tensor tools
@@ -37,6 +36,7 @@ import {
   createCollection,
   createSingle,
 } from "./3land/tools/create_3land_collectible";
+import { search_assets } from "./metaplex/tools/search_assets";
 
 // Define and export the plugin
 const NFTPlugin = {

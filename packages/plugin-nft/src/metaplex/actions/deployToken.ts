@@ -82,6 +82,7 @@ const deployTokenAction: Action = {
         input.name,
         input.uri,
         input.symbol,
+        input.authority,
         input.decimals,
         input.initialSupply,
       );

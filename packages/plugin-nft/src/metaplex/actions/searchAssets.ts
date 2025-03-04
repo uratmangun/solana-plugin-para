@@ -1,8 +1,8 @@
 import { Action } from "solana-agent-kit";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { search_assets } from "../tools";
 import { publicKey } from "@metaplex-foundation/umi";
+import { search_assets } from "../tools/search_assets";
 
 const searchAssetsAction: Action = {
   name: "SEARCH_ASSETS",

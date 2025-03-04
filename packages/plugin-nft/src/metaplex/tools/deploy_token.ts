@@ -35,7 +35,7 @@ export async function deploy_token(
   name: string,
   uri: string,
   symbol: string,
-  authority: SPLAuthorityInput,
+  authority?: SPLAuthorityInput,
   decimals: number = 9,
   initialSupply?: number,
 ) {
@@ -78,31 +78,31 @@ export async function deploy_token(
       isMutable: true,
     };
 
-    if (authority.mintAuthority === null) {
+    if (authority?.mintAuthority === null) {
       defaultAuthority.mintAuthority = null;
-    } else if (authority.mintAuthority !== undefined) {
-      defaultAuthority.mintAuthority = new PublicKey(authority.mintAuthority);
+    } else if (authority?.mintAuthority !== undefined) {
+      defaultAuthority.mintAuthority = new PublicKey(authority?.mintAuthority);
     }
 
-    if (authority.freezeAuthority === null) {
+    if (authority?.freezeAuthority === null) {
       defaultAuthority.freezeAuthority = null;
-    } else if (authority.freezeAuthority !== undefined) {
+    } else if (authority?.freezeAuthority !== undefined) {
       defaultAuthority.freezeAuthority = new PublicKey(
-        authority.freezeAuthority,
+        authority?.freezeAuthority,
       );
     }
 
     if (
-      authority.updateAuthority !== undefined &&
-      authority.updateAuthority !== null
+      authority?.updateAuthority !== undefined &&
+      authority?.updateAuthority !== null
     ) {
       defaultAuthority.updateAuthority = new PublicKey(
-        authority.updateAuthority,
+        authority?.updateAuthority,
       );
     }
 
-    if (authority.isMutable !== undefined) {
-      defaultAuthority.isMutable = authority.isMutable;
+    if (authority?.isMutable !== undefined) {
+      defaultAuthority.isMutable = authority?.isMutable;
     }
 
     if (defaultAuthority.mintAuthority !== agent.wallet.publicKey) {

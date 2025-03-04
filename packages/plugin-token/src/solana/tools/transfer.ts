@@ -9,6 +9,8 @@ import {
   getAssociatedTokenAddress,
   createTransferInstruction,
   getMint,
+  getAccount,
+  createAssociatedTokenAccountInstruction,
 } from "@solana/spl-token";
 
 /**
@@ -43,6 +45,7 @@ export async function transfer(
 
       tx = await signOrSendTX(agent, transaction.instructions);
     } else {
+      const transaction = new Transaction();
       // Transfer SPL token
       const fromAta = await getAssociatedTokenAddress(
         mint,
@@ -50,11 +53,25 @@ export async function transfer(
       );
       const toAta = await getAssociatedTokenAddress(mint, to);
 
+      try {
+        await getAccount(agent.connection, toAta);
+      } catch {
+        // Error is thrown if the tokenAccount doesn't exist
+        transaction.add(
+          createAssociatedTokenAccountInstruction(
+            agent.wallet.publicKey,
+            toAta,
+            to,
+            mint,
+          ),
+        );
+      }
+
       // Get mint info to determine decimals
       const mintInfo = await getMint(agent.connection, mint);
       const adjustedAmount = amount * Math.pow(10, mintInfo.decimals);
 
-      const transaction = new Transaction().add(
+      transaction.add(
         createTransferInstruction(
           fromAta,
           toAta,
