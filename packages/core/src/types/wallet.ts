@@ -1,5 +1,19 @@
-import { Transaction, PublicKey, VersionedTransaction } from "@solana/web3.js";
+import {
+  Transaction,
+  PublicKey,
+  VersionedTransaction,
+  TransactionMessage,
+  Signer,
+  Keypair,
+  TransactionInstruction,
+} from "@solana/web3.js";
 import { TransactionOrVersionedTransaction } from ".";
+import { SolanaAgentKit } from "../agent";
+import {
+  sendTx,
+  feeTiers,
+  getComputeBudgetInstructions,
+} from "../utils/send_tx";
 
 /**
  * Interface representing a Solana wallet implementation
@@ -71,4 +85,52 @@ export interface BaseWallet {
   //     transaction: T,
   //     options?: SendOptions
   // ): Promise<{ signature: TransactionSignature }>;
+}
+
+export async function signOrSendTX(
+  agent: SolanaAgentKit,
+  instructionsOrTransaction:
+    | TransactionInstruction[]
+    | Transaction
+    | VersionedTransaction,
+  otherKeypairs?: Keypair[],
+  feeTier?: keyof typeof feeTiers,
+): Promise<string | TransactionOrVersionedTransaction> {
+  if (
+    instructionsOrTransaction instanceof Transaction ||
+    instructionsOrTransaction instanceof VersionedTransaction
+  ) {
+    if (agent.config.signOnly) {
+      return instructionsOrTransaction;
+    }
+
+    return await agent.wallet.sendTransaction(instructionsOrTransaction);
+  }
+
+  const ixComputeBudget = await getComputeBudgetInstructions(
+    agent,
+    instructionsOrTransaction,
+    feeTier ?? "mid",
+  );
+  const allInstructions = [
+    ixComputeBudget.computeBudgetLimitInstruction,
+    ixComputeBudget.computeBudgetPriorityFeeInstructions,
+    ...instructionsOrTransaction,
+  ];
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  const messageV0 = new TransactionMessage({
+    payerKey: agent.wallet.publicKey,
+    recentBlockhash: blockhash,
+    instructions: allInstructions,
+  }).compileToV0Message();
+
+  const transaction = new VersionedTransaction(messageV0);
+  transaction.sign([...(otherKeypairs ?? [])] as Signer[]);
+  const signedTransaction = await agent.wallet.signTransaction(transaction);
+
+  if (agent.config.signOnly) {
+    return signedTransaction;
+  }
+
+  return sendTx(agent, instructionsOrTransaction, otherKeypairs, feeTier);
 }

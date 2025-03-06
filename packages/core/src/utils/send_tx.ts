@@ -14,7 +14,7 @@ import type {
   TransactionOrVersionedTransaction,
 } from "../types/index";
 
-const feeTiers = {
+export const feeTiers = {
   min: 0.01,
   mid: 0.5,
   max: 0.95,
@@ -188,52 +188,4 @@ export async function sendTx(
     }
   }
   throw new Error("Transaction timeout");
-}
-
-export async function signOrSendTX(
-  agent: SolanaAgentKit,
-  instructionsOrTransaction:
-    | TransactionInstruction[]
-    | Transaction
-    | VersionedTransaction,
-  otherKeypairs?: Keypair[],
-  feeTier?: keyof typeof feeTiers,
-): Promise<string | TransactionOrVersionedTransaction> {
-  if (
-    instructionsOrTransaction instanceof Transaction ||
-    instructionsOrTransaction instanceof VersionedTransaction
-  ) {
-    if (agent.config.signOnly) {
-      return instructionsOrTransaction;
-    }
-
-    return await agent.wallet.sendTransaction(instructionsOrTransaction);
-  }
-
-  const ixComputeBudget = await getComputeBudgetInstructions(
-    agent,
-    instructionsOrTransaction,
-    feeTier ?? "mid",
-  );
-  const allInstructions = [
-    ixComputeBudget.computeBudgetLimitInstruction,
-    ixComputeBudget.computeBudgetPriorityFeeInstructions,
-    ...instructionsOrTransaction,
-  ];
-  const { blockhash } = await agent.connection.getLatestBlockhash();
-  const messageV0 = new TransactionMessage({
-    payerKey: agent.wallet.publicKey,
-    recentBlockhash: blockhash,
-    instructions: allInstructions,
-  }).compileToV0Message();
-
-  const transaction = new VersionedTransaction(messageV0);
-  transaction.sign([...(otherKeypairs ?? [])] as Signer[]);
-  const signedTransaction = await agent.wallet.signTransaction(transaction);
-
-  if (agent.config.signOnly) {
-    return signedTransaction;
-  }
-
-  return sendTx(agent, instructionsOrTransaction, otherKeypairs, feeTier);
 }

@@ -6,6 +6,7 @@ export { SolanaAgentKit, createVercelAITools, createMcpServer, startMcpServer };
 
 // Optional: Export types that users might need
 export * from "./types";
+export * from "./types/wallet";
 export * from "./utils/actionExecutor";
 export * from "./utils/send_tx";
 
