@@ -1,8 +1,4 @@
-import type {
-  PublicKey,
-  Transaction,
-  VersionedTransaction,
-} from "@solana/web3.js";
+import type { Transaction, VersionedTransaction } from "@solana/web3.js";
 import type { SolanaAgentKit } from "../agent";
 import type { z } from "zod";
 
@@ -16,34 +12,6 @@ export interface Plugin {
 export type TransactionOrVersionedTransaction =
   | Transaction
   | VersionedTransaction;
-
-export interface BaseWallet {
-  signTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(
-    tx: T,
-  ): Promise<T>;
-  signAllTransactions<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(
-    txs: T[],
-  ): Promise<T[]>;
-  sendTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(
-    tx: T,
-  ): Promise<string>;
-  publicKey: PublicKey;
-}
 
 export interface Config {
   signOnly?: boolean;

@@ -1,5 +1,6 @@
 import { Connection } from "@solana/web3.js";
-import type { Config, Plugin, BaseWallet, Action } from "../types";
+import type { Config, Plugin, Action } from "../types";
+import { BaseWallet } from "../types/wallet";
 
 /**
  * Defines a type that merges all plugin methods into the `methods` object
