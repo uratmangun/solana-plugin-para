@@ -1,8 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import type { Action } from "../types/action";
-import { SolanaAgentKit } from "../agent";
+import { type Action, SolanaAgentKit } from "solana-agent-kit";
 
 // Define the raw shape type that MCP tools expect
 export type MCPSchemaShape = {
@@ -66,8 +65,8 @@ export function createMcpServer(
   });
 
   // Convert each action to an MCP tool
-  for (const [key, action] of Object.entries(actions)) {
-    const { result, keys } = zodToMCPShape(action.schema);
+  for (const [_key, action] of Object.entries(actions)) {
+    const { result } = zodToMCPShape(action.schema);
     server.tool(action.name, action.description, result, async (params) => {
       try {
         // Execute the action handler with the params directly
