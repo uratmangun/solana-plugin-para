@@ -2,34 +2,28 @@ import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 
 import {
-  createParaPregenWallet,
-  getParaPregenWallets,
+  claimParaPregenWallet,
   getParaInstance,
 
 
 } from "./tools";
 
-import createParaPregenWalletAction from "./actions/createParaPregenWallet";
-import getParaPregenWalletsAction from "./actions/getParaPregenWallets";
-import updateParaPregenWalletAction from "./actions/updateParaPregenWallet";
+import claimParaPregenWalletAction from "./actions/claimParaPregenWallet";
 
 // Define and export the plugin
-const ParaServerPlugin = {
-  name: "para-server",
+const ParaWebPlugin = {
+  name: "para-web",
 
   // Combine all tools
   methods: {
-    getParaPregenWallets,
-    updateParaPregenWallet,
-    createParaPregenWallet
+    claimParaPregenWallet,  
+    getParaInstance
   },
 
   // Combine all actions
   actions: [
    
-    createParaPregenWalletAction,
-    getParaPregenWalletsAction,
-    updateParaPregenWalletAction,
+    claimParaPregenWalletAction,
   
   ],
 
@@ -50,4 +44,4 @@ const ParaServerPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = ParaServerPlugin;
+export = ParaWebPlugin;

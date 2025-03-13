@@ -1,16 +1,14 @@
 import { Action } from "solana-agent-kit";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import { createParaPregenWallet } from "../tools";
+import { claimParaPregenWallet } from "../tools";
 
-const createParaPregenWalletAction: Action = {
-  name: "CREATE_PARA_PREGEN_WALLET",
+const claimParaPregenWalletAction: Action = {
+  name: "CLAIM_PARA_PREGEN_WALLET",
   similes: [
-    "create para pregen wallet",
-    "generate para pregen wallet",
-    "make para pregen wallet",
+    "claim para pregen wallet"
   ],
-  description: "Create a pregen wallet for Para",
+  description: "Claim a pregen wallet for Para",
   examples: [
     [
       {
@@ -19,12 +17,10 @@ const createParaPregenWalletAction: Action = {
         },
         output: {
           status: "success",
-          message: "Pre-generated wallet created successfully.",
-          address: "0xdasdnas",
-          walletId: "1234567890",
-          userShare: "sdfsdfsdfsd",
+          message: "Pre-generated wallet claimed successfully.",
+        email:"test@test.com"
         },
-        explanation: "Create a pregen wallet for Para",
+        explanation: "Claim a pregen wallet for Para",
       },
     ],
   ],
@@ -34,7 +30,7 @@ const createParaPregenWalletAction: Action = {
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
       const { email } = input;
-      const response = await createParaPregenWallet(email);
+      const response = await claimParaPregenWallet(email);
 
       return {
         status: "success",
@@ -49,4 +45,4 @@ const createParaPregenWalletAction: Action = {
   },
 };
 
-export default createParaPregenWalletAction;
+export default claimParaPregenWalletAction;
