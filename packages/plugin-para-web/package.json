@@ -22,7 +22,7 @@
     "@tiplink/api": "^0.3.1",
     "axios": "^1.7.9",
     "bs58": "^6.0.0",
-    "solana-agent-kit": "file:../agent-kit-v2/packages/core",
+    "solana-agent-kit": "file:../../../michael-v2/packages/core",
     "zod": "^3.24.1"
   },
   "peerDependencies": {

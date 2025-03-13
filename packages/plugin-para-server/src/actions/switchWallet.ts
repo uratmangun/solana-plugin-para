@@ -33,7 +33,7 @@ const switchWalletAction: Action = {
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
       const { userShare, type } = input;
-      const response = await switchWallet(userShare, type);
+      const response = await switchWallet(agent,userShare, type);
 
       return {
         status: "success",
