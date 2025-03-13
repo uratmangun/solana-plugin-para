@@ -5,13 +5,13 @@ import {
   createParaPregenWallet,
   getParaPregenWallets,
   updateParaPregenWallet,
-  switchWallet
+
 } from "./tools";
 
 import createParaPregenWalletAction from "./actions/createParaPregenWallet";
 import getParaPregenWalletsAction from "./actions/getParaPregenWallets";
 import updateParaPregenWalletAction from "./actions/updateParaPregenWallet";
-import switchWalletAction from "./actions/switchWallet";
+
 // Define and export the plugin
 const ParaServerPlugin = {
   name: "para-server",
@@ -21,12 +21,12 @@ const ParaServerPlugin = {
     getParaPregenWallets,
     updateParaPregenWallet,
     createParaPregenWallet,
-    switchWallet
+  
   },
 
   // Combine all actions
   actions: [
-    switchWalletAction,
+   
     createParaPregenWalletAction,
     getParaPregenWalletsAction,
     updateParaPregenWalletAction,

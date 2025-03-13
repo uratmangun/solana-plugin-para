@@ -22,7 +22,6 @@ const createParaPregenWalletAction: Action = {
           message: "Pre-generated wallet created successfully.",
           address: "0xdasdnas",
           walletId: "1234567890",
-          userShare: "sdfsdfsdfsd",
         },
         explanation: "Create a pregen wallet for Para",
       },

@@ -5,7 +5,9 @@ export async function claimParaPregenWallet(email: string) {
     if (!email) {
       throw new Error("Provide `email` in the request body to claim a pre-generated wallet.");
     }
-
+if(!para.isFullyLoggedIn()){
+  throw new Error("Please login to Para using email: " + email + " to claim a pre-generated wallet.");
+}
     
     const wallet = await para.claimPregenWallets({
        pregenIdentifier: email,

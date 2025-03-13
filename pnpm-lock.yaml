@@ -53,9 +53,6 @@ importers:
       '@getpara/server-sdk':
         specifier: ^1.4.4
         version: 1.5.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      '@getpara/solana-web3.js-v1-integration':
-        specifier: ^1.5.0
-        version: 1.5.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@solana/web3.js':
         specifier: ^1.98.0
         version: 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -73,7 +70,7 @@ importers:
     dependencies:
       '@getpara/solana-web3.js-v1-integration':
         specifier: ^1.5.0
-        version: 1.5.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        version: 1.5.0
       '@getpara/web-sdk':
         specifier: ^1.5.0
         version: 1.5.0
@@ -2924,7 +2921,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@getpara/solana-web3.js-v1-integration@1.5.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@getpara/solana-web3.js-v1-integration@1.5.0':
     dependencies:
       '@getpara/core-sdk': 1.5.0
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)

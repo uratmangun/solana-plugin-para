@@ -4,7 +4,7 @@ import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 import {
   claimParaPregenWallet,
   getParaInstance,
-
+  getWallets
 
 } from "./tools";
 
@@ -17,7 +17,8 @@ const ParaWebPlugin = {
   // Combine all tools
   methods: {
     claimParaPregenWallet,  
-    getParaInstance
+    getParaInstance,
+    getWallets
   },
 
   // Combine all actions
