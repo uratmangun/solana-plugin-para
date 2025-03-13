@@ -4,7 +4,7 @@ import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 import {
   createParaPregenWallet,
   getParaPregenWallets,
-  updateParaPregenWallet,
+  getParaInstance,
 
 
 } from "./tools";
