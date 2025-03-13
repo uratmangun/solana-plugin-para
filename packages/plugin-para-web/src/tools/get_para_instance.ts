@@ -1,5 +1,5 @@
 import {para} from "../utils/config";
 
-export async function getParaInstance() {
+export function getParaInstance() {
  return para;
 }
