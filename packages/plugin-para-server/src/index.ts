@@ -50,4 +50,4 @@ const ParaServerPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = ParaServerPlugin;
+export default ParaServerPlugin;

@@ -1,6 +1,6 @@
 import {para} from "../utils/config";
 
-export async function getWallets() {
+export async function getAllWallets() {
   try {
   
 if(!para.isFullyLoggedIn()){
