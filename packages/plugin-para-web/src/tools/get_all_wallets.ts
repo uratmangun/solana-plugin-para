@@ -2,8 +2,8 @@ import {para} from "../utils/config";
 
 export async function getAllWallets() {
   try {
-  
-if(!para.isFullyLoggedIn()){
+  const isLoggedIn = await para.isFullyLoggedIn();
+if(!isLoggedIn){
   throw new Error("Please login to Para to get wallets.");
 }
     

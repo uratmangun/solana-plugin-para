@@ -7,7 +7,8 @@ export async function useWallet(agent: SolanaAgentKit, walletId: string) {
   if(!walletId){
     throw new Error("Provide `walletId` in the request body to use a wallet.");
   }
-if(!para.isFullyLoggedIn()){
+    const isLoggedIn = await para.isFullyLoggedIn();
+if(!isLoggedIn){
   throw new Error("Please login to Para to use a wallet.");
 }
 const solanaConnection = new Connection(process.env.NEXT_PUBLIC_RPC_URL as string);
