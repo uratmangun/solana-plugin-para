@@ -5,7 +5,7 @@ import {
   createParaPregenWallet,
   getParaPregenWallets,
   updateParaPregenWallet,
-
+getParaInstance
 } from "./tools";
 
 import createParaPregenWalletAction from "./actions/createParaPregenWallet";
@@ -21,7 +21,7 @@ const ParaServerPlugin = {
     getParaPregenWallets,
     updateParaPregenWallet,
     createParaPregenWallet,
-  
+    getParaInstance
   },
 
   // Combine all actions

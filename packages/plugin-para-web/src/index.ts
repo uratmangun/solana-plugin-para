@@ -5,12 +5,12 @@ import {
   claimParaPregenWallet,
   getParaInstance,
   getAllWallets,
-  useWallet
+
 } from "./tools";
 
 import claimParaPregenWalletAction from "./actions/claimParaPregenWallet";
 import getAllWalletsAction from "./actions/getAllWallets";
-import useWalletAction from "./actions/useWallet";
+
 // Define and export the plugin
 const ParaWebPlugin = {
   name: "para-web",
@@ -20,7 +20,7 @@ const ParaWebPlugin = {
     claimParaPregenWallet,  
     getParaInstance,
     getAllWallets,
-    useWallet
+  
   },
 
   // Combine all actions
@@ -28,7 +28,7 @@ const ParaWebPlugin = {
    
     claimParaPregenWalletAction,
     getAllWalletsAction,
-    useWalletAction
+  
   ],
 
   // Initialize function
