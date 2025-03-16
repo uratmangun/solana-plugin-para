@@ -1,5 +1,5 @@
 import { para } from "../utils/config";
-import {WalletType} from "@getpara/server-sdk"
+import { WalletType } from "@getpara/server-sdk";
 export async function createParaPregenWallet(email: string) {
   try {
     if (!email) {
@@ -8,7 +8,7 @@ export async function createParaPregenWallet(email: string) {
       );
     }
 
-      const walletExists = await para.hasPregenWallet({
+    const walletExists = await para.hasPregenWallet({
       pregenIdentifier: email,
       pregenIdentifierType: "EMAIL",
     });
@@ -28,14 +28,12 @@ export async function createParaPregenWallet(email: string) {
         "Failed to create pre-generated wallet. Check your Para configuration and try again.",
       );
     }
-   
 
     return {
       message: "Pre-generated wallet created successfully.",
       address: wallet.address,
       email,
       walletId: wallet.id,
- 
     };
   } catch (error: any) {
     throw new Error(`create pregen wallet failed ${error.message}`);

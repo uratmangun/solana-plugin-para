@@ -1,12 +1,6 @@
 import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
-
-import {
-  claimParaPregenWallet,
-  getParaInstance,
-  getAllWallets,
-
-} from "./tools";
+import { claimParaPregenWallet, getParaInstance, getAllWallets } from "./tools";
 
 import claimParaPregenWalletAction from "./actions/claimParaPregenWallet";
 import getAllWalletsAction from "./actions/getAllWallets";
@@ -17,19 +11,13 @@ const ParaWebPlugin = {
 
   // Combine all tools
   methods: {
-    claimParaPregenWallet,  
+    claimParaPregenWallet,
     getParaInstance,
     getAllWallets,
-  
   },
 
   // Combine all actions
-  actions: [
-   
-    claimParaPregenWalletAction,
-    getAllWalletsAction,
-  
-  ],
+  actions: [claimParaPregenWalletAction, getAllWalletsAction],
 
   // Initialize function
   initialize: function (agent: SolanaAgentKit): void {

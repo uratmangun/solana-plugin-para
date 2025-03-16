@@ -5,20 +5,16 @@ import { claimParaPregenWallet } from "../tools";
 
 const claimParaPregenWalletAction: Action = {
   name: "CLAIM_PARA_PREGEN_WALLET",
-  similes: [
-    "claim para pregen wallet"
-  ],
+  similes: ["claim para pregen wallet"],
   description: "Claim a pregen wallet for Para",
   examples: [
     [
       {
-        input: {
-     
-        },
+        input: {},
         output: {
           status: "success",
           message: "Pre-generated wallet claimed successfully.",
-        email:"test@test.com"
+          email: "test@test.com",
         },
         explanation: "Claim a pregen wallet for Para",
       },
@@ -27,7 +23,6 @@ const claimParaPregenWalletAction: Action = {
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-    
       const response = await claimParaPregenWallet();
 
       return {
@@ -35,7 +30,6 @@ const claimParaPregenWalletAction: Action = {
         ...response,
       };
     } catch (error: any) {
-      
       return {
         status: "error",
         message: error.message,

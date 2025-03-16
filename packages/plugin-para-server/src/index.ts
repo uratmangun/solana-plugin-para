@@ -1,11 +1,10 @@
 import { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
-
 import {
   createParaPregenWallet,
   getParaPregenWallets,
   updateParaPregenWallet,
-getParaInstance
+  getParaInstance,
 } from "./tools";
 
 import createParaPregenWalletAction from "./actions/createParaPregenWallet";
@@ -21,16 +20,14 @@ const ParaServerPlugin = {
     getParaPregenWallets,
     updateParaPregenWallet,
     createParaPregenWallet,
-    getParaInstance
+    getParaInstance,
   },
 
   // Combine all actions
   actions: [
-   
     createParaPregenWalletAction,
     getParaPregenWalletsAction,
     updateParaPregenWalletAction,
-  
   ],
 
   // Initialize function

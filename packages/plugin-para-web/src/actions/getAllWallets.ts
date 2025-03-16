@@ -1,23 +1,19 @@
 import { Action } from "solana-agent-kit";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
-import {  getAllWallets } from "../tools";
+import { getAllWallets } from "../tools";
 
 const getAllWalletsAction: Action = {
   name: "GET_ALL_WALLETS",
-  similes: [
-    "get all wallets"
-  ],
+  similes: ["get all wallets"],
   description: "Get all wallets",
   examples: [
     [
       {
-        input: {
-          
-        },
+        input: {},
         output: {
           status: "success",
-              wallets: []
+          wallets: [],
         },
         explanation: "Get all wallets",
       },
