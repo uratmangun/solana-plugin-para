@@ -11,9 +11,9 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@getpara/server-sdk": "^1.4.4",
+    "@getpara/server-sdk": "^1.5.1",
     "bs58": "^6.0.0",
-    "solana-agent-kit": "npm:@uratmangun/solana-agent-kit@^2.0.2",
+    "solana-agent-kit": "2.0.0-beta.2",
     "zod": "^3.24.1"
   },
   "peerDependencies": {

@@ -23,7 +23,7 @@ if(!isLoggedIn){
     };
   } catch (error: any) {
        // false positive Error: Cannot read properties of undefined (reading 'scheme')
-       if((error as Error).message.includes("Cannot read properties of undefined")){
+       if((error as Error).message.includes("Cannot read properties of undefined (reading 'scheme')")){
         return {
           message: "Pre-generated wallet claimed successfully.",
         email

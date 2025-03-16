@@ -42,3 +42,4 @@ import TokenPlugin from "@solana-agent-kit/plugin-token";
 export const solanaAgentWithPara = solanaAgent.use(ParaServerPlugin).use(TokenPlugin);
 ```
 
+solana agent kit v2 is still unreleased 
