@@ -1,86 +1,138 @@
-# @solana-agent-kit/plugin-misc
+# @getpara/plugin-para-server
 
-This plugin provides a set of miscellaneous tools and actions for interacting with various services and protocols on the Solana blockchain. It includes functionalities for domain registration, webhook creation, and more.
+This plugin provides server-side tools and actions for managing Para wallets and services in the Solana Agent Kit. It enables pre-generated wallet management and other Para-specific functionalities for server applications.
 
-## Tools Available
+## Installation
 
-### AllDomains
-- `getAllDomainsTLDs` - Retrieve all top-level domains.
-- `getOwnedAllDomains` - Get all domains owned by a specific wallet.
-- `getOwnedDomainsForTLD` - Get domains owned by a wallet for a specific TLD.
-- `resolveDomain` - Resolve a domain to get its owner's public key.
-
-### Allora
-- `getAllTopics` - Retrieve all topics.
-- `getInferenceByTopicId` - Get inference data by topic ID.
-- `getPriceInference` - Get price inference data.
-
-### Gibwork
-- `createGibworkTask` - Create a new task on Gibwork.
-
-### Helius
-- `createWebhook` - Create a new webhook to monitor transactions.
-- `deleteWebhook` - Delete an existing webhook.
-- `getAssetsByOwner` - Get assets owned by a specific wallet.
-- `getWebhook` - Retrieve webhook details.
-- `parseTransaction` - Parse a Solana transaction.
-
-### SNS
-- `resolveSolDomain` - Resolve a .sol domain.
-- `registerDomain` - Register a new .sol domain.
-- `getPrimaryDomain` - Get the primary domain for a wallet.
-- `getMainAllDomainsDomain` - Get the main domain for AllDomains.
-- `getAllRegisteredAllDomains` - Get all registered domains.
-
-### Squads
-- `transferFromMultisigTreasury` - Transfer funds from a multisig treasury.
-- `rejectMultisigProposal` - Reject a multisig proposal.
-- `executeMultisigProposal` - Execute a multisig proposal.
-- `depositToMultisigTreasury` - Deposit funds into a multisig treasury.
-- `createMultisig` - Create a new multisig account.
-- `createMultisigProposal` - Create a new multisig proposal.
-
-### Coingecko
-- `getCoingeckoTokenInfo` - Get token information from Coingecko.
-- `getCoingeckoTopGainers` - Get top gaining tokens.
-- `getCoingeckoLatestPools` - Get the latest pools.
-- `getCoingeckoTrendingPools` - Get trending pools.
-- `getCoingeckoTokenPriceData` - Get token price data.
-- `getCoingeckoTrendingTokens` - Get trending tokens.
-
-### ElfaAi
-- `getElfaAiApiKeyStatus` - Check the status of an ElfaAi API key.
-- `getSmartMentions` - Get smart mentions using ElfaAi.
-- `getSmartTwitterAccountStats` - Get Twitter account stats using ElfaAi.
-- `getTopMentionsByTicker` - Get top mentions by ticker using ElfaAi.
-- `getTrendingTokensUsingElfaAi` - Get trending tokens using ElfaAi.
-- `pingElfaAiApi` - Ping the ElfaAi API.
-- `searchMentionsByKeywords` - Search mentions by keywords using ElfaAi.
-
-## Switchboard
-- `simulate_switchboard_feed` - Simulate a switchboard feed.
-
-## Tiplink
-- `create_TipLink` - Create a tiplink.
-
-## Example Usage
-
-### Register a Domain
-```typescript
-const result = await agent.methods.registerDomain(agent, {
-  name: "mydomain",
-  spaceKB: 1,
-});
-console.log("Domain Registration:", result);
+```bash
+pnpm add @getpara/plugin-para-server
+# or
+bun add @getpara/plugin-para-server
 ```
 
-### Create a Webhook
+## Setup
+
+First, initialize the Solana Agent Kit with the Para Server Plugin:
+
 ```typescript
-const webhook = await agent.methods.createWebhook(agent, {
-  accountAddresses: ["BVdNLvyG2DNiWAXBE9qAmc4MTQXymd5Bzfo9xrQSUzVP"],
-  webhookURL: "https://yourdomain.com/webhook",
-});
-console.log("Webhook Created:", webhook);
+import { SolanaAgentKit, type BaseWallet } from "solana-agent-kit";
+import ParaServerPlugin from "@getpara/plugin-para-server";
+import TokenPlugin from "@solana-agent-kit/plugin-token";
+
+// Create the Solana Agent
+const solanaAgent = new SolanaAgentKit(
+  {} as BaseWallet, // Temporary wallet, will be replaced
+  process.env.NEXT_PUBLIC_RPC_URL as string,
+  {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY as string || "",
+  }
+);
+
+// Add Para Server Plugin and Token Plugin
+export const solanaAgentWithPara = solanaAgent.use(ParaServerPlugin).use(TokenPlugin);
 ```
 
-For more detailed information about each action and its parameters, you can check the individual action files in the source code or refer to the official documentation at [docs.sendai.fun](https://docs.sendai.fun).
+## Available Methods
+
+### getParaInstance()
+Returns the Para instance that can be used to interact with Para services directly.
+
+```typescript
+const para = solanaAgentWithPara.methods.getParaInstance();
+```
+
+### createParaPregenWallet(email: string)
+Creates a pre-generated Para wallet for a specific email address.
+
+```typescript
+try {
+  const result = await solanaAgentWithPara.methods.createParaPregenWallet("user@example.com");
+  console.log('Wallet created successfully!');
+  console.log({
+    address: result.address,
+    email: result.email,
+    walletId: result.walletId
+  });
+} catch (error) {
+  if (error.message.includes("already exists")) {
+    console.error('A wallet already exists for this email');
+  } else {
+    console.error('Failed to create wallet:', error.message);
+  }
+}
+```
+
+### getParaPregenWallets(email: string)
+Retrieves all pre-generated wallets associated with a specific email address.
+
+```typescript
+try {
+  const { listAllPregenWallets } = await solanaAgentWithPara.methods.getParaPregenWallets("user@example.com");
+  console.log('Pre-generated wallets:', listAllPregenWallets);
+  
+  // Example of processing wallets
+  listAllPregenWallets.forEach(wallet => {
+    console.log('Wallet ID:', wallet.id);
+    console.log('Wallet Address:', wallet.address);
+  });
+} catch (error) {
+  console.error('Failed to get pre-generated wallets:', error.message);
+}
+```
+
+### updateParaPregenWallet(email: string, walletId: string)
+Updates the email identifier for an existing pre-generated wallet.
+
+```typescript
+try {
+  const result = await solanaAgentWithPara.methods.updateParaPregenWallet(
+    "newemail@example.com",
+    "wallet_id_here"
+  );
+  console.log('Wallet updated successfully!');
+  console.log({
+    email: result.email,
+    walletId: result.walletId
+  });
+} catch (error) {
+  if (error.message.includes("already exists")) {
+    console.error('A wallet already exists for this email');
+  } else {
+    console.error('Failed to update wallet:', error.message);
+  }
+}
+```
+
+## Error Handling
+
+The plugin methods may throw errors in the following cases:
+- Invalid email format
+- Duplicate wallet creation attempts
+- Invalid wallet IDs
+- Network connectivity issues
+- Para API errors
+
+Always wrap method calls in try-catch blocks and handle errors appropriately in your application.
+
+## TypeScript Support
+
+This plugin is written in TypeScript and provides full type definitions for all methods and return values. Import the necessary types from the package:
+
+```typescript
+import { WalletType } from "@getpara/server-sdk";
+```
+
+## Environment Variables
+
+Make sure to set up the following environment variables:
+- `NEXT_PUBLIC_RPC_URL`: Your Solana RPC URL
+- `OPENAI_API_KEY`: Your OpenAI API key (if using OpenAI features)
+- Any additional Para-specific environment variables required for your use case
+
+## Contributing
+
+If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on our GitHub repository.
+
+## License
+
+[License Type] - See LICENSE file for details

@@ -13,7 +13,7 @@ const claimParaPregenWalletAction: Action = {
     [
       {
         input: {
-          email: "test@test.com",
+     
         },
         output: {
           status: "success",
@@ -24,19 +24,18 @@ const claimParaPregenWalletAction: Action = {
       },
     ],
   ],
-  schema: z.object({
-    email: z.string().describe("The email address to create the wallet for"),
-  }),
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const { email } = input;
-      const response = await claimParaPregenWallet(email);
+    
+      const response = await claimParaPregenWallet();
 
       return {
         status: "success",
         ...response,
       };
     } catch (error: any) {
+      
       return {
         status: "error",
         message: error.message,

@@ -1,5 +1,5 @@
 {
-  "name": "@solana-agent-kit/plugin-para-web",
+  "name": "@getpara/plugin-para-web",
   "version": "2.0.0",
   "publishConfig": {
     "access": "public"
@@ -14,7 +14,7 @@
     "@getpara/solana-web3.js-v1-integration": "^1.5.0",
     "@getpara/web-sdk": "^1.5.0",
     "bs58": "^6.0.0",
-    "solana-agent-kit": "file:../../../michael-v2/packages/core",
+    "solana-agent-kit": "npm:@uratmangun/solana-agent-kit@^2.0.2",
     "zod": "^3.24.1"
   },
   "peerDependencies": {

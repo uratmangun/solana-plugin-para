@@ -1,86 +1,119 @@
-# @solana-agent-kit/plugin-misc
+# @getpara/plugin-para-web
 
-This plugin provides a set of miscellaneous tools and actions for interacting with various services and protocols on the Solana blockchain. It includes functionalities for domain registration, webhook creation, and more.
+This plugin provides web-specific tools and actions for interacting with Para services in the Solana Agent Kit. It enables wallet management, authentication, and other Para-specific functionalities in web applications.
 
-## Tools Available
+## Installation
 
-### AllDomains
-- `getAllDomainsTLDs` - Retrieve all top-level domains.
-- `getOwnedAllDomains` - Get all domains owned by a specific wallet.
-- `getOwnedDomainsForTLD` - Get domains owned by a wallet for a specific TLD.
-- `resolveDomain` - Resolve a domain to get its owner's public key.
-
-### Allora
-- `getAllTopics` - Retrieve all topics.
-- `getInferenceByTopicId` - Get inference data by topic ID.
-- `getPriceInference` - Get price inference data.
-
-### Gibwork
-- `createGibworkTask` - Create a new task on Gibwork.
-
-### Helius
-- `createWebhook` - Create a new webhook to monitor transactions.
-- `deleteWebhook` - Delete an existing webhook.
-- `getAssetsByOwner` - Get assets owned by a specific wallet.
-- `getWebhook` - Retrieve webhook details.
-- `parseTransaction` - Parse a Solana transaction.
-
-### SNS
-- `resolveSolDomain` - Resolve a .sol domain.
-- `registerDomain` - Register a new .sol domain.
-- `getPrimaryDomain` - Get the primary domain for a wallet.
-- `getMainAllDomainsDomain` - Get the main domain for AllDomains.
-- `getAllRegisteredAllDomains` - Get all registered domains.
-
-### Squads
-- `transferFromMultisigTreasury` - Transfer funds from a multisig treasury.
-- `rejectMultisigProposal` - Reject a multisig proposal.
-- `executeMultisigProposal` - Execute a multisig proposal.
-- `depositToMultisigTreasury` - Deposit funds into a multisig treasury.
-- `createMultisig` - Create a new multisig account.
-- `createMultisigProposal` - Create a new multisig proposal.
-
-### Coingecko
-- `getCoingeckoTokenInfo` - Get token information from Coingecko.
-- `getCoingeckoTopGainers` - Get top gaining tokens.
-- `getCoingeckoLatestPools` - Get the latest pools.
-- `getCoingeckoTrendingPools` - Get trending pools.
-- `getCoingeckoTokenPriceData` - Get token price data.
-- `getCoingeckoTrendingTokens` - Get trending tokens.
-
-### ElfaAi
-- `getElfaAiApiKeyStatus` - Check the status of an ElfaAi API key.
-- `getSmartMentions` - Get smart mentions using ElfaAi.
-- `getSmartTwitterAccountStats` - Get Twitter account stats using ElfaAi.
-- `getTopMentionsByTicker` - Get top mentions by ticker using ElfaAi.
-- `getTrendingTokensUsingElfaAi` - Get trending tokens using ElfaAi.
-- `pingElfaAiApi` - Ping the ElfaAi API.
-- `searchMentionsByKeywords` - Search mentions by keywords using ElfaAi.
-
-## Switchboard
-- `simulate_switchboard_feed` - Simulate a switchboard feed.
-
-## Tiplink
-- `create_TipLink` - Create a tiplink.
-
-## Example Usage
-
-### Register a Domain
-```typescript
-const result = await agent.methods.registerDomain(agent, {
-  name: "mydomain",
-  spaceKB: 1,
-});
-console.log("Domain Registration:", result);
+```bash
+pnpm add @getpara/plugin-para-web
+# or
+bun add @getpara/plugin-para-web
 ```
 
-### Create a Webhook
+## Setup
+
+First, initialize the Solana Agent Kit with the Para Web Plugin:
+
 ```typescript
-const webhook = await agent.methods.createWebhook(agent, {
-  accountAddresses: ["BVdNLvyG2DNiWAXBE9qAmc4MTQXymd5Bzfo9xrQSUzVP"],
-  webhookURL: "https://yourdomain.com/webhook",
-});
-console.log("Webhook Created:", webhook);
+import { SolanaAgentKit, type BaseWallet } from "solana-agent-kit";
+import ParaWebPlugin from "@getpara/plugin-para-web";
+
+// Create the Solana Agent
+const solanaAgent = new SolanaAgentKit(
+  {} as BaseWallet, // Temporary wallet, will be replaced
+  process.env.NEXT_PUBLIC_RPC_URL as string,
+  {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY as string || "",
+  }
+);
+
+// Add Para Web Plugin
+export const solanaAgentWithPara = solanaAgent.use(ParaWebPlugin);
+export const para = solanaAgentWithPara.methods.getParaInstance();
 ```
 
-For more detailed information about each action and its parameters, you can check the individual action files in the source code or refer to the official documentation at [docs.sendai.fun](https://docs.sendai.fun).
+## Available Methods
+
+### getParaInstance()
+Returns the Para instance that can be used to interact with Para services directly.
+
+```typescript
+const para = solanaAgentWithPara.methods.getParaInstance();
+```
+
+### getAllWallets()
+Retrieves all wallets associated with the currently logged-in Para account. Requires user to be logged in.
+
+```typescript
+try {
+  const { wallets } = await solanaAgentWithPara.methods.getAllWallets();
+  console.log('Your Para wallets:', wallets);
+  
+  // Example of processing wallets
+  wallets.forEach(wallet => {
+    console.log('Wallet address:', wallet.publicKey.toString());
+  });
+} catch (error) {
+  if (error.message.includes("Please login to Para")) {
+    // Handle not logged in state
+    console.error('Please log in to Para first');
+  } else {
+    console.error('Failed to get wallets:', error.message);
+  }
+}
+```
+
+### claimParaPregenWallet()
+Claims a pre-generated Para wallet using the user's email address. This method requires the user to be logged in to Para.
+
+```typescript
+try {
+  const result = await solanaAgentWithPara.methods.claimParaPregenWallet();
+  console.log('Wallet claimed successfully!');
+  console.log('Associated email:', result.email);
+} catch (error) {
+  if (error.message.includes("Please login to Para")) {
+    console.error('Authentication required: Please log in to Para');
+  } else {
+    console.error('Failed to claim wallet:', error.message);
+  }
+}
+```
+
+## Authentication
+
+Most methods in this plugin require the user to be authenticated with Para. You can check the authentication status using:
+
+```typescript
+const checkAuth = async () => {
+  const isLoggedIn = await para.isFullyLoggedIn();
+  if (!isLoggedIn) {
+    console.log('User needs to log in');
+    // Implement your login flow here
+  } else {
+    console.log('User is authenticated');
+  }
+};
+```
+
+## Error Handling
+
+The plugin methods may throw errors in the following cases:
+- User is not authenticated with Para
+- Network connectivity issues
+- Invalid parameters or operation failures
+- Rate limiting or API restrictions
+
+Always wrap method calls in try-catch blocks and handle errors appropriately in your application.
+
+## TypeScript Support
+
+This plugin is written in TypeScript and provides full type definitions for all methods and return values.
+
+## Contributing
+
+If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on our GitHub repository.
+
+## License
+
+[License Type] - See LICENSE file for details
