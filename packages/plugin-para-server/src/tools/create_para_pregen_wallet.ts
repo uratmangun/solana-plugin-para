@@ -17,7 +17,7 @@ export async function createParaPregenWallet(email: string) {
         "A pre-generated wallet already exists for this user. Consider using that wallet or choose a different email.",
       );
     }
-   
+
     const wallet = await para.createPregenWallet({
       type: WalletType.SOLANA,
       pregenIdentifier: email,

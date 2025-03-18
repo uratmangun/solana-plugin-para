@@ -7,7 +7,8 @@ export async function getAllWallets() {
       throw new Error("Please login to Para to get wallets.");
     }
 
-    const wallets = Object.values(await para.getWallets());
+    const fetchWallets = await para?.fetchWallets();
+    const wallets = fetchWallets?.filter((wallet) => wallet.type === "SOLANA");
 
     return {
       wallets,

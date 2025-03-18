@@ -1,19 +1,17 @@
 import { para } from "../utils/config";
 
-export async function claimParaPregenWallet(agent:any,userShare:string) {
+export async function claimParaPregenWallet(agent: any, userShare: string) {
   let email: string | undefined;
   try {
-   
-
     const isLoggedIn = await para.isFullyLoggedIn();
     if (!isLoggedIn) {
       throw new Error("Please login to Para to claim a pre-generated wallet.");
     }
-    if(!userShare){
-      throw new Error("userShare required");     
+    if (!userShare) {
+      throw new Error("userShare required");
     }
     email = await para.getEmail();
-    
+
     await para.setUserShare(userShare);
     await para.claimPregenWallets({
       pregenIdentifier: email,
@@ -25,8 +23,6 @@ export async function claimParaPregenWallet(agent:any,userShare:string) {
       email,
     };
   } catch (error: any) {
-  
-      throw new Error(error.message);
-   
+    throw new Error(error.message);
   }
 }
