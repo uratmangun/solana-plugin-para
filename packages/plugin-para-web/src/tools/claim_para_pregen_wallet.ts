@@ -1,14 +1,20 @@
 import { para } from "../utils/config";
 
-export async function claimParaPregenWallet() {
+export async function claimParaPregenWallet(agent:any,userShare:string) {
   let email: string | undefined;
   try {
+   
+
     const isLoggedIn = await para.isFullyLoggedIn();
     if (!isLoggedIn) {
       throw new Error("Please login to Para to claim a pre-generated wallet.");
     }
+    if(!userShare){
+      throw new Error("userShare required");     
+    }
     email = await para.getEmail();
-
+    
+    await para.setUserShare(userShare);
     await para.claimPregenWallets({
       pregenIdentifier: email,
       pregenIdentifierType: "EMAIL",
@@ -19,18 +25,8 @@ export async function claimParaPregenWallet() {
       email,
     };
   } catch (error: any) {
-    // false positive Error: Cannot read properties of undefined (reading 'scheme')
-    if (
-      (error as Error).message.includes(
-        "Cannot read properties of undefined (reading 'scheme')",
-      )
-    ) {
-      return {
-        message: "Pre-generated wallet claimed successfully.",
-        email,
-      };
-    } else {
+  
       throw new Error(error.message);
-    }
+   
   }
 }

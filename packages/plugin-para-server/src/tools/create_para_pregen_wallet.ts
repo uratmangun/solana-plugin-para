@@ -17,12 +17,13 @@ export async function createParaPregenWallet(email: string) {
         "A pre-generated wallet already exists for this user. Consider using that wallet or choose a different email.",
       );
     }
-
+   
     const wallet = await para.createPregenWallet({
       type: WalletType.SOLANA,
       pregenIdentifier: email,
       pregenIdentifierType: "EMAIL",
     });
+    const userShare = await para.getUserShare();
     if (!wallet) {
       throw new Error(
         "Failed to create pre-generated wallet. Check your Para configuration and try again.",
@@ -34,6 +35,7 @@ export async function createParaPregenWallet(email: string) {
       address: wallet.address,
       email,
       walletId: wallet.id,
+      userShare,
     };
   } catch (error: any) {
     throw new Error(`create pregen wallet failed ${error.message}`);

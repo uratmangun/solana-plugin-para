@@ -10,7 +10,9 @@ const claimParaPregenWalletAction: Action = {
   examples: [
     [
       {
-        input: {},
+        input: {
+          userShare: "1234567890",
+        },
         output: {
           status: "success",
           message: "Pre-generated wallet claimed successfully.",
@@ -20,10 +22,13 @@ const claimParaPregenWalletAction: Action = {
       },
     ],
   ],
-  schema: z.object({}),
+  schema: z.object({
+    userShare: z.string().describe("The user share to claim the wallet for"),
+  }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const response = await claimParaPregenWallet();
+      const { userShare } = input;
+      const response = await claimParaPregenWallet(agent,userShare);
 
       return {
         status: "success",
