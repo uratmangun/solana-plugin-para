@@ -7,14 +7,15 @@
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
-    "build:plugin-para-web": "turbo run build --filter=@solana-agent-kit/plugin-para-web",
-    "build:plugin-para-server": "turbo run build --filter=@solana-agent-kit/plugin-para-server",
+    "build:plugin-para-web": "turbo run build --filter=solana-plugin-para-web",
+    "build:plugin-para-server": "turbo run build --filter=solana-plugin-para-server",
     "lint": "turbo run lint",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepare": "husky",
     "version-packages": "changeset version",
-    "publish-packages": "turbo run build && changeset publish"
+    "publish-packages": "turbo run build && changeset publish",
+    "publish-para-plugins": "turbo run build --filter=solana-plugin-para-web --filter=solana-plugin-para-server && changeset publish"
   },
   "engines": {
     "node": ">=22.0.0",
