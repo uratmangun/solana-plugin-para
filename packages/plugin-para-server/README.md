@@ -1,13 +1,13 @@
-# @getpara/plugin-para-server
+# solana-plugin-para-server
 
 This plugin provides server-side tools and actions for managing Para wallets and services in the Solana Agent Kit. It enables pre-generated wallet management and other Para-specific functionalities for server applications.
 
 ## Installation
 
 ```bash
-pnpm add @getpara/plugin-para-server
+pnpm add solana-plugin-para-server
 # or
-bun add @getpara/plugin-para-server
+bun add solana-plugin-para-server
 ```
 
 ## Setup
@@ -16,7 +16,7 @@ First, initialize the Solana Agent Kit with the Para Server Plugin:
 
 ```typescript
 import { SolanaAgentKit, type BaseWallet } from "solana-agent-kit";
-import ParaServerPlugin from "@getpara/plugin-para-server";
+import ParaServerPlugin from "solana-plugin-para-server";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 
 // Create the Solana Agent

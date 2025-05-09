@@ -15,7 +15,7 @@
     "prepare": "husky",
     "version-packages": "changeset version",
     "publish-packages": "turbo run build && changeset publish",
-    "publish-para-plugins": "turbo run build --filter=solana-plugin-para-web --filter=solana-plugin-para-server && changeset publish"
+    "publish-para-plugins": "echo -e '---\n\"solana-plugin-para-web\": patch\n\"solana-plugin-para-server\": patch\n---\n\nchore: Automated version bump for para plugins' > .changeset/auto-$(date +%s).md && pnpm run version-packages && turbo run build --filter=solana-plugin-para-web --filter=solana-plugin-para-server && changeset publish --no-git-tag"
   },
   "engines": {
     "node": ">=22.0.0",

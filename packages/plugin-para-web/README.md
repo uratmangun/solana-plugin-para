@@ -1,13 +1,13 @@
-# @getpara/plugin-para-web
+# solana-plugin-para-web
 
 This plugin provides web-specific tools and actions for interacting with Para services in the Solana Agent Kit. It enables wallet management, authentication, and other Para-specific functionalities in web applications.
 
 ## Installation
 
 ```bash
-pnpm add @getpara/plugin-para-web
+pnpm add solana-plugin-para-web
 # or
-bun add @getpara/plugin-para-web
+bun add solana-plugin-para-web
 ```
 
 ## Setup
@@ -16,7 +16,7 @@ First, initialize the Solana Agent Kit with the Para Web Plugin:
 
 ```typescript
 import { SolanaAgentKit, type BaseWallet } from "solana-agent-kit";
-import ParaWebPlugin from "@getpara/plugin-para-web";
+import ParaWebPlugin from "solana-plugin-para-web";
 
 // Create the Solana Agent
 const solanaAgent = new SolanaAgentKit(
