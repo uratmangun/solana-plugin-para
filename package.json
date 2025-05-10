@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
-    "build:plugin-para-web": "turbo run build --filter=solana-plugin-para-web",
-    "build:plugin-para-server": "turbo run build --filter=solana-plugin-para-server",
+    "build:plugin-para-web": "turbo run build --filter=solana-plugin-para-web --no-cache",
+    "build:plugin-para-server": "turbo run build --filter=solana-plugin-para-server --no-cache",
     "lint": "turbo run lint",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

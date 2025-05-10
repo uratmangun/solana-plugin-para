@@ -28,7 +28,7 @@ const claimParaPregenWalletAction: Action = {
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
       const { userShare } = input;
-      const response = await claimParaPregenWallet(agent, userShare);
+      const response = await claimParaPregenWallet("",userShare);
 
       return {
         status: "success",

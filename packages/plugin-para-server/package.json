@@ -1,6 +1,6 @@
 {
   "name": "solana-plugin-para-server",
-  "version": "2.0.3",
+  "version": "2.0.5",
   "publishConfig": {
     "access": "public"
   },
@@ -13,7 +13,7 @@
   "dependencies": {
     "@getpara/server-sdk": "^1.5.1",
     "bs58": "^6.0.0",
-    "solana-agent-kit": "2.0.0-beta.2",
+    "solana-agent-kit": "2.0.4",
     "zod": "^3.24.1"
   },
   "peerDependencies": {

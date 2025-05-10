@@ -1,7 +1,8 @@
 import { para } from "../utils/config";
 
-export async function claimParaPregenWallet(agent: any, userShare: string) {
+export async function claimParaPregenWallet(any:any,userShare: string) {
   let email: string | undefined;
+
   try {
     const isLoggedIn = await para.isFullyLoggedIn();
     if (!isLoggedIn) {
